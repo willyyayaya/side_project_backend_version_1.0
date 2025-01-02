@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,4 +27,27 @@ public class TagController {
     public String addTag(@RequestBody List<Tag> tags) {
         return tagService.addTags(tags);
     }
+    
+    // 更新標籤資料
+    @PostMapping("/updateTag/{tagId}")
+    public String updateTag(@PathVariable int tagId, @RequestBody Tag tagDetails) {
+        try {
+            Tag updatedTag = tagService.updateTag(tagId, tagDetails);
+            return "標籤更新成功: " + updatedTag.getTagname();
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
+    }
+
+    // 刪除標籤
+    @DeleteMapping("/deleteTag/{tagId}")
+    public String deleteTag(@PathVariable int tagId) {
+        try {
+            tagService.deleteTag(tagId);
+            return "標籤刪除成功 (ID: " + tagId + ")";
+        } catch (RuntimeException e) {
+            return e.getMessage();
+        }
+    }
+    
 }
