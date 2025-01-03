@@ -30,7 +30,7 @@ public class Order {
     private String deadline;
     private String intro;
     private String detail;
-    private String picurl;
+    private byte[] picurl;
     private String location;
     private Integer rank;
     private Integer people = 1; // 預設值
@@ -94,11 +94,11 @@ public class Order {
         this.detail = detail;
     }
 
-    public String getPicurl() {
+    public byte[] getPicurl() {
         return picurl;
     }
 
-    public void setPicurl(String picurl) {
+    public void setPicurl(byte[] picurl) {
         this.picurl = picurl;
     }
 
