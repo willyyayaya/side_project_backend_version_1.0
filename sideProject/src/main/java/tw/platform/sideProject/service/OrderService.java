@@ -33,8 +33,11 @@ public class OrderService {
         // 建立並儲存 Order
         Order order = new Order();
         order.setName(request.getName());
+        order.setIntro(request.getIntro());
         order.setDeadline(request.getDeadline());
         order.setDetail(request.getDetail());
+        order.setPicurl(request.getPicurl());
+        order.setLocation(request.getLocation());
         order.setPeople(request.getPeople());
         orderRepository.save(order);
 
@@ -74,6 +77,9 @@ public class OrderService {
             // 僅更新非空欄位
             if (orderDetails.getName() != null) {
             	existingOrder.setName(orderDetails.getName());
+            }
+            if (orderDetails.getIntro() != null) {
+            	existingOrder.setIntro(orderDetails.getIntro());
             }
             if (orderDetails.getDeadline() != null) {
             	existingOrder.setDeadline(orderDetails.getDeadline());

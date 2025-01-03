@@ -28,6 +28,7 @@ public class Order {
 
     private String name;
     private String deadline;
+    private String intro;
     private String detail;
     private String picurl;
     private String location;
@@ -68,8 +69,16 @@ public class Order {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getIntro() {
+		return intro;
+	}
 
-    public String getDeadline() {
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public String getDeadline() {
         return deadline;
     }
 

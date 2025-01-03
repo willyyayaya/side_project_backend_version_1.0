@@ -3,9 +3,12 @@ package tw.platform.sideProject.model;
 import java.util.List;
 
 public class AddOrderRequest {
-    private String name;
+	private String name;
     private String deadline;
+    private String intro;
     private String detail;
+    private String picurl;
+    private String location;
     private int people;
     private List<Integer> tagIds; // 傳入的 Tag IDs
 
@@ -25,8 +28,16 @@ public class AddOrderRequest {
     public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
+    
+    public String getIntro() {
+		return intro;
+	}
 
-    public String getDetail() {
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public String getDetail() {
         return detail;
     }
 
@@ -34,7 +45,23 @@ public class AddOrderRequest {
         this.detail = detail;
     }
 
-    public int getPeople() {
+    public String getPicurl() {
+		return picurl;
+	}
+
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getPeople() {
         return people;
     }
 
