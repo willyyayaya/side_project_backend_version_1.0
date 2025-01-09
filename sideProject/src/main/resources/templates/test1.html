@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link href="/p1.css" rel="stylesheet">
+
+   <title>p1</title>
+</head>
+<body>
+
+    <!-- 上方菜單 -->
+    <div id="menu_t_1">
+        <div id="menu_t_2">
+            <div id="menu_t_3">
+                <div id="logo_top">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeff3"><path d="m437-398 227-226-57-57-170 170-85-85-56 56 141 142ZM40-120v-80h880v80H40Zm120-120q-33 0-56.5-23.5T80-320v-440q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v440q0 33-23.5 56.5T800-240H160Zm0-80h640v-440H160v440Zm0 0v-440 440Z"/></svg>
+                </div>
+                <div id="menu_top" class="flex-nav">
+                    <ul id="menu_top_1">
+                        <li>搜尋
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeff3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                        </li>
+                        <li>配對</li>
+                        <li>連結1</li>
+                        <li>個人管理</li>
+                    </ul>
+                    <ul id="menu_top_2">
+                        <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="70px" fill="#eaeff3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- 中間 -->
+    <div id="center_1" >
+        <div id="center_2">
+            <div id="center_icon" style="background-color: #bbc8d8;">
+    			<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
+            	<form th:action="@{/test1/{id}/update(id=${member.memberid})}" method="post" enctype="multipart/form-data">
+            	<div style="background-color: #bbc8d8;width: 90%;height: 15%;">
+                <!-- 預覽圖片 -->
+    			<img id="icon" th:src="'data:image/png;base64,' + ${base64Image}" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
+    			<input type="file" id="upload" name="picurl" accept="image/*" style="display:none;" onchange="previewImage()" />
+    			<button type="submit" id="icon_btn">更換圖片</button>
+            </div>
+        </form>
+    </div>
+</div>
+            
+            <div id="center_laft" style="background-color: #bbc8d8;">
+                <div style="background-color: #bbc8d8; height: 5%;font-weight: bold;" id="center_laftmune_1">功能列</div>
+                <div style="background-color: #bbc8d8; height: 44%;" id="center_laftmune_2">
+                    <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
+                        <ul  id="laftmune_2_1">
+                            <li>未開通</li>
+                            <li>進行中</li>
+                            <li>查看評價</li>
+                        </ul>
+                        <ul  id="laftmune_2_2" style="font-weight: bold;">收藏
+                            <li>資料夾管理</li>
+                        </ul>
+                        <ul  id="laftmune_2_3" style="font-weight: bold;">帳號管理
+                            <li>會員資料編輯</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background-color: #bbc8d8; height: 30%;" id="center_laftmune_2">
+                    <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
+                        <ul  id="laftmune_3_1">
+                            <li>未開通</li>
+                            <li>進行中</li>
+                            <li>已結案</li>
+                        </ul>
+                        <!-- <ul  id="laftmune_3_2" style="font-weight: bold;">收藏
+                            <li>資料夾管理</li>
+                        </ul> -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="center_result" >
+            <div style="background-color: #bbc8d8; height: 5%;width: 95%; margin-left: 20px;" id="center_result_title">
+                <h2 style="color: #14518e;">會員資料編輯區</h2>
+            </div>
+            <div style="background-color: #bbc8d8; height: 90%;width: 95%;margin-left: 20px" id="center_result_index">
+            	  <form th:action="@{/test1/{id}/update(id=${member.memberid})}" method="post" enctype="multipart/form-data">
+                	<div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_1">
+                    <div id="input_1" >
+                     <!-- <input type="hidden" name="id" th:value="${member.memberid}">-->
+                        <h4>姓名:</h4>
+                        <input  th:value="${member.name}" id="input_index_1" readonly>
+                      <!--  <button id="inputbtn_1" type="submit">編輯</button> -->
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_2">
+                    <div id="input_2" >
+                        <h4>帳號:</h4>
+                        <input type="text" th:value="${member.account}" id="input_index_2" name="account" />
+                        <button id="inputbtn_2"  type="button" onclick="submitForm()" >編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_3">
+                    <div id="input_3" >
+                        <h4>密碼:</h4>
+                        <input th:value="${member.password}"  id="input_index_3" name="password" type="password" />
+                        <button id="inputbtn_3"  type="button" onclick="submitForm()" >編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_4">
+                    <div id="input_4" >
+                        <h4 >電子信箱:</h4>
+                        <input th:value="${member.email}" id="input_index_4" type="email" name="email"  />
+                        <button id="inputbtn_4"  type="button" onclick="submitForm()" >編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_5">
+                    <div id="input_5" >
+                        <h4>電話:</h4>
+                        <input th:value="${member.tel}"  id="input_index_5" name="tel" type="tel" required />
+                        <button id="inputbtn_5" type="button" onclick="submitForm()" >編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_7">
+                    <div id="input_7" >
+                        <h4>生日:</h4>
+                        <input th:value="${member.birthday}"  id="input_index_7" name="birthday" type="date" />
+                        <button id="inputbtn_7"  type="button" onclick="submitForm()">編輯</button>
+                    </div>
+                </div>
+
+                <div style="background-color: #bbc8d8; height: 35%;"  id="center_result_inputindex_6">
+                    <div id="input_6">
+                        <h4>自我介紹:</h4>
+                        <textarea id="input_index_6" type="text" th:text="${member.memberinfo}" 
+                        name="memberinfo" style="width: 400px; height: 250px; resize: none;"></textarea>
+                        <button id="inputbtn_6"  type="button" onclick="submitForm()" >編輯</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+
+ <!-- 頭像JS部分 -->
+    <script>
+        // 顯示選擇的圖片預覽
+        function previewImage() {
+            const file = document.getElementById('upload').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function() {
+                document.getElementById('icon').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitForm() {
+            // 获取所有输入框
+            var form = document.querySelector('form');
+            var inputElements = form.querySelectorAll('input'); // 获取所有输入框
+            var valid = true;
+
+            // 遍历所有输入框，检查有效性
+            for (var i = 0; i < inputElements.length; i++) {
+                var inputElement = inputElements[i];
+
+             // 检查电子邮件字段的有效性
+                if (inputElement.type === "email" && !inputElement.checkValidity()) {
+                    alert("請檢查電子郵件的格式。");
+                    inputElement.focus(); // 将焦点聚焦到第一个无效的输入框
+                    valid = false; // 标记表单无效
+                    break; // 终止验证，防止继续检查其它字段
+                }
+
+                // 检查电话字段的有效性
+                if (inputElement.type === "tel" && !inputElement.checkValidity()) {
+                    alert("請檢查電話號碼的格式。");
+                    inputElement.focus(); // 将焦点聚焦到第一个无效的输入框
+                    valid = false; // 标记表单无效
+                    break; // 终止验证，防止继续检查其它字段
+                }
+
+                // 验证每个输入框的有效性
+                if (!inputElement.checkValidity()) {
+                    // 如果格式不正确，弹出提示框并阻止表单提交
+                    alert("請檢查輸入的格式。");
+                    inputElement.focus(); // 将焦点聚焦到第一个无效的输入框
+                    valid = false; // 标记表单无效
+                    break; // 终止验证，防止继续检查其它字段
+                }
+            }
+
+            // 如果所有输入框有效，才提交表单
+            if (valid) {
+                // 创建 FormData 实例，包含整个表单的数据
+                var data = new FormData(form);
+
+                // 使用 Fetch 提交数据
+                fetch(form.action, {
+                    method: 'POST',
+                    body: data,
+                })
+                .then(response => {
+                    // 检查响应的 Content-Type
+                    if (response.ok && response.headers.get('Content-Type').includes('application/json')) {
+                        return response.json();  // 解析 JSON
+                    } else {
+                        throw new Error("回應不是有效的 JSON");
+                    }
+                })
+                .then(data => {
+                    console.log("成功:", data);
+                    alert('更新成功！'); // 彈出成功提示
+                })
+                .catch((error) => {
+                    console.error("錯誤:", error);
+                    alert('更新失敗，請稍後再試！'); // 彈出錯誤提示
+                });
+            }
+        }
+    </script>
+
+
+    <!-- 下方菜單 -->
+    <div id="footer_1">
+        <div id="footer_2">
+            <div id="footer_text_1" >1</div>
+            <div id="footer_text_2" >2</div>
+            <div id="footer_text_3" >3</div>
+            <div id="footer_text_4" >4</div>
+        </div>
+    </div>
+</body>
+</html>
