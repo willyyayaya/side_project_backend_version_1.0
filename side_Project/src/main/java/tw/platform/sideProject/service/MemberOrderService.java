@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import jakarta.transaction.Transactional;
 import tw.platform.sideProject.model.AddMemberOrderRequest;
@@ -144,28 +145,62 @@ public class MemberOrderService {
 
 	// 查找某個會員相關的所有專案平均評分
 	public Double getAverageRankByMemberId(Long memberId) {
-	    // 查找該會員所有擁有的專案的 rank 分數
-	    List<Integer> ranks = memberOrderRepository.findRanksByMemberIdAndOwnedTrue(memberId);
-	    
-	    if (ranks.isEmpty()) {
-	        // 如果沒有找到相關專案，則返回 null 或者其他預設值
-	        return null;
-	    }
+		// 查找該會員所有擁有的專案的 rank 分數
+		List<Integer> ranks = memberOrderRepository.findRanksByMemberIdAndOwnedTrue(memberId);
 
-	    // 計算平均 rank 分數，將 null 視為 0
-	    double sum = 0;
-	    int count = 0;
+		if (ranks.isEmpty()) {
+			// 如果沒有找到相關專案，則返回 null 或者其他預設值
+			return null;
+		}
 
-	    for (Integer rank : ranks) {
-	        sum += (rank != null ? rank : 0);  // 使用 0 代替 null
-	        count++;
-	    }
+		// 計算平均 rank 分數，將 null 視為 0
+		double sum = 0;
+		int count = 0;
 
-	    return sum / count; // 返回所有 rank 的平均分數
+		for (Integer rank : ranks) {
+			sum += (rank != null ? rank : 0); // 使用 0 代替 null
+			count++;
+		}
+
+		return sum / count; // 返回所有 rank 的平均分數
 	}
-	
-//	//尋找某個專案的發行會員
+
+	// 尋找某個專案的發行會員
 	public List<Member> getMemberByOrderId(Long orderId) {
-    return memberOrderRepository.findMembersByOrderid(orderId);
-}
+		return memberOrderRepository.findMembersByOrderid(orderId);
+	}
+
+	// 申請專案(會員對專案的collected的狀態為true)
+	@Transactional
+	public String updateCollectedStatus(AddMemberOrderRequest request) {
+		// 查找會員
+		Member member = memberRepository.findById(request.getMemberId())
+				.orElseThrow(() -> new RuntimeException("Member not found"));
+
+		// 查找專案
+		Order order = orderRepository.findById(request.getOrderId())
+				.orElseThrow(() -> new RuntimeException("Order not found"));
+
+		MemberOrder memberOrder = new MemberOrder();
+		MemberOrderKey memberOrderKey = new MemberOrderKey();
+		memberOrder.setId(memberOrderKey); // 初始化 ID
+		memberOrder.setMember(member); // 設置 member 對象
+		memberOrder.setOrder(order); // 設置 order 對象
+		memberOrder.getId().setMemberid(request.getMemberId());
+		memberOrder.getId().setOrderid(request.getOrderId());
+
+		// 只更新 collected 状态
+		memberOrder.setCollected(request.isCollected()); // 使用 request 中的 collected 值来更新
+
+		// 保存更新的 MemberOrder
+		memberOrderRepository.save(memberOrder);
+
+		return "會員的collected狀態已更新";
+	}
+
+	// 尋找某個專案的發行會員
+	public Long getcollected(Long orderId) {
+		return memberOrderRepository.countCollectedByOrderId(orderId);
+	}
+
 }

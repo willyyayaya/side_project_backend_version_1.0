@@ -56,6 +56,8 @@ public class TagController {
         }
     }
     
+    
+    //取得標籤名字
     @GetMapping("/getTagNames")
     public List<String> getTagNames() {
         return tagService.getTagNames();  // 返回所有的 tagname 列表

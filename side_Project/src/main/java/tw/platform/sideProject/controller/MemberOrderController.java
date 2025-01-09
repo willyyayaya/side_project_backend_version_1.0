@@ -3,6 +3,7 @@ package tw.platform.sideProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import tw.platform.sideProject.model.AddMemberOrderRequest;
@@ -50,16 +51,16 @@ public class MemberOrderController {
 		return memberOrderService.getOrdersByMemberId(memberId);
 	}
 
-//	//根據orderid來找發行會員
-	@GetMapping("/getMemberIdByOrderId/{orderId}")
-	public List<Member> getMemberIdByOrderID(@PathVariable Long orderId) {
-		return memberOrderService.getMemberByOrderId(orderId);
-	}
-
 	// 查詢某個專案相關的所有會員
 	@GetMapping("/getMembersByOrderId/{orderId}")
 	public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
 		return memberOrderService.getMembersByOrderId(orderId);
+	}
+
+	// 根據orderid來找發行會員
+	@GetMapping("/getMemberIdByOrderId/{orderId}")
+	public List<Member> getMemberIdByOrderID(@PathVariable Long orderId) {
+		return memberOrderService.getMemberByOrderId(orderId);
 	}
 
 	// 新增評價
@@ -73,4 +74,17 @@ public class MemberOrderController {
 	public Double getAverageRank(@PathVariable Long memberId) {
 		return memberOrderService.getAverageRankByMemberId(memberId);
 	}
+
+	// 申請案件
+	@PutMapping("/collected")
+	public String updateCollectedStatus(@RequestBody AddMemberOrderRequest request) {
+		return memberOrderService.updateCollectedStatus(request);
+	}
+
+	// 查詢申請案件人數
+	@GetMapping("/collected/people/{orderId}")
+	public Long getcollected(@PathVariable Long orderId) {
+		return  memberOrderService.getcollected(orderId);
+	}
+
 }
