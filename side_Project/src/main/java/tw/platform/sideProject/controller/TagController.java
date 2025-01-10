@@ -62,4 +62,10 @@ public class TagController {
     public List<String> getTagNames() {
         return tagService.getTagNames();  // 返回所有的 tagname 列表
     }
+    
+    @GetMapping("/getTag/{orderId}")
+    public List<String> getTagByOrderId(@PathVariable Long orderId) {
+        return tagService.getTagByOrderId(orderId);  // 返回所有的 tagname 列表
+    }
+    
 }

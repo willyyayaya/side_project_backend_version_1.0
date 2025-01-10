@@ -76,15 +76,15 @@ public class MemberOrderController {
 	}
 
 	// 申請案件
-	@PutMapping("/collected")
-	public String updateCollectedStatus(@RequestBody AddMemberOrderRequest request) {
-		return memberOrderService.updateCollectedStatus(request);
+	@PutMapping("/wanted")
+	public String updatewantedStatus(@RequestBody AddMemberOrderRequest request) {
+		return memberOrderService.updatewantedStatus(request);
 	}
 
 	// 查詢申請案件人數
-	@GetMapping("/collected/people/{orderId}")
-	public Long getcollected(@PathVariable Long orderId) {
-		return  memberOrderService.getcollected(orderId);
+	@GetMapping("/wanted/people/{orderId}")
+	public Long getwanted(@PathVariable Long orderId) {
+		return  memberOrderService.getwanted(orderId);
 	}
 
 }

@@ -54,7 +54,7 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	List<Member> findMembersByOrderid(@Param("orderId") Long orderId);
 
 	// 查詢該專案的申請人數
-	@Query("SELECT COUNT(mo) FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.collected = true")
-	Long countCollectedByOrderId(@Param("orderId") Long orderId);
+	@Query("SELECT COUNT(mo) FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.wanted = true")
+	Long countWantedByOrderId(@Param("orderId") Long orderId);
 
 }

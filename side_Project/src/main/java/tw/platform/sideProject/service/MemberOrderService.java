@@ -170,9 +170,9 @@ public class MemberOrderService {
 		return memberOrderRepository.findMembersByOrderid(orderId);
 	}
 
-	// 申請專案(會員對專案的collected的狀態為true)
+	// 申請專案(會員對專案的wanted的狀態為true)
 	@Transactional
-	public String updateCollectedStatus(AddMemberOrderRequest request) {
+	public String updatewantedStatus(AddMemberOrderRequest request) {
 		// 查找會員
 		Member member = memberRepository.findById(request.getMemberId())
 				.orElseThrow(() -> new RuntimeException("Member not found"));
@@ -189,18 +189,19 @@ public class MemberOrderService {
 		memberOrder.getId().setMemberid(request.getMemberId());
 		memberOrder.getId().setOrderid(request.getOrderId());
 
-		// 只更新 collected 状态
-		memberOrder.setCollected(request.isCollected()); // 使用 request 中的 collected 值来更新
+		// 只更新 Wanted 状态
+		memberOrder.setWanted(request.isWanted());/// 使用 request 中的 Wanted 值来更新
+		memberOrder.setOwned(request.isOwned());  
 
 		// 保存更新的 MemberOrder
 		memberOrderRepository.save(memberOrder);
 
-		return "會員的collected狀態已更新";
+		return "會員的wanted狀態已更新";
 	}
 
 	// 尋找某個專案的發行會員
-	public Long getcollected(Long orderId) {
-		return memberOrderRepository.countCollectedByOrderId(orderId);
+	public Long getwanted(Long orderId) {
+		return memberOrderRepository.countWantedByOrderId(orderId);
 	}
 
 }

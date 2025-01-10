@@ -1,6 +1,7 @@
 package tw.platform.sideProject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -56,5 +57,10 @@ public class TagService {
     @Transactional
     public List<String> getTagNames() {
       return tagRepository.findAllTagname();
+    }
+    
+    @Transactional
+    public List<String> getTagByOrderId(Long orderId) {
+        return tagRepository.findTagNamesByOrderId(orderId);
     }
 }
