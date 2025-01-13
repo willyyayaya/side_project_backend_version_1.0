@@ -57,4 +57,11 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	@Query("SELECT COUNT(mo) FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.wanted = true")
 	Long countWantedByOrderId(@Param("orderId") Long orderId);
 
+	@Modifying
+	@Transactional
+	@Query("UPDATE MemberOrder mo SET mo.collected = :collected WHERE mo.member.id = :memberId AND mo.order.id = :orderId")
+	void updateCollectedStatus(@Param("collected") boolean collected, @Param("memberId") Long memberId,
+			@Param("orderId") Long orderId);
+
+	
 }

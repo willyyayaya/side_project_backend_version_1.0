@@ -75,10 +75,10 @@ public class MemberOrderController {
 		return memberOrderService.getAverageRankByMemberId(memberId);
 	}
 
-	// 申請案件
-	@PutMapping("/wanted")
-	public String updatewantedStatus(@RequestBody AddMemberOrderRequest request) {
-		return memberOrderService.updatewantedStatus(request);
+	// 收藏案件
+	@PutMapping("/collected")
+	public String updatecollectedStatus(@RequestBody AddMemberOrderRequest request) {
+		return memberOrderService.updatecollectedStatus(request);
 	}
 
 	// 查詢申請案件人數

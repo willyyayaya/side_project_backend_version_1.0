@@ -1,6 +1,7 @@
 package tw.platform.sideProject.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,26 +57,45 @@ public class MemberOrderService {
 	// 新增會員對專案有興趣的關聯 (wanted設為true)
 	public String addWantedOrder(AddMemberOrderRequest request) {
 
-		// 查找會員
-		Member member = memberRepository.findById(request.getMemberId())
-				.orElseThrow(() -> new RuntimeException("Member not found"));
+	    // 查找會員
+	    Member member = memberRepository.findById(request.getMemberId())
+	            .orElseThrow(() -> new RuntimeException("Member not found"));
 
-		// 查找專案
-		Order order = orderRepository.findById(request.getOrderId())
-				.orElseThrow(() -> new RuntimeException("Order not found"));
+	    // 查找專案
+	    Order order = orderRepository.findById(request.getOrderId())
+	            .orElseThrow(() -> new RuntimeException("Order not found"));
 
-		MemberOrder memberOrder = new MemberOrder();
-		MemberOrderKey memberOrderKey = new MemberOrderKey();
-		memberOrder.setId(memberOrderKey); // 初始化 ID
-		memberOrder.setMember(member); // 設置 member 對象
-		memberOrder.setOrder(order); // 設置 order 對象
-		memberOrder.getId().setMemberid(request.getMemberId());
-		memberOrder.getId().setOrderid(request.getOrderId());
-		memberOrder.setOwned(false);
-		memberOrder.setWanted(true);
+	    // 查詢是否已有相同的關聯
+	    Optional<MemberOrder> existingMemberOrder = memberOrderRepository.findByMember_memberidAndOrder_orderid(
+	            request.getMemberId(), request.getOrderId());
 
-		memberOrderRepository.save(memberOrder);
-		return "會員對專案有興趣的關聯已新增";
+	    if (existingMemberOrder.isPresent()) {
+	        // 如果已經存在這條關聯，則不覆蓋 collected 欄位的值
+	        MemberOrder memberOrder = existingMemberOrder.get();
+
+	        // 更新 wanted 為 true，保留 collected 的原值
+	        memberOrder.setWanted(true);
+
+	        // 保存更新後的資料
+	        memberOrderRepository.save(memberOrder);
+	        return "會員對專案有興趣的關聯已更新，保留原有的 collected 狀態";
+	    } else {
+	        // 如果該關聯不存在，則新增一條資料
+	        MemberOrder memberOrder = new MemberOrder();
+	        MemberOrderKey memberOrderKey = new MemberOrderKey();
+	        memberOrder.setId(memberOrderKey); // 初始化 ID
+	        memberOrder.getId().setMemberid(request.getMemberId());
+	        memberOrder.getId().setOrderid(request.getOrderId());
+	        memberOrder.setMember(member); // 設置 member 對象
+	        memberOrder.setOrder(order); // 設置 order 對象
+	        memberOrder.setOwned(false); // 設置 owned 為 false
+	        memberOrder.setWanted(true); // 設置 wanted 為 true
+	        memberOrder.setCollected(false); // 設置 collected 為 false，根據需求可改為預設值
+
+	        // 保存新增的 MemberOrder 記錄
+	        memberOrderRepository.save(memberOrder);
+	        return "會員對專案有興趣的關聯已新增";
+	    }
 	}
 
 	// 移除會員對專案有興趣的關聯 (wanted設為false)
@@ -170,34 +190,43 @@ public class MemberOrderService {
 		return memberOrderRepository.findMembersByOrderid(orderId);
 	}
 
-	// 申請專案(會員對專案的wanted的狀態為true)
-	@Transactional
-	public String updatewantedStatus(AddMemberOrderRequest request) {
-		// 查找會員
-		Member member = memberRepository.findById(request.getMemberId())
-				.orElseThrow(() -> new RuntimeException("Member not found"));
+	// 收藏專案(會員對專案的collected的狀態為true)
+		@Transactional
+		public String updatecollectedStatus(AddMemberOrderRequest request) {
+		    // 檢查 MemberOrder 是否已存在
+		    Optional<MemberOrder> existingMemberOrder = memberOrderRepository.findByMember_memberidAndOrder_orderid(
+		            request.getMemberId(), request.getOrderId());
 
-		// 查找專案
-		Order order = orderRepository.findById(request.getOrderId())
-				.orElseThrow(() -> new RuntimeException("Order not found"));
+		    // 如果找不到，則新增一條 MemberOrder 記錄
+		    if (!existingMemberOrder.isPresent()) {
+		        // 查找會員和專案
+		        Member member = memberRepository.findById(request.getMemberId())
+		                .orElseThrow(() -> new RuntimeException("Member not found"));
+		        Order order = orderRepository.findById(request.getOrderId())
+		                .orElseThrow(() -> new RuntimeException("Order not found"));
 
-		MemberOrder memberOrder = new MemberOrder();
-		MemberOrderKey memberOrderKey = new MemberOrderKey();
-		memberOrder.setId(memberOrderKey); // 初始化 ID
-		memberOrder.setMember(member); // 設置 member 對象
-		memberOrder.setOrder(order); // 設置 order 對象
-		memberOrder.getId().setMemberid(request.getMemberId());
-		memberOrder.getId().setOrderid(request.getOrderId());
+		        // 新增一條 MemberOrder 記錄並設置 collected 屬性
+		        MemberOrder newMemberOrder = new MemberOrder();
+		        MemberOrderKey memberOrderKey = new MemberOrderKey();
+		        newMemberOrder.setId(memberOrderKey); // 初始化 ID
+		        newMemberOrder.getId().setMemberid(request.getMemberId());
+		        newMemberOrder.getId().setOrderid(request.getOrderId());
+		        newMemberOrder.setMember(member);
+		        newMemberOrder.setOrder(order);
+		        newMemberOrder.setCollected(request.isCollected());  // 設置 collected 狀態
+		        newMemberOrder.setOwned(false);// 設置 owned 預設值為 false
+		        newMemberOrder.setWanted(false);  // 設置 owned 預設值為 false
 
-		// 只更新 Wanted 状态
-		memberOrder.setWanted(request.isWanted());/// 使用 request 中的 Wanted 值来更新
-		memberOrder.setOwned(request.isOwned());  
 
-		// 保存更新的 MemberOrder
-		memberOrderRepository.save(memberOrder);
-
-		return "會員的wanted狀態已更新";
-	}
+		        // 保存新紀錄
+		        memberOrderRepository.save(newMemberOrder);
+		        return "新增會員對專案的收藏狀態";
+		    } else {
+		        // 如果已經存在資料，就直接更新 collected 屬性
+		        memberOrderRepository.updateCollectedStatus(request.isCollected(), request.getMemberId(), request.getOrderId());
+		        return "會員的 collected 狀態已更新";
+		    }
+		}
 
 	// 尋找某個專案的發行會員
 	public Long getwanted(Long orderId) {
