@@ -12,28 +12,33 @@ import tw.platform.sideProject.repository.KeywordRepository;
 
 @Service
 public class KeywordService {
-	
+
 	@Autowired
 	private KeywordRepository keywordRepository;
-	
+
 	public void saveKeyword(String userKeyword) {
 		Optional<Keywords> SQLKeyword = keywordRepository.findByKeyword(userKeyword);
-		if(SQLKeyword.isPresent()) {
+		if (SQLKeyword.isPresent()) {
 			Keywords keyword = SQLKeyword.get();
-			keyword.setTimes(keyword.getTimes()+1);
+			keyword.setTimes(keyword.getTimes() + 1);
 			keywordRepository.save(keyword);
-			System.out.println("關鍵詞 "+keyword.getKeyword()+" 搜尋次數+1");
-		}else {
+			System.out.println("關鍵詞 " + keyword.getKeyword() + " 搜尋次數+1");
+		} else {
 			Keywords newKeyword = new Keywords();
 			newKeyword.setKeyword(userKeyword);
 			newKeyword.setTimes(1);
 			keywordRepository.save(newKeyword);
-			System.out.println("新增 "+newKeyword.getKeyword()+" 關鍵詞");
+			System.out.println("新增 " + newKeyword.getKeyword() + " 關鍵詞");
 		}
 	}
-	
-	public List<Keywords> getKeywordDesc(){
+
+	public List<Keywords> getKeywordDesc() {
 		List<Keywords> top5Keywords = keywordRepository.findTop5ByOrderByTimesDesc();
 		return top5Keywords;
+	}
+
+	public String getRandomKeyword() {
+		Keywords keywords = keywordRepository.findRandomKeyword();
+		return keywords != null ? keywords.getKeyword() : "目前無其他關鍵字";
 	}
 }
