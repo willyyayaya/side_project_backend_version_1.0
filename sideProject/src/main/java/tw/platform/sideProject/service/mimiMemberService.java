@@ -1,13 +1,14 @@
-package tw.mimi.test.service;
+package tw.platform.sideProject.service;
 
+import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tw.mimi.test.model.mimiMember;
-import tw.mimi.test.repository.mimiMemberRepository;
-import tw.mimi.test.util.BCrypt;
+import tw.platform.sideProject.model.mimiMember;
+import tw.platform.sideProject.repository.mimiMemberRepository;
+import tw.platform.sideProject.util.BCrypt;
 
 @Service
 public class mimiMemberService {

@@ -1,4 +1,4 @@
-package tw.mimi.test.model;
+package tw.platform.sideProject.model;
 
 import java.util.List;
 
@@ -7,10 +7,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tag")
 public class mimiTag {
 	
 	@Id

@@ -28,6 +28,7 @@ public class MemberController {
     // 顯示所有會員
     @GetMapping("/getAllMembers")
     public List<Member> getAllMembers() {
+    	System.out.println("觸發");
         return memberService.getAllMembers();
     }
     

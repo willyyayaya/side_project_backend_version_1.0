@@ -1,4 +1,4 @@
-package tw.mimi.test.model;
+package tw.platform.sideProject.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +13,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
 
 
 @Entity
-@Table(name = "member")
 public class mimiMember {
 	
 	@Id
@@ -93,7 +91,6 @@ public class mimiMember {
 	public void setTags(List<mimiTag> tags) {
 		this.tags = tags;
 	}
-
 	
 	
 	
