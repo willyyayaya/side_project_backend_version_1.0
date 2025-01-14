@@ -51,5 +51,5 @@ public class HomeController {
 		model.addAttribute("kw",list);
 		return "search";
 	}
-
+	
 }
