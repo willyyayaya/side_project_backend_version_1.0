@@ -64,6 +64,7 @@ public class mimiLoginController {
 		System.out.println("selected:" + member.getTags());
 
 		memberService.addMember(member);
+		model.addAttribute("member", member);
 
 		return "login";
 	}

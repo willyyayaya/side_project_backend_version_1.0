@@ -26,16 +26,16 @@
 
 
     <!-- 會員註冊窗口 -->
-    <div style="width: 80%;margin: 10%;">
-        <div id="register" class="m-5" style="top: 100px;">
+    <div id="bigOut">
+        <div id="register" class="m-5">
             <form class="row justify-content-md-center" th:action="@{/reg_submit}" th:object="${member}" method="post"
-                enctype="multipart/form-data">
-                <div class="col-sm-12">
+                enctype="multipart/form-data" onsubmit="return validatePassword()">
+                <div class="col-sm-12 all">
                     <h3>註冊帳號</h3>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-1"></div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-1 all"></div>
+                        <div class="col-sm-4 all">
                             <!-- 帳號： -->
                             <input type="text" id="account" placeholder="使用者帳號" required th:field="*{account}"><br>
                             <!-- 暱稱： -->
@@ -45,8 +45,8 @@
                             <!-- E-mail： -->
                             <input type="email" id="email" placeholder="電子信箱" required th:field="*{email}"><br>
                         </div>
-                        <div class="col-sm-2"></div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-2 all"></div>
+                        <div class="col-sm-4 all">
                             <!-- 出生日期： -->
                             <input type="date" id="birthday" placeholder="出生日期" required th:field="*{birthday}"><br>
                             <!-- 輸入密碼： -->
@@ -54,16 +54,16 @@
                             <!-- 確認密碼： -->
                             <input type="password" id="checkpasswd" placeholder="確認密碼" required>
                         </div>
-                        <div class="col-sm-1"></div>
+                        <div class="col-sm-1 all"></div>
                     </div>
                     <br>
                     <br>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 all">
                     <h3>前端</h3>
                     <hr>
                     <label th:each="option : ${options}" th:for="${option.tagname}"
-                        th:if="${option.category} == 'Front'">
+                        th:if="${option.category} == 'Front'"  class="all">
                         <input type="checkbox" th:id="${option.tagname}" name="selected" th:value="${option.tagid}">
                         <span th:text="${option.tagname}">Java</span>
                     </label>
@@ -71,11 +71,11 @@
                     <br>
                     <br>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 all">
                     <h3>後端</h3>
                     <hr>
                     <label th:each="option : ${options}" th:for="${option.tagname}"
-                        th:if="${option.category} == 'Back'">
+                        th:if="${option.category} == 'Back'"  class="all">
                         <input type="checkbox" th:id="${option.tagname}" name="selected" th:value="${option.tagid}">
                         <span th:text="${option.tagname}">Java</span>
                     </label>
@@ -83,11 +83,11 @@
                     <br>
                     <br>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-4 all">
                     <h3>資料庫</h3>
                     <hr>
                     <label th:each="option : ${options}" th:for="${option.tagname}"
-                        th:if="${option.category} == 'Database'">
+                        th:if="${option.category} == 'Database'"  class="all">
                         <input type="checkbox" th:id="${option.tagname}" name="selected" th:value="${option.tagid}">
                         <span th:text="${option.tagname}">Java</span>
                     </label>
@@ -96,15 +96,15 @@
                     <br>
                 </div>
 
-                <div id="next">
-                    <a href="/login"><input type="submit" value="下一步" class="submit" onclick="checkResult()"></a>
+                <div id="next" class="all">
+                    <a href="/login" class="all"><input type="submit" value="下一步" class="submit" onclick="checkResult()"></a>
                 </div>
             </form>
         </div>
     </div>
 
     <div th:replace="fragments::footer"></div>
-    <!-- <script src="js/register.js"></script> -->
+    <script src="js/register.js"></script>
 </body>
 
 </html>
