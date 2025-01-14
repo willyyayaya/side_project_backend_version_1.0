@@ -80,34 +80,68 @@ public class OrderService {
 	}
 
 	// 更新專案資料
-	public Order updateOrder(Long orderId, Order orderDetails) {
+	public Order updateOrder(Long orderId,AddOrderRequest request) {
 
 		return orderRepository.findById(orderId).map(existingOrder -> {
 			// 僅更新非空欄位
-			if (orderDetails.getName() != null) {
-				existingOrder.setName(orderDetails.getName());
-			}
-			if (orderDetails.getIntro() != null) {
-				existingOrder.setIntro(orderDetails.getIntro());
-			}
-			if (orderDetails.getDeadline() != null) {
-				existingOrder.setDeadline(orderDetails.getDeadline());
-			}
-			if (orderDetails.getDetail() != null) {
-				existingOrder.setDetail(orderDetails.getDetail());
-			}
-			if (orderDetails.getPicurl() != null) {
-				existingOrder.setPicurl(orderDetails.getPicurl());
-			}
-			if (orderDetails.getLocation() != null) {
-				existingOrder.setLocation(orderDetails.getLocation());
-			}
-			if (orderDetails.getRank() != null) {
-				existingOrder.setRank(orderDetails.getRank());
-			}
-			if (orderDetails.getPeople() != null) {
-				existingOrder.setPeople(orderDetails.getPeople());
-			}
+			if (request.getName() != null) {
+	            existingOrder.setName(request.getName());
+	        }
+	        if (request.getIntro() != null) {
+	            existingOrder.setIntro(request.getIntro());
+	        }
+	        if (request.getDeadline() != null) {
+	            existingOrder.setDeadline(request.getDeadline());
+	        }
+	        if (request.getDetail() != null) {
+	            existingOrder.setDetail(request.getDetail());
+	        }
+	        if (request.getPicurl() != null) {
+	            existingOrder.setPicurl(request.getPicurl());
+	        }
+	        if (request.getLocation() != null) {
+	            existingOrder.setLocation(request.getLocation());
+	        }
+	        if (request.getRank() != null) {
+	            existingOrder.setRank(request.getRank());
+	        }
+	        if (request.getPeople() != -1) {
+	            existingOrder.setPeople(request.getPeople());
+	        }
+	        if (request.getBudget() != null) {
+	            existingOrder.setBudget(request.getBudget());
+	        }
+	        if (request.getNewdate() != null) {
+	            existingOrder.setNewdate(request.getNewdate());
+	        }
+	        if (request.getCategory() != null) {
+	            existingOrder.setCategory(request.getCategory());
+	        }
+
+
+			if (request.getTagIds() != null && !request.getTagIds().isEmpty()) {
+	            // 刪除舊的標籤
+	            orderTagRepository.deleteByOrderid(orderId);
+
+	            // 根據傳來的 tagIds 更新標籤
+	            List<OrderTag> orderTags = new ArrayList<>();
+	            for (Integer tagId : request.getTagIds()) {
+	    			Tag tag = tagRepository.findById(tagId)
+	    					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
+
+	                OrderTagKey orderTagKey = new OrderTagKey(orderId, tag.getTagidm());
+	                OrderTag orderTag = new OrderTag();
+	                orderTag.setId(orderTagKey);
+	                orderTag.setOrder(existingOrder);  // 設定訂單
+	                orderTag.setTag(tag);  // 設定標籤
+
+	                orderTags.add(orderTag);
+	            }
+	            // 儲存新標籤
+	            orderTagRepository.saveAll(orderTags);
+	        }
+			
+			
 			// 儲存更新後的資料
 			return orderRepository.save(existingOrder);
 		}).orElseThrow(() -> new RuntimeException("專案 ID 不存在: " + orderId));

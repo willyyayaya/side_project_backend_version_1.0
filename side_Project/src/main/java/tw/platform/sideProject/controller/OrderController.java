@@ -48,8 +48,8 @@ public class OrderController {
 
     // 根據 ID 更新專案資料
     @PutMapping("/updateOrder/{orderId}")
-    public Order updateOrder(@PathVariable Long orderId, @RequestBody Order orderDetails) {
-        return orderService.updateOrder(orderId, orderDetails);
+    public Order updateOrder(@PathVariable Long orderId, @RequestBody AddOrderRequest request) {
+        return orderService.updateOrder(orderId, request);
     }
 
     // 根據 ID 刪除專案
