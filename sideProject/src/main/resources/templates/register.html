@@ -18,6 +18,7 @@
         crossorigin="anonymous"></script>
     <script src="js/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="CSS/fragment.css">
+    <link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/register.css">
 </head>
 
 <body>
@@ -33,9 +34,8 @@
                 <div class="col-sm-12 all">
                     <h3>註冊帳號</h3>
                     <hr>
-                    <div class="row">
-                        <div class="col-sm-1 all"></div>
-                        <div class="col-sm-4 all">
+                    <div class="row justify-content-center all">
+                        <div class="col-auto all">
                             <!-- 帳號： -->
                             <input type="text" id="account" placeholder="使用者帳號" required th:field="*{account}"><br>
                             <!-- 暱稱： -->
@@ -45,8 +45,7 @@
                             <!-- E-mail： -->
                             <input type="email" id="email" placeholder="電子信箱" required th:field="*{email}"><br>
                         </div>
-                        <div class="col-sm-2 all"></div>
-                        <div class="col-sm-4 all">
+                        <div class="col-auto all">
                             <!-- 出生日期： -->
                             <input type="date" id="birthday" placeholder="出生日期" required th:field="*{birthday}"><br>
                             <!-- 輸入密碼： -->
@@ -54,7 +53,6 @@
                             <!-- 確認密碼： -->
                             <input type="password" id="checkpasswd" placeholder="確認密碼" required>
                         </div>
-                        <div class="col-sm-1 all"></div>
                     </div>
                     <br>
                     <br>
