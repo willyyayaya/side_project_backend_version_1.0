@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./p1.css">
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<html xmlns:th="http://www.thymeleaf.org">
+	
+
+
+
+   <title>p1</title>
+</head>
+<body>
+
+    <!-- 上方菜單 -->
+    <div id="menu_t_1">
+        <div id="menu_t_2">
+            <div id="menu_t_3">
+                <div id="logo_top">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeff3"><path d="m437-398 227-226-57-57-170 170-85-85-56 56 141 142ZM40-120v-80h880v80H40Zm120-120q-33 0-56.5-23.5T80-320v-440q0-33 23.5-56.5T160-840h640q33 0 56.5 23.5T880-760v440q0 33-23.5 56.5T800-240H160Zm0-80h640v-440H160v440Zm0 0v-440 440Z"/></svg>                </div>
+                <div id="menu_top" class="flex-nav">
+                    <ul id="menu_top_1" >
+                        <li>搜尋
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#eaeff3"><path d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"/></svg>
+                        </li>
+                        <li>配對</li>
+                        <li>連結1</li>
+                        <li>個人管理</li>
+                    </ul>
+                    <ul id="menu_top_2" >
+                        <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="70px" fill="#eaeff3"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg></li>
+                        <!-- <li>個人管理</li> -->
+                        <li><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="70px" fill="#eaeff3"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h280v80H200Zm440-160-55-58 102-102H360v-80h327L585-622l55-58 200 200-200 200Z"/></svg></li>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 中間 -->
+    <div id="center_1" >
+        <div id="center_2">
+            <div id="center_icon" style="background-color: #bbc8d8;">
+                <div style="background-color: #bbc8d8;width: 90%;height: 75%;">
+                    <img src="./c0d1c4fcef95b34b.png" width="100%" height="100%" id="icon">icon</img>
+                </div>
+                <div style="background-color: #bbc8d8;width: 90%;height: 15%;">
+                    <button id="icon_btn">更換圖片</button>
+                </div>
+            </div>
+            <div id="center_laft" style="background-color: #bbc8d8;">
+                <div style="background-color: #bbc8d8; height: 5%;font-weight: bold;" id="center_laftmune_1">功能列</div>
+                <div style="background-color: #bbc8d8; height: 44%;" id="center_laftmune_2">
+                    <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
+                        <ul  id="laftmune_2_1">
+                            <li>未開通</li>
+                            <li>進行中</li>
+                            <li>查看評價</li>
+                        </ul>
+                        <ul  id="laftmune_2_2" style="font-weight: bold;">收藏
+                            <li>資料夾管理</li>
+                        </ul>
+                        <ul  id="laftmune_2_3" style="font-weight: bold;">帳號管理
+                            <li>會員資料編輯</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="background-color: #bbc8d8; height: 30%;" id="center_laftmune_2">
+                    <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
+                        <ul  id="laftmune_3_1">
+                            <li>未開通</li>
+                            <li>進行中</li>
+                            <li>已結案</li>
+                        </ul>
+                        <!-- <ul  id="laftmune_3_2" style="font-weight: bold;">收藏
+                            <li>資料夾管理</li>
+                        </ul> -->
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="center_result" >
+            <div style="background-color: #bbc8d8; height: 5%;width: 95%; margin-left: 20px;" id="center_result_title">
+                <h2 style="color: #14518e;">會員資料編輯區</h2>
+            </div>
+            <div style="background-color: #bbc8d8; height: 90%;width: 95%;margin-left: 20px" id="center_result_index">
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_1">
+                    <div id="input_1">
+                        <h4>姓名:</h4>
+                        <input th:value="member:${members}" id="input_index_1" >
+                        <button id="inputbtn_1" type="submit">編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_2">
+                    <div id="input_2" >
+                        <h4>帳號:</h4>
+                        <input value="請輸入" id="input_index_2" >
+                        <button id="inputbtn_2" type="submit">編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_3">
+                    <div id="input_3" >
+                        <h4>密碼:</h4>
+                        <input value="請輸入" id="input_index_3" >
+                        <button id="inputbtn_3" type="submit">編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_4">
+                    <div id="input_4" >
+                        <h4>聯絡方式:</h4>
+                        <input value="請輸入" id="input_index_4" >
+                        <button id="inputbtn_4" type="submit">編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 10%;"  id="center_result_inputindex_5">
+                    <div id="input_5" >
+                        <h4>測試:</h4>
+                        <input value="請輸入" id="input_index_5" >
+                        <button id="inputbtn_5" type="submit">編輯</button>
+                    </div>
+                </div>
+                <div style="background-color: #bbc8d8; height: 35%;"  id="center_result_inputindex_6">
+                    <div id="input_6">
+                        <h4>自我介紹:</h4>
+                        <pre id="input_index_6" >
+                        <button id="inputbtn_6" type="submit">編輯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 下方菜單 -->
+    <div id="footer_1">
+        <div id="footer_2" >
+            <div id="footer_text_1" >1</div>
+            <div id="footer_text_2" >2</div>
+            <div id="footer_text_3" >3</div>
+            <div id="footer_text_4" >4</div>
+        </div>
+    </div>
+
+
+</body>
+</html>
