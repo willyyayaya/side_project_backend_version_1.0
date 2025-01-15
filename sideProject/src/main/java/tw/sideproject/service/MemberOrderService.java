@@ -1,6 +1,7 @@
 package tw.sideproject.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -113,13 +114,23 @@ public class MemberOrderService {
     }
     
     // 查找某個會員相關的所有專案
-    public List<Order> getOrdersByMemberId(Long memberId) {
-        return memberOrderRepository.findAllOrdersByMemberid(memberId);
+    public List<Order> getOrdersByMemberId(Long memberid) {
+        return memberOrderRepository.findAllOrdersByMember_memberid(memberid);
     }
 
     // 查找某個專案相關的所有會員
     public static List<Member> getMembersByOrderId(Long orderId) {
-        return memberOrderRepository.findAllMembersByOrderid(orderId);
+        return memberOrderRepository.findAllMembersByOrderId(orderId);
     }
     
+    //========新增======================================
+ // 根据 memberId 获取该会员的所有订单
+    public List<MemberOrder> getAllOrdersByMemberId(Long memberid) {
+        return memberOrderRepository.findByMember_memberid(memberid);
+    }
+
+    // 根据 memberId 和 orderId 查找特定的订单
+    public Optional<MemberOrder> getOrderByMemberAndOrder(Long memberId, Long orderId) {
+        return memberOrderRepository.findByMember_memberidAndOrder_orderid(memberId, orderId);
+    }
 }

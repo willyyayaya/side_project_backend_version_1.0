@@ -116,7 +116,7 @@
         display: block;
         position: relative;
         margin-left: 68px;
-        margin-top: 55px;
+        margin-top: 10px;
         width: 90%;
         height: 800PX;
         /* background-color: lightgrey; */
@@ -193,16 +193,16 @@
     #icon_btn{
         margin-left: 105px;
         margin-top: 3px;
-        background-color: #bbc8d8;
-        color: #14518e;
+        background-color: #14518e;
+        color: #eaeff3;
         border: 1px solid #14518e;
         height: 25px;
         border-radius: 10px;
         width: 70px;
     }
     #icon_btn:hover{
-        background-color: #14518e;
-        color: #eaeff3;
+        background-color: #bbc8d8;
+        color: #14518e;
     }
 
     #center_laft{
@@ -332,248 +332,92 @@
         color: #eaeff3;
     }
 
-    /* 資料編輯區 */
-    #input_1{
-        display: flex;
-        /* border: 1px dotted #14518e; */
-        border-radius: 8px;
-        background-color: #bbc8d8;
-        color: #14518e;
-        align-items: center;
-        margin-left: 30px;
+    /* 資料變化區 */
+    /* 收藏========================================== */
+
+    #Card_out{
+        margin: 10px;
+        margin-top: -30px;
     }
 
-#input_1 > h4 , button , input{
-    margin-right: 30px;
-}
+    /* .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 300px;
+        margin: auto;
+        text-align: center;
+    } */
+    .Card{
+        
+        width: 160PX;
+        height: 280px;
+        /* margin: px; */
+        margin-right: 10px;
+        margin-left: 20px;
+        margin-top: 20px;
+        position:relative;
+        background-color: #eaeff3;
+        display:inline-table;
+    }
 
-#input_index_password{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: 30px ;
-}
+    .Card > div {
+        background-color: #eaeff3;
+    }
 
-#inputbtn_1{
-    background-color: #bbc8d8;
+
+
+    .title, h4 ,svg {
         color: #14518e;
-        border: 1px solid #14518e;
+        background-color: #eaeff3;
+        font-size: 18px;
+        margin: 10px;
+    }
+    
+    .Card_btn{
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 3px;
+        color: #eaeff3;
+        background-color: #14518e;
+        text-align: center;
+        cursor: pointer;
+        width: 45%;
+        font-size: 15px;
+        margin-left: 80px;
+        margin-top: -40px;
+        position: absolute;
         border-radius: 10px;
-        width: 80px;
-        height: 30px;
-}
-/* -------------------------------------------- */
-
-#input_2{
-    display: flex;
-    /* border: 1px dotted #14518e; */
-    border-radius: 8px;
+    }
+    
+    .Card_btn:hover {
     background-color: #bbc8d8;
-    color: #14518e;
-    align-items: center;
-    margin-left: 30px;
-}
-
-#input_2 > h4 , button , input{
-margin-right: 30px;
-}
-
-#input_index_name{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: 30px ;
-
-}
-
-#inputbtn_2{
-background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
     border-radius: 10px;
-    width: 80px;
-    height: 40px;
-}
-/* --------------------------------------------- */
-#input_3{
-    display: flex;
-    /* border: 1px dotted #14518e; */
-    border-radius: 8px;
-    background-color: #bbc8d8;
-    color: #14518e;
-    align-items: center;
-    margin-left: 30px;
-}
-
-#input_3 > h4 , button , input{
-margin-right: 30px;
-}
-
-#input_index_account{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: 30px ;
-
-}
-
-#inputbtn_3{
-background-color: #bbc8d8;
-    color: #14518e;
     border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 80px;
-    height: 40px;
-}
-/* --------------------------------------------- */
-#input_4{
-    display: flex;
-    /* border: 1px dotted #14518e; */
-    border-radius: 8px;
-    background-color: #bbc8d8;
     color: #14518e;
-    align-items: center;
-    margin-left: 30px;
-}
+    }
 
-#input_4 > h4 , button , input{
-margin-right: 30px;
-}
-
-#input_index_email{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: -2px ;
-}
-
-#inputbtn_4{
-background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 80px;
-    height: 40px;
-    margin-left: 8px;
-}
-/* --------------------------------------------- */
-#input_5{
-    display: flex;
-    /* border: 1px dotted #14518e; */
-    border-radius: 8px;
-    background-color: #bbc8d8;
-    color: #14518e;
-    align-items: center;
-    margin-left: 30px;
-}
-
-#input_5 > h4 , button , input{
-margin-right: 30px;
-}
-
-#input_index_tel{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: 30px ;
-
-}
-
-#inputbtn_5{
-background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 80px;
-    height: 40px;
-}
-
-/* --------------------------------------------- */
-#input_6{
-        display: inline-flex;
-        border-radius: 8px;
-        background-color: #bbc8d8;
+    a {
+        text-decoration: none;
+        font-size: 22px;
         color: #14518e;
-        margin-top: 10px; 
-        /* align-items: center; */
-        /* margin-left: 30px; */
-        /* border: 1px solid #14518e; */
+    }
+    
+    #Card_1_btn:hover, a:hover {
+        opacity: 0.7;
+    }
 
-}
+    .icon {
+        width: 50px;
+        height: 50px;
+    }
+    .liked {
+        fill: red;
+    }
+    .unliked {
+        fill: gray;
+    }
 
-#input_6 > h4 , button , pre{
-    margin-left: 10px;
-}
-
-#input_6 > h4 {
-    width: 70px;
-    margin-left: 30px;
-}
-
-
-
-#input_index_memberinfo{
-    border: 1px dotted #14518e;
-    width: 400px;
-    height: 150px;
-    white-space: pre-wrap;  /* 自動換行 */
-    word-wrap: break-word;  /* 長單詞換行 */
-    margin-left: 30px ;
-}
-
-#inputbtn_6{
-    background-color: #bbc8d8;
-        color: #14518e;
-        border: 1px solid #14518e;
-        height: 25px;
-        border-radius: 10px;
-        width: 80px;
-        height: 40px;
-        margin-left: 38px;
-        /* margin-top: 20px; */
-}
-
-/* --------------------------------------------- */
-#input_7{
-    display: flex;
-    /* border: 1px dotted #14518e; */
-    border-radius: 8px;
-    background-color: #bbc8d8;
-    color: #14518e;
-    align-items: center;
-    margin-left: 30px;
-}
-
-#input_7 > h4 , button , input{
-margin-right: 30px;
-}
-
-#input_index_birthday{
-    border: 1px dotted #14518e;
-    width: 250px;
-    height: 30px;
-    margin-left: 30px ;
-
-}
-
-#inputbtn_7{
-background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 80px;
-    height: 40px;
-    margin-left: 13px;
-}
-/* --------------------------------------------- */
-
-
-
+    /* ================================================ */
 /* 下方菜單 */
 /* ======================================================= */
 

@@ -1,5 +1,6 @@
 package tw.sideproject.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,7 +30,7 @@ public class Member {
 	@Column(name = "name")
     private String name;
 	@Column(name = "birthday")
-    private String birthday;
+    private LocalDate birthday;
 	@Column(name = "tel")
     private String tel;
    
@@ -46,19 +47,24 @@ public class Member {
     private List<MemberTag> memberTags;
 
     // Getters and Setters
-    public Long getMemberid() {
-        return memberid;
-    }
 
-    public void setMemberid(Long memberid) {
-        this.memberid = memberid;
-    }
 
     public String getAccount() {
         return account;
     }
+    
 
-    public void setAccount(String account) {
+	public Long getMemberid() {
+		return memberid;
+	}
+
+
+	public void setMemberid(Long memberid) {
+		this.memberid = memberid;
+	}
+
+
+	public void setAccount(String account) {
         this.account = account;
     }
 
@@ -86,15 +92,17 @@ public class Member {
         this.name = name;
     }
 
-    public String getBirthday() {
-        return birthday;
-    }
+    
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
+    public LocalDate getBirthday() {
+		return birthday;
+	}
 
-    public String getTel() {
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getTel() {
         return tel;
     }
 

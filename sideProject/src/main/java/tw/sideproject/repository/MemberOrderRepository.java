@@ -17,13 +17,21 @@ import tw.sideproject.model.Order;
 
 @Repository
 public interface MemberOrderRepository extends JpaRepository<MemberOrder, MemberOrderKey> {
+    // 正确的方法：根据 member 的 id 查找 MemberOrder
+    List<MemberOrder> findByMember_memberid(Long memberid);
+    
+    //根據 memberid 查找對應的 Member 實體
+    List<MemberOrder> findAllByMember_memberid(Long memberid);
+	
+ // 修正方法，使用 'member' 進行查詢
+    List<MemberOrder> findAllByMember(Member member);
     
 	// 使用 member.memberid 和 order.orderid 進行查詢
-    Optional<MemberOrder> findByMember_memberidAndOrder_orderid(Long memberId, Long orderId);
+    Optional<MemberOrder> findByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
 	
 	@Modifying
     @Query("DELETE FROM MemberOrder mo WHERE mo.member.id = :memberid")
-    void deleteAllByMemberid(@Param("memberid") Long memberid);
+    void deleteAllBymemberid(@Param("memberid") Long memberid);
 	
     @Modifying
     @Query("DELETE FROM MemberOrder mo WHERE mo.order.id = :orderid")
@@ -35,12 +43,18 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     @Query("DELETE FROM MemberOrder mo WHERE mo.wanted = false AND mo.owned = false")
     void deleteAllByWantedFalseAndOwnedFalse();
     
-    // 查找與某個會員相關的所有專案
-    @Query("SELECT mo.order FROM MemberOrder mo WHERE mo.member.memberid = :memberId")
-    List<Order> findAllOrdersByMemberid(Long memberId);
+ // 查找與某個會員相關的所有專案 (基於 member.id)
+    @Query("SELECT mo.order FROM MemberOrder mo WHERE mo.member.id = :memberid")
+    List<Order> findAllOrdersByMemberId(@Param("memberid") Long memberId);
 
-    // 查找與某個專案相關的所有會員
-    @Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.orderid = :orderId")
-    List<Member> findAllMembersByOrderid(Long orderId);
+    // 查找與某個專案相關的所有會員 (基於 order.id)
+    @Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.id = :orderId")
+    List<Member> findAllMembersByOrderId(@Param("orderId") Long orderId);
+
+    // 查找與某個會員相關的所有專案 (基於 member.id)
+    List<Order> findAllOrdersByMember_memberid(Long memberId);
+   
+    
+    
     
 }

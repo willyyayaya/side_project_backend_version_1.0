@@ -1,5 +1,6 @@
 package tw.sideproject.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class AddMemberRequest {
@@ -7,7 +8,7 @@ public class AddMemberRequest {
     private String password;
     private String email;
     private String name;
-    private String birthday;
+    private LocalDate birthday;
     private String tel;
     private byte[] pic;
     private Boolean isblocked;
@@ -46,11 +47,11 @@ public class AddMemberRequest {
         this.name = name;
     }
     
-    public String getBirthday() {
+    public LocalDate getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(LocalDate birthday) {
 		this.birthday = birthday;
 	}
 
