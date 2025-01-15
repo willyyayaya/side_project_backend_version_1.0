@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 a {
     text-decoration: none;
 }
@@ -8,7 +10,12 @@ body {
     height: 100vh;
     width: 100vw;
     flex-direction: column;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    flex-direction: column;
 }
+
 
 
 h3 {
@@ -49,10 +56,26 @@ h5:hover {
     align-items: center;
 }
 
+#loginWindow {
+    flex-grow: 2;
+    flex-shrink: 1;
+    flex-basis: 0%;
+}
+
+.loginCSS {
+    flex: 1;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #sign {
     margin: 50px;
     padding: 20px;
     width: 350px;
+    /* height: 370px; */
+    border-style: 9px #c59650;
     /* height: 370px; */
     border-style: 9px #c59650;
     background-color: #eaeff3;
