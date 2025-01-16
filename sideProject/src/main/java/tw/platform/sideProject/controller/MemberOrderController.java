@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import tw.platform.sideProject.model.AddMemberOrderRequest;
 import tw.platform.sideProject.model.Member;
+import tw.platform.sideProject.model.MemberOrder;
 import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.service.MemberOrderService;
 
@@ -53,6 +54,12 @@ public class MemberOrderController {
     @GetMapping("/getMembersByOrderId/{orderId}")
     public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
         return memberOrderService.getMembersByOrderId(orderId);
+    }
+    
+    // 查詢某個會員相關的所有專案的關係
+    @GetMapping("/getAllMemberOrdersByMemberId/{memberId}")
+    public List<MemberOrder> getAllMemberOrdersByMemberId(@PathVariable Long memberId) {
+        return memberOrderService.getAllMemberOrdersByMemberId(memberId);
     }
 
 }

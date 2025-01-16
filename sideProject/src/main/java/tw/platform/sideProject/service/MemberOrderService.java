@@ -47,6 +47,7 @@ public class MemberOrderService {
         memberOrder.setOrder(order);    // 設置 order 對象
         memberOrder.setOwned(true);
         memberOrder.setWanted(false);
+        memberOrder.setCollected(false);
         memberOrderRepository.save(memberOrder);
         return "會員創建專案關聯已新增";
     }
@@ -71,6 +72,7 @@ public class MemberOrderService {
         memberOrder.getId().setOrderid(request.getOrderId());
         memberOrder.setOwned(false);
     	memberOrder.setWanted(true);
+    	memberOrder.setCollected(false);
         
         memberOrderRepository.save(memberOrder);
         return "會員對專案有興趣的關聯已新增";
@@ -118,6 +120,11 @@ public class MemberOrderService {
     // 查找某個專案相關的所有會員
     public List<Member> getMembersByOrderId(Long orderId) {
         return memberOrderRepository.findAllMembersByOrderid(orderId);
+    }
+    
+    // 查詢某個會員相關的所有專案的關係
+    public List<MemberOrder> getAllMemberOrdersByMemberId(Long memberId) {
+        return memberOrderRepository.findAllByMemberid(memberId);
     }
     
 }

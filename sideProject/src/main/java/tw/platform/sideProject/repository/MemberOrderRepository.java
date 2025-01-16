@@ -43,4 +43,8 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     @Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.orderid = :orderId")
     List<Member> findAllMembersByOrderid(Long orderId);
     
+    // 查詢某個會員相關的所有專案的關係	
+    @Query("SELECT mo FROM MemberOrder mo WHERE mo.member.memberid = :memberId")
+    List<MemberOrder> findAllByMemberid(@Param("memberId") Long memberId);
+
 }

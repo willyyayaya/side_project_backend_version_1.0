@@ -7,6 +7,9 @@ public class AddMemberRequest {
     private String password;
     private String email;
     private String name;
+    private String birthday;
+    private String tel;
+    private byte[] picurl;
     private Boolean isblocked;
     private List<Integer> tagIds;
 
@@ -43,7 +46,31 @@ public class AddMemberRequest {
         this.name = name;
     }
     
-    public Boolean getIsblocked() {
+    public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public byte[] getPicurl() {
+		return picurl;
+	}
+
+	public void setPicurl(byte[] picurl) {
+		this.picurl = picurl;
+	}
+
+	public Boolean getIsblocked() {
 		return isblocked;
 	}
 

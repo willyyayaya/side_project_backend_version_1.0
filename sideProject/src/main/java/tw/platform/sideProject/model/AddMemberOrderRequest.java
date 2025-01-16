@@ -5,6 +5,7 @@ public class AddMemberOrderRequest {
     private Long orderId;
     private boolean owned;
     private boolean wanted;
+    private boolean collected;
 
     // Getters and Setters
     public Long getMemberId() {
@@ -38,5 +39,14 @@ public class AddMemberOrderRequest {
     public void setWanted(boolean wanted) {
         this.wanted = wanted;
     }
+
+	public boolean isCollected() {
+		return collected;
+	}
+
+	public void setCollected(boolean collected) {
+		this.collected = collected;
+	}
+    
 }
 

@@ -26,6 +26,7 @@ public class MemberOrder {
 
     private Boolean owned;
     private Boolean wanted;
+    private Boolean collected;
 
     // Getters and Setters
     public MemberOrderKey getId() {
@@ -67,4 +68,13 @@ public class MemberOrder {
     public void setWanted(Boolean wanted) {
         this.wanted = wanted;
     }
+
+	public Boolean getCollected() {
+		return collected;
+	}
+
+	public void setCollected(Boolean collected) {
+		this.collected = collected;
+	}
+    
 }

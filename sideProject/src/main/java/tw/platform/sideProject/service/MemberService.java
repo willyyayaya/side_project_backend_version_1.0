@@ -37,6 +37,9 @@ public class MemberService {
         member.setPassword(request.getPassword());
         member.setEmail(request.getEmail());
         member.setName(request.getName());
+        member.setBirthday(request.getBirthday());
+        member.setTel(request.getTel());
+        member.setPicurl(request.getPicurl());
         member.setIsblocked(false);
         memberRepository.save(member);
 

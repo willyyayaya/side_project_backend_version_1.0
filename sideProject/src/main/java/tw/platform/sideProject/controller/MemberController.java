@@ -32,8 +32,8 @@ public class MemberController {
     }
     
     // 根據 Email 查詢會員
-    @GetMapping("/getMemberByEmail")
-    public Optional<Member> getMemberByEmail(String email) {
+    @GetMapping("/getMemberByEmail/{email}")
+    public Optional<Member> getMemberByEmail(@PathVariable String email) {
         return memberService.getMemberByEmail(email);
     }
     
