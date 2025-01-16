@@ -43,7 +43,7 @@
 				<button id="varLogout" class="varBtn" type="submit">logout</button>
 			</form>
 			<!-- 跳轉到會員中心@{會員中心的GetMapping} -->
-			<button id="varUser" class="varBtn" th:onclick="'window.location.href=\'' + @{/userloging} + '\''"
+			<button id="varUser" class="varBtn" th:onclick="'window.location.href=\'' + @{/membercenter} + '\''"
 				th:if="${member != null}" th:text="${member.name}"></button>
 		</div>
 	</header>
