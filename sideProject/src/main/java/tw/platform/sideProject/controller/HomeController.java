@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpSession;
 import tw.platform.sideProject.model.Keywords;
-import tw.platform.sideProject.model.Member;
+import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.service.KeywordService;
 
 @Controller
@@ -21,7 +21,7 @@ public class HomeController {
 	@GetMapping("/index")
 	public String index(Model model, HttpSession session) {
 		if (session.getAttribute("member") != null) {
-			Member member = (Member) session.getAttribute("member");
+			mimiMember member = (mimiMember) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName() + "%n");
 			model.addAttribute("member", member);
 		} else {
@@ -38,7 +38,7 @@ public class HomeController {
 	@GetMapping("/search")
 	public String search(Model model, HttpSession session) {
 		if (session.getAttribute("member") != null) {
-			Member member = (Member) session.getAttribute("member");
+			mimiMember member = (mimiMember) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName() + "%n");
 			model.addAttribute("member", member);
 		} else {

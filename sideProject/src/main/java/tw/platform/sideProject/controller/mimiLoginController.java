@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
+import tw.platform.sideProject.model.Keywords;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.model.mimiTag;
 import tw.platform.sideProject.repository.mimiTagRepository;
+import tw.platform.sideProject.service.KeywordService;
 import tw.platform.sideProject.service.mimiMemberService;
 
 @Controller
@@ -27,6 +29,9 @@ public class mimiLoginController {
 
 	@Autowired
 	private mimiTagRepository tagRepository;
+	
+	@Autowired
+	private KeywordService keywordService;
 
 	@RequestMapping("/register")
 	public String reg(Model model, HttpSession session) {
@@ -113,6 +118,8 @@ public class mimiLoginController {
 	@PostMapping("/logout")
 	public String logout(HttpSession session, Model model) {
 		session.invalidate();
-		return "index";
+		List<Keywords> list = keywordService.getKeywordDesc(); 
+		model.addAttribute("kw", list);
+		return"redirect:/index";
 	}
 }
