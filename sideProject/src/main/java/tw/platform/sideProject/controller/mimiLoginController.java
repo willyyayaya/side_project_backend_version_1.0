@@ -91,25 +91,32 @@ public class mimiLoginController {
 	}
 
 	@PostMapping("/login_submit")
-	public String loginSubmit(@ModelAttribute mimiMember member, BindingResult result, Model model,
-			HttpSession session) {
-		if (result.hasErrors()) {
+	public String loginSubmit(@ModelAttribute("member") mimiMember member,BindingResult result, Model model, HttpSession session) {
+		if(result.hasErrors()) {
 			System.out.println(result.getAllErrors().toString());
 			System.out.println("debug1");
+			model.addAttribute("newMember",member);
 			return "login";
 		}
-		System.out.println(member.getAccount());
+		System.out.println(member.getEmail());
 		System.out.println(member.getPassword());
-
+		
 		member = memberService.loginMember(member);
-		if (member == null) {
+		if(member == null) {
 			System.out.println("debug2");
+			model.addAttribute("errorMessage","Email或密碼錯誤");
+			model.addAttribute("newMember",new mimiMember());
 			return "login";
-		} else {
-			session.setAttribute("member", member);
+		}else if (member.isBlocked()){
+			System.out.println("此帳號無法登入");
+			model.addAttribute("errorMessage","此帳號無法登入");
+			model.addAttribute("newMember",new mimiMember());
+			return "login";
+		}else {
+			session.setAttribute("newMember", member);
 		}
-
-		model.addAttribute("member", member);
+		
+		model.addAttribute("newMember", member);
 
 		return "memberCenter"; //思宇的會員中心
 //		return "redirect:/main/home";

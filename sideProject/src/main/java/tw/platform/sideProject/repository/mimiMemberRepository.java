@@ -10,5 +10,5 @@ import tw.platform.sideProject.model.mimiMember;
 
 @Repository
 public interface mimiMemberRepository extends JpaRepository<mimiMember, Long>{
-	Optional<mimiMember> findByAccount(String account);
+	Optional<mimiMember> findByEmail(String email);
 }

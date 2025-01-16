@@ -21,7 +21,7 @@ public class mimiMemberService {
 	}
 	
 	public mimiMember loginMember(mimiMember loginmember) {
-		Optional<mimiMember> opt = memberRepository.findByAccount(loginmember.getAccount());
+		Optional<mimiMember> opt = memberRepository.findByEmail(loginmember.getEmail());
 		try {
 		mimiMember member = opt.get();
 		if(member != null) {

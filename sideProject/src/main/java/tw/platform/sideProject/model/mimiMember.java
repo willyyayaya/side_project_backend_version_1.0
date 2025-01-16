@@ -32,7 +32,12 @@ public class mimiMember {
 	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isblocked = false;
 	
-	
+	public boolean isBlocked() {
+		return isblocked;
+	}
+	public void setBlocked(boolean isblocked) {
+		this.isblocked = isblocked;
+	}
 	
 	public String getEmail() {
 		return email;
@@ -83,7 +88,7 @@ public class mimiMember {
 	@ManyToMany
 	@JoinTable(name = "membertag", 
 			joinColumns = @JoinColumn(name = "memberid"),
-			inverseJoinColumns = @JoinColumn(name = "tagidm"))
+			inverseJoinColumns = @JoinColumn(name = "tagid"))
 	private List<mimiTag> tags;
 
 

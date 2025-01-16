@@ -26,7 +26,6 @@
     <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
     <!-- 會員登入窗口 -->
     <div id="loginWindow" class="loginCSS"> <!-- LOGIN窗口 -->
-        <div id="userSign">
             <form th:action="@{/login_submit}" th:object="${newMember}" method="post" id="sign">
                 <h3>會員登入</h3>
                 <hr>
@@ -36,8 +35,8 @@
                 <a href="/register">
                     <h5>註冊帳號</h5>
                 </a>
+                <div th:if="${errorMessage}" th:text="${errorMessage}" style="color:red;background-color: #eaeff3;"></div>
             </form>
-        </div>
     </div>
 
 
