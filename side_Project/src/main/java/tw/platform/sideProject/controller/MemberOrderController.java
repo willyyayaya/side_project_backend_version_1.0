@@ -3,6 +3,7 @@ package tw.platform.sideProject.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,10 +82,29 @@ public class MemberOrderController {
 		return memberOrderService.updatecollectedStatus(request);
 	}
 
+	// 查詢收藏案件是否為true
+	@GetMapping("/collected/{orderId}/{memberId}")
+	public Boolean getMemberCollected(@PathVariable Long orderId, @PathVariable Long memberId) {
+		return memberOrderService.getMemberCollected(orderId, memberId);
+	}
+
+	// 取消收藏 (collected設為false)
+	@PutMapping("/removeMemberCollected")
+	public String removeMemberCollected(@RequestBody AddMemberOrderRequest request) {
+		 request.setCollected(false);  // 將 collected 設置為 false，代表取消收藏
+		    return memberOrderService.removeMemberCollected(request);
+	}
+
 	// 查詢申請案件人數
 	@GetMapping("/wanted/people/{orderId}")
 	public Long getwanted(@PathVariable Long orderId) {
-		return  memberOrderService.getwanted(orderId);
+		return memberOrderService.getwanted(orderId);
+	}
+
+	// 查詢會員是否已wantrd
+	@GetMapping("/memberWanted/{orderId}/{memberId}")
+	public Boolean getMemberWanted(@PathVariable Long orderId, @PathVariable Long memberId) {
+		return memberOrderService.getMemberWanted(orderId, memberId);
 	}
 
 }

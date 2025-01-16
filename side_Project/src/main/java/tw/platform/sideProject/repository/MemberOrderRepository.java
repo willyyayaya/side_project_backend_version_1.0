@@ -49,13 +49,21 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	@Query("SELECT o.rank FROM MemberOrder mo JOIN mo.order o WHERE mo.member.memberid = :memberId AND mo.owned = true")
 	List<Integer> findRanksByMemberIdAndOwnedTrue(@Param("memberId") Long memberId);
 
-	// 查詢專案的所有會員
+	// 查發布專案的會員
 	@Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.owned = true")
-	List<Member> findMembersByOrderid(@Param("orderId") Long orderId);
+	List<Member> findMemberByOrderid(@Param("orderId") Long orderId);
 
 	// 查詢該專案的申請人數
 	@Query("SELECT COUNT(mo) FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.wanted = true")
 	Long countWantedByOrderId(@Param("orderId") Long orderId);
+
+	// 查詢會員是否已wantrd
+	@Query("SELECT mo.wanted FROM MemberOrder mo WHERE mo.id.orderid = :orderId AND mo.id.memberid = :memberId")
+	Boolean getMemberWanted(@Param("orderId") Long orderId, @Param("memberId") Long memberId);
+
+	// 查詢收藏案件是否為true
+	@Query("SELECT mo.collected FROM MemberOrder mo WHERE mo.id.orderid = :orderId AND mo.id.memberid = :memberId")
+	Boolean getMemberCollected(@Param("orderId") Long orderId, @Param("memberId") Long memberId);
 
 	@Modifying
 	@Transactional
@@ -63,5 +71,4 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	void updateCollectedStatus(@Param("collected") boolean collected, @Param("memberId") Long memberId,
 			@Param("orderId") Long orderId);
 
-	
 }
