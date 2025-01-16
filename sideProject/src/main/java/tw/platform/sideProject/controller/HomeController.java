@@ -25,7 +25,7 @@ public class HomeController {
 			System.out.println("index目前登入狀態:" + member.getName() + "%n");
 			model.addAttribute("member", member);
 		} else {
-			System.out.println("indexXX");
+			System.out.println("目前無登入紀錄");
 		}
 		List<Keywords> list = keywordService.getKeywordDesc();
 		for(Keywords keywords : list) {

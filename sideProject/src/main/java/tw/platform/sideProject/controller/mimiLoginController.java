@@ -29,13 +29,17 @@ public class mimiLoginController {
 	private mimiTagRepository tagRepository;
 
 	@RequestMapping("/register")
-	public String reg(Model model) {
-		mimiMember member = new mimiMember();
+	public String reg(Model model, HttpSession session) {
+		if(session.getAttribute("member")!=null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member",member);
+		}
 
 //		List<String> options = List.of("python","java","C#","Mysql","CSS");
 		List<mimiTag> options = tagRepository.findAll();
 
-		model.addAttribute("member", member);
+		model.addAttribute("newMember", new mimiMember());
 		model.addAttribute("options", options);
 
 //		System.out.println(options.toString());
@@ -64,14 +68,20 @@ public class mimiLoginController {
 		System.out.println("selected:" + member.getTags());
 
 		memberService.addMember(member);
-		model.addAttribute("member", member);
+		model.addAttribute("newMember", member);
 
 		return "login";
 	}
 
 	@GetMapping("/login")
 	public String login(Model model, HttpSession session) {
-		model.addAttribute("member", new mimiMember());
+		System.out.println("進入login");
+		if(session.getAttribute("member")!=null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member",member);
+		}
+		model.addAttribute("newMember", new mimiMember());
 		return "login";
 	}
 
@@ -96,7 +106,13 @@ public class mimiLoginController {
 
 		model.addAttribute("member", member);
 
-		return "main";
+		return "memberCenter"; //思宇的會員中心
 //		return "redirect:/main/home";
+	}
+
+	@PostMapping("/logout")
+	public String logout(HttpSession session, Model model) {
+		session.invalidate();
+		return "index";
 	}
 }

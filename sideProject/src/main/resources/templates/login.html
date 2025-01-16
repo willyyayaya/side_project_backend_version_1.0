@@ -27,7 +27,7 @@
     <!-- 會員登入窗口 -->
     <div id="loginWindow" class="loginCSS"> <!-- LOGIN窗口 -->
         <div id="userSign">
-            <form th:action="@{/login_submit}" th:object="${member}" method="post" id="sign">
+            <form th:action="@{/login_submit}" th:object="${newMember}" method="post" id="sign">
                 <h3>會員登入</h3>
                 <hr>
                 <input type="text" id="username" placeholder="請輸入帳號" required th:field="*{account}">
