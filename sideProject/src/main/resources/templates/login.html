@@ -29,7 +29,7 @@
             <form th:action="@{/login_submit}" th:object="${newMember}" method="post" id="sign">
                 <h3>會員登入</h3>
                 <hr>
-                <input type="text" id="username" placeholder="請輸入帳號" required th:field="*{account}">
+                <input type="text" id="username" placeholder="請輸入Email" required th:field="*{email}">
                 <input type="password" id="password" placeholder="請輸入密碼" required th:field="*{password}">
                 <input type="submit" value="登入" class="submit">
                 <a href="/register">

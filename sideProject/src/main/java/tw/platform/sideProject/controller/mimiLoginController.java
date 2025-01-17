@@ -70,6 +70,7 @@ public class mimiLoginController {
 		System.out.println(member.getAccount());
 		System.out.println(member.getPassword());
 		System.out.println(member.getName());
+		System.out.println(member.getEmail());
 		System.out.println("selected:" + member.getTags());
 
 		memberService.addMember(member);
@@ -105,18 +106,18 @@ public class mimiLoginController {
 		if(member == null) {
 			System.out.println("debug2");
 			model.addAttribute("errorMessage","Email或密碼錯誤");
-			model.addAttribute("newMember",new mimiMember());
+			model.addAttribute("newMember",new mimiMember());//登入失敗給一個空的newMember
 			return "login";
 		}else if (member.isBlocked()){
 			System.out.println("此帳號無法登入");
 			model.addAttribute("errorMessage","此帳號無法登入");
-			model.addAttribute("newMember",new mimiMember());
+			model.addAttribute("newMember",new mimiMember());//登入失敗給一個空的newMember
 			return "login";
 		}else {
-			session.setAttribute("newMember", member);
+			session.setAttribute("member", member);//登入成功後帶入的會員資料
 		}
 		
-		model.addAttribute("newMember", member);
+		model.addAttribute("member", member);//登入成功後帶入的會員資料
 
 		return "memberCenter"; //思宇的會員中心
 //		return "redirect:/main/home";
