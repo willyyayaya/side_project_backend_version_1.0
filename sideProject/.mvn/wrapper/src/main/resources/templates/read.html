@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/read.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+        crossorigin="anonymous"></script>
+    <script src="js/jquery-3.6.0.js"></script>
+    <link rel="stylesheet" href="CSS/fragment.css">
+    <link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/register.css">
+</head>
+
+<body>
+
+
+
+  <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
+  <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
+
+<form th:action="@{/message/read/{messageid}(messageid=${message.messageid})}" th:object="${message}"method="post"
+    enctype="multipart/form-data">
+  <div id="message">
+      <div id="mesgTop">
+        <div id="alld">
+              <a href="/message/${message.senderid.memberid}" id="home">站內信</a>
+              <a href="/send" id="tegami">寫信</a>
+          </div>
+          <br>
+          <br> 
+          <hr>
+          <div id="mesgDown">
+              <div class="sendemail">
+                  <label for="receiverEmail" class="mystyle">
+                  寄件人
+                  <input type="text" th:field="*{senderid.email}" id="receiverEmail" readonly="readonly"/></label>
+              </div>
+              <div class="sendemail">
+                  <label for="title" class="mystyle">
+                  標&emsp;題
+                  <input type="text" th:field="*{title}" id="title" readonly="readonly"/></label>
+              </div>
+              <div class="sendemail">
+                  <label for="content" class="mystyle">
+                  內&emsp;文
+                  <textarea th:field="*{content}" id="content" readonly="readonly"/></label>
+              </div>
+			</div>
+			 	<form th:action="@{/deleteMessage/{messageid}(messageid=${message.messageid})}" method="post">
+          		    <button id="del">刪除</button>
+        		</form>
+				 <form th:action="@{/message/reply/{messageid}(messageid=${message.messageid})}" method="post">
+					<button id="back">回信</button>
+				</form>
+			</div>
+          </div>
+
+</form>
+  <div th:replace="fragments::footer"></div>
+  <script src="js/send.js"></script>
+
+<script>
+
+</script>
+
+</body>
+
+</html>
