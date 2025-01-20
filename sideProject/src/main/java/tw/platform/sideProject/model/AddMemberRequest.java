@@ -9,7 +9,7 @@ public class AddMemberRequest {
     private String name;
     private String birthday;
     private String tel;
-    private byte[] picurl;
+    private String picurl;
     private Boolean isblocked;
     private List<Integer> tagIds;
 
@@ -62,11 +62,11 @@ public class AddMemberRequest {
 		this.tel = tel;
 	}
 
-	public byte[] getPicurl() {
+	public String getPicurl() {
 		return picurl;
 	}
 
-	public void setPicurl(byte[] picurl) {
+	public void setPicurl(String picurl) {
 		this.picurl = picurl;
 	}
 

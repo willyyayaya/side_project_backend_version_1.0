@@ -7,7 +7,7 @@ public class AddOrderRequest {
     private String deadline;
     private String intro;
     private String detail;
-    private byte[] picurl;
+    private String picurl;
     private String location;
     private int people;
     private List<Integer> tagIds; // 傳入的 Tag IDs
@@ -45,11 +45,11 @@ public class AddOrderRequest {
         this.detail = detail;
     }
 
-    public byte[] getPicurl() {
+    public String getPicurl() {
 		return picurl;
 	}
 
-	public void setPicurl(byte[] picurl) {
+	public void setPicurl(String picurl) {
 		this.picurl = picurl;
 	}
 
