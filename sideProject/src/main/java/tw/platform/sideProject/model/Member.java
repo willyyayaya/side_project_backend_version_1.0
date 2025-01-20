@@ -26,7 +26,7 @@ public class Member {
     private String name;
     private String birthday;
     private String tel;
-    private byte[] picurl;
+    private String picurl;
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
 
@@ -91,11 +91,11 @@ public class Member {
         this.tel = tel;
     }
 
-    public byte[] getPicurl() {
+    public String getPicurl() {
         return picurl;
     }
 
-    public void setPicurl(byte[] picurl) {
+    public void setPicurl(String picurl) {
         this.picurl = picurl;
     }
 
