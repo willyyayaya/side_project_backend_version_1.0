@@ -1,5 +1,6 @@
 package tw.sideproject.model;
 import java.util.ArrayList;
+import java.util.Base64.Encoder;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -7,6 +8,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,10 +31,12 @@ public class Order {
     private String deadline;
     private String intro;
     private String detail;
-    private byte[] picurl;
+    private String picurl;
     private String location;
     private Integer rank;
     private Integer people = 1; // 預設值
+    private String status;
+    private String picurlBase64;  // 新增的 Base64 字串，用於顯示圖片
     
  // 多對多關聯：Order 與 Tag
     @ManyToMany
@@ -93,15 +97,25 @@ public class Order {
         this.detail = detail;
     }
 
-    public byte[] getPicurl() {
-        return picurl;
-    }
+    public String getPicurlBase64() {
+		return picurlBase64;
+	}
 
-    public void setPicurl(byte[] picurl) {
-        this.picurl = picurl;
-    }
+	public void setPicurlBase64(Object base64PicUrl) {
+		this.picurlBase64 = (String) base64PicUrl;
+	}
 
-    public String getLocation() {
+
+
+	public String getPicurl() {
+		return picurl;
+	}
+
+	public void setPicurl(String picurlBytes) {
+		this.picurl = picurlBytes;
+	}
+
+	public String getLocation() {
         return location;
     }
 
@@ -149,8 +163,13 @@ public class Order {
         this.tags = tags;
     }
 
-//	public  void getId() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+
 }

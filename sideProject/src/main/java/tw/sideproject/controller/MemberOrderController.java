@@ -40,8 +40,8 @@ public class MemberOrderController {
 
     // 移除會員對專案有興趣的關聯 (wanted設為false)
     @DeleteMapping("/removeWantedOrder/{memberId}/{orderId}")
-    public String removeWantedOrder(@PathVariable Long memberId, @PathVariable Long orderId) {
-        return memberOrderService.removeWantedOrder(memberId, orderId);
+    public String removeWantedOrder(@PathVariable Long memberid, @PathVariable Long orderid) {
+        return memberOrderService.removeWantedOrder(memberid, orderid);
     }
 
     // 會員刪除專案 (僅限 owned = true 的會員執行)
@@ -51,42 +51,41 @@ public class MemberOrderController {
     }
     
     // 查詢某個會員相關的所有專案
-    @GetMapping("/getOrdersByMemberId/{memberId}")
-    public List<Order> getOrdersByMemberId(@PathVariable Long memberId) {
-        return memberOrderService.getOrdersByMemberId(memberId);
+    @GetMapping("/getOrdersByMemberid/{memberid}")
+    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) {
+        return memberOrderService.getOrdersByMemberid(memberid);
     }
 
     // 查詢某個專案相關的所有會員
-    @GetMapping("/getMembersByOrderId/{orderId}")
-    public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
-        return memberOrderService.getMembersByOrderId(orderId);
+    @GetMapping("/getMembersByOrderid/{orderid}")
+    public List<Member> getMembersByOrderId(@PathVariable Long orderid) {
+        return memberOrderService.getMembersByOrderId(orderid);
     }
 
     
   //======新增===================================
     @Autowired
     private MemberOrderRepository memberOrderRepository;
-
-    // 根据 memberId 获取该会员的所有订单
-    @GetMapping("/memberlike/{memberId}")
-    public String getMemberLike(@PathVariable Long memberId, @RequestParam Long orderId, Model model) {
-        // 使用 service 获取所有与该 memberId 关联的 MemberOrder
-        List<MemberOrder> orders = memberOrderService.getAllOrdersByMemberId(memberId);  // 假設您有這個方法
-
-        // 過濾出與 orderId 匹配的 MemberOrder
-        Optional<MemberOrder> memberOrder = orders.stream()
-                .filter(order -> order.getOrder().getOrderid().equals(orderId))  // 假設 MemberOrder 中的 order 是 Order 類型
-                .findFirst();
-
-        // 根據是否找到對應的 MemberOrder 設置 wanted 屬性
-        if (memberOrder.isPresent()) {
-            model.addAttribute("wanted", memberOrder.get().getWanted());  // 假設 MemberOrder 中有 wanted 屬性
-            System.out.println(memberOrder.get().getWanted());
-        } else {
-            model.addAttribute("wanted", false);  // 如果没有找到对应的订单，返回 false
-        }
-
-        return "memberlike";  // 返回 "memberlike" 视图
+    
+ // 根據 memberId 獲取該會員所有收藏的專案
+    @GetMapping("/like/{memberid}")
+    public List<MemberOrder> getwanted(@PathVariable Long memberid,Long orderid) {
+        return memberOrderService.getWantedByMemberId(memberid);
     }
-
+    
+ // 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
+    @GetMapping("/memberlike/{memberid}/{orderid}")
+    public boolean getMemberLike(@PathVariable Long memberid, @RequestParam Long orderid) {
+        Optional<MemberOrder> memberOrder = memberOrderService.getOrderByMemberAndOrder(memberid, orderid);
+        
+        // 返回該會員對某個專案是否有收藏（wanted）
+        return memberOrder.isPresent() && memberOrder.get().getWanted();
+    }
+    
+ // 更新會員對專案的收藏狀態
+    @PostMapping("/updateWantedStatus")
+    public void updateWantedStatus(@RequestParam Long memberid, @RequestParam Long orderid, @RequestParam boolean wanted) {
+        memberOrderService.updateWantedStatus(memberid, orderid, wanted);
+    }
+    
 }

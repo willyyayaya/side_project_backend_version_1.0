@@ -1,12 +1,12 @@
 package tw.sideproject.model;
 
 public class AddMemberOrderRequest {
-
-	private Long memberId;
+    private Long memberId;
     private Long orderId;
     private boolean owned;
     private boolean wanted;
     private boolean collected;
+    private String evaluate;
 
     // Getters and Setters
     public Long getMemberId() {
@@ -48,4 +48,14 @@ public class AddMemberOrderRequest {
 	public void setCollected(boolean collected) {
 		this.collected = collected;
 	}
+	
+	public String getEvaluate() {
+		return evaluate;
+	}
+
+	public void setEvaluate(String evaluate) {
+		this.evaluate = evaluate;
+	}
+    
 }
+

@@ -130,7 +130,7 @@
     }
 </script>
 
-<!-- 收藏按鈕js -->
+<!-- 收藏按鈕js
 <script>
     // 你可以保留这个部分来处理用户交互，点击图标后进行状态切换
     document.getElementById('favorite-icon').addEventListener('click', function() {
@@ -138,43 +138,97 @@
     console.log('已收藏!');
     });
 </script>
-
+ -->
 <!-- 收藏js -->
 
 <script>
-        // 獲取會員收藏的專案
-        fetch(`/api/memberOrders/like/${memberid}`)
-            .then(response => response.json())
-            .then(favoriteProjects => {
-                const container = document.getElementById('Card_out');
-                container.innerHTML = ''; // 清空現有內容
+const memberid = 103;  // 假設我們的會員ID是 103
 
-                if (favoriteProjects.length === 0) {
-                    container.innerHTML = '<p>您還沒有收藏任何專案。</p>';
+// 獲取會員收藏的專案
+fetch(`/api/memberOrders/like/${memberid}`)
+    .then(response => response.json())
+    .then(favoriteOrders => {
+        console.log(favoriteOrders); // 查看完整的 API 返回資料
+        const container = document.getElementById('Card_out');
+        container.innerHTML = '';  // 清空現有的內容
+
+        if (favoriteOrders.length === 0) {
+            container.innerHTML = '<p>您還沒有收藏任何專案。</p>';
+        } else {
+            favoriteOrders.forEach(order => {
+                console.log(order); // 打印每個 `order` 物件來檢查 `orderid` 是否正確
+
+                const svgElement = `
+                    <svg class="icon favorite-icon" style="fill: currentcolor; width: 24px; height: 24px; cursor: pointer;" 
+                         id="favorite-icon-${order.orderid}" 
+                         data-member-id="${memberid}" 
+                         data-order-id="${order.orderid}" 
+                         data-wanted="${order.wanted}">
+                        <use href="#icon-favorite-heart"></use>
+                    </svg>
+                `;
+                
+                const wantedStatus = order.wanted ? 'wanted' : 'unwanted';
+                
+                const card = document.createElement('div');
+                card.classList.add('Card');
+                card.innerHTML = `
+                    <img src="${order.picurl}" alt="${order.name}" style="width:150px; height:150px;">
+                    <h4>${order.name}</h4>
+                    <p class="title">${order.name}</p>
+                    <div class="card-icon">
+                        ${svgElement}
+                    </div>
+                    <button class="Card_btn">了解詳細</button>
+                `;
+
+                const favoriteIcon = card.querySelector(`#favorite-icon-${order.orderid}`);
+                if (order.wanted) {
+                    favoriteIcon.style.fill = "red";
                 } else {
-                    favoriteProjects.forEach(project => {
-                        const card = document.createElement('div');
-                        card.classList.add('Card');
-                        card.innerHTML = `
-                            <img src="data:image/png;base64,${project.picurl}" alt="${project.name}" style="width:150px; height:150px;">
-                            <h4>${project.name}</h4>
-                            <p class="title">${project.description}</p>
-                            <button class="Card_btn">了解詳細</button>
-                        `;
-                        container.appendChild(card);
-                    });
-
-                    // 顯示總收藏數量
-                    const totalFavorites = favoriteProjects.length;
-                    const favoritesCountElement = document.createElement('div');
-                    favoritesCountElement.innerHTML = `<p>您有 ${totalFavorites} 個收藏的專案。</p>`;
-                    container.insertBefore(favoritesCountElement, container.firstChild); // 顯示在卡片列表的上方
+                    favoriteIcon.style.fill = "gray";
                 }
-            })
-            .catch(error => {
-                console.error("Error fetching favorite projects:", error);
+
+                favoriteIcon.addEventListener('click', function () {
+                    const currentWantedStatus = favoriteIcon.getAttribute('data-wanted') === 'true';  // 當前的 wanted 狀態
+                    const newWantedStatus = !currentWantedStatus;  // 切換 wanted 狀態
+
+                    // 確保 orderid 是有效的數字
+                    const orderid = parseInt(favoriteIcon.getAttribute('data-order-id'), 10);
+                    if (isNaN(orderid)) {
+                        console.error("Invalid orderid: ", favoriteIcon.getAttribute('data-order-id'));
+                        return; // 如果 orderid 無效，停止請求
+                    }
+
+                    // 發送更新請求
+                    fetch(`/api/memberOrders/updateWantedStatus?memberid=${memberid}&orderid=${orderid}&wanted=${newWantedStatus}`, {
+                        method: 'POST',
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            favoriteIcon.setAttribute('data-wanted', newWantedStatus);
+                            favoriteIcon.style.fill = newWantedStatus ? "red" : "gray";
+                        } else {
+                            alert('收藏狀態更新失敗');
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error updating favorite status:", error);
+                    });
+                });
+
+                container.appendChild(card);
             });
-    </script>
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching favorite orders:", error);
+    });
+
+
+</script>
+
+
 
     <!-- 下方菜單 -->
     <footer th:fragment="footer">

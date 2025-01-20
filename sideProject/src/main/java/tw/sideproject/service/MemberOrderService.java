@@ -20,13 +20,14 @@ import tw.sideproject.repository.OrderRepository;
 public class MemberOrderService {
     
     @Autowired
-    private static MemberOrderRepository memberOrderRepository;
+    private MemberOrderRepository memberOrderRepository;
     
     @Autowired
     private MemberRepository memberRepository;
     
     @Autowired
     private OrderRepository orderRepository;
+
 
     // 新增會員創建專案的關聯 (owned設為true)
     public String addOwnedOrder(AddMemberOrderRequest request) {
@@ -90,7 +91,6 @@ public class MemberOrderService {
         if (!memberOrder.getWanted()) {
             return "該會員對專案的關聯已經為非 wanted";
         }
-
         // 更新 wanted 為 false
         memberOrder.setWanted(false);
         memberOrderRepository.save(memberOrder);
@@ -99,6 +99,11 @@ public class MemberOrderService {
         memberOrderRepository.deleteAllByWantedFalseAndOwnedFalse();
 
         return "會員對專案的 wanted 關聯已移除，並刪除所有 wanted 和 owned 都為 false 的資料";
+    }
+    
+ // 根據 memberId 獲取該會員所有收藏的專案
+    public List<MemberOrder> getWantedByMemberId(Long memberid) {
+        return memberOrderRepository.findByMember_MemberidAndWantedTrue(memberid);  // 這個方法返回會員收藏的專案
     }
 
     // 會員刪除專案 (僅限 owned = true 的會員執行)
@@ -114,23 +119,31 @@ public class MemberOrderService {
     }
     
     // 查找某個會員相關的所有專案
-    public List<Order> getOrdersByMemberId(Long memberid) {
-        return memberOrderRepository.findAllOrdersByMember_memberid(memberid);
+    public List<MemberOrder> getOrdersByMemberid(Long memberid) {
+        return memberOrderRepository.findAllById_Memberid(memberid);
     }
+    
+    
 
     // 查找某個專案相關的所有會員
-    public static List<Member> getMembersByOrderId(Long orderId) {
-        return memberOrderRepository.findAllMembersByOrderId(orderId);
+    public List<Member> getMembersByOrderId(Long orderid) {
+        return memberOrderRepository.findAllMembersByOrderid(orderid);
     }
     
     //========新增======================================
  // 根据 memberId 获取该会员的所有订单
-    public List<MemberOrder> getAllOrdersByMemberId(Long memberid) {
-        return memberOrderRepository.findByMember_memberid(memberid);
+    public List<MemberOrder> getAllOrdersByMemberid(Long memberid) {
+        return memberOrderRepository.findAllById_Memberid(memberid); // 查詢方法使用复合主鍵
     }
 
     // 根据 memberId 和 orderId 查找特定的订单
     public Optional<MemberOrder> getOrderByMemberAndOrder(Long memberId, Long orderId) {
         return memberOrderRepository.findByMember_memberidAndOrder_orderid(memberId, orderId);
     }
+    
+ // 更新會員對某個專案的收藏狀態
+    public void updateWantedStatus(Long memberid, Long orderid, boolean wanted) {
+        memberOrderRepository.updateWantedStatus(memberid, orderid, wanted);
+    }
+    
 }

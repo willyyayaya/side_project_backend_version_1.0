@@ -12,7 +12,8 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long>{
 	
 	Optional<Order> findByName(String name);
-    
+	
+	
     List<Order> findByRankGreaterThanEqual(int rank);
  // 查詢所有 tagido 等於特定值的訂單
 //    List<Order> findByTagido(int tagido);

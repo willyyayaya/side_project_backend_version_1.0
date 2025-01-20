@@ -1,10 +1,14 @@
 package tw.sideproject.service;
 
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.stereotype.Service;
 
 import tw.sideproject.model.AddOrderRequest;
@@ -29,38 +33,42 @@ public class OrderService {
     private OrderTagRepository orderTagRepository;
     
  // 新增專案
-    public String addOrder(AddOrderRequest request) {
-        // 建立並儲存 Order
-        Order order = new Order();
-        order.setName(request.getName());
-        order.setIntro(request.getIntro());
-        order.setDeadline(request.getDeadline());
-        order.setDetail(request.getDetail());
-        order.setPicurl(request.getPicurl());
-        order.setLocation(request.getLocation());
-        order.setPeople(request.getPeople());
-        orderRepository.save(order);
+    public Map<String, Object> addOrder(AddOrderRequest request) {
+		Map<String, Object> response = new HashMap();
+		// 建立並儲存 Order
+		Order order = new Order();
+		order.setName(request.getName());
+		order.setIntro(request.getIntro());
+		order.setDeadline(request.getDeadline());
+		order.setDetail(request.getDetail());
+		order.setPicurl(request.getPicurl());
+		order.setLocation(request.getLocation());
+		order.setPeople(request.getPeople());
 
-        // 建立並儲存 OrderTag
-        List<OrderTag> orderTags = new ArrayList<>();
-        for (Integer tagId : request.getTagIds()) {
-            Tag tag = tagRepository.findById(tagId)
-                    .orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
-
-            OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
-            OrderTag orderTag = new OrderTag();
-            orderTag.setId(orderTagKey);
-            orderTag.setOrder(order);
-            orderTag.setTag(tag);
-
-            orderTags.add(orderTag);
-        }
-        orderTagRepository.saveAll(orderTags);
-
-        return "專案新增成功";
+		orderRepository.save(order);
+		return response;
     }
 
-    // 查詢所有專案
+        // 建立並儲存 OrderTag
+//        List<OrderTag> orderTags = new ArrayList<>();
+//        for (Integer tagId : request.getTagIds()) {
+//            Tag tag = tagRepository.findById(tagId)
+//                    .orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
+//
+//            OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
+//            OrderTag orderTag = new OrderTag();
+//            orderTag.setId(orderTagKey);
+//            orderTag.setOrder(order);
+//            orderTag.setTag(tag);
+//
+//            orderTags.add(orderTag);
+//        }
+//        orderTagRepository.saveAll(orderTags);
+//
+//        return "專案新增成功";
+//    }
+//
+//    // 查詢所有專案
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
     }

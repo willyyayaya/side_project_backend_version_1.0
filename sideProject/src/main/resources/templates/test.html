@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link href="./p5.css" rel="stylesheet">
+	<link href="./p4.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="/fragment.css">
-	<link rel="stylesheet" href="/p5.css">
+    <link rel="stylesheet" href="fragment.css">
+    <link rel="stylesheet" href="/p4.css">
+    
 
 
-<title>p5</title>
+<title>p2</title>
 </head>
 <body>
 
@@ -53,10 +54,9 @@
                 <div style="background-color: #bbc8d8; height: 44%;" id="center_laftmune_2">
                     <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
                         <ul  id="laftmune_2_1">
-                        
-                             <a href="test.html">進行中</a>
-                             <br/>
-                            <a href="test2.html">已結束</a>
+                            <li>未開通</li>
+                            <li><a href="test2.html">進行中</li>
+                            <li>查看評價</li>
                         </ul>
                         <ul  id="laftmune_2_2" style="font-weight: bold;">收藏
                             <li>資料夾管理</li>
@@ -80,34 +80,25 @@
         </div>
         <div id="center_result" >
             <div style="background-color: #bbc8d8; height: 5%;width: 95%; margin-left: 20px;" id="center_result_title">
-                <h2 style="color: #14518e;margin-bottom: -20px;margin-top: 10px;">收藏管理區</h2>
+                <h2 style="color: #14518e;margin-bottom: -20px;margin-top: 10px;">專案管理</h2>
             </div>
             <div style="background-color: #bbc8d8; height: 90%;width: 95%;margin-left: 20px" id="center_result_index">
-                <!-- <form th:action="@{/test1/{memberid}/update(memberid=${member.memberid})}" method="post" enctype="multipart/form-data"> -->
                 <!-- 中間有變化區塊 -->
-                <!-- SVG 图标库 -->
-                <svg style="display: none;">
-                    <symbol id="icon-favorite-heart" viewBox="0 0 32 32">
-                    <path d="M16 29s13-7.4 13-14c0-3.9-3.1-7-7-7-2.4 0-4.5 1.2-6 3-1.5-1.8-3.6-3-6-3-3.9 0-7 3.1-7 7 0 6.6 13 14 13 14z"/>
-                    </symbol>
-                </svg>
+                <div id="box_1" class="boxOut">
+                    <div id="Card_out">進行中</div>
+                    <div  class="box" id="box_1_cards">
+                    </div>
 
-                    <div style="width: 100%;height: 100%;" id="Card_out" >
-                        <div class="Card"  id="Card_1">
-                            <img src="./c0d1c4fcef95b34b.png" alt="TEST" style="width:150;height: 150px;">
-                            <h4>專案title</h4>
-                            <p class="title">簡介</p>
-                            <p></p>
-                            <div>
-                                <svg class="icon" style="fill: currentcolor; width: 24px; height: 24px;" th:class="${wanted ? 'wanted' : 'unwanted'}" id="favorite-icon">
-                                    <use href="#icon-favorite-heart"></use>
-                                </svg>
-                                <p><button class="Card_btn">了解詳細</button></p>
-                            </div>
-                            <!-- <p><button id="Card_1_btn">了解詳細</button></p> -->
-                        </div>
-                    
-                <!-- </form> -->
+                <div id="box_2" class="boxOut">
+                    <div id="Card_out">尚未完成</div>
+                    <div  class="box" id="box_2_cards">
+
+                    </div>
+
+                <div id="box_3" class="boxOut">
+                    <div id="Card_out">配對</div>
+                    <div  class="box" id="box_3_cards">
+                    </div>                    
                 </div>
             </div>
         </div>
@@ -130,51 +121,46 @@
     }
 </script>
 
-<!-- 收藏按鈕js -->
+<!-- card js -->
 <script>
-    // 你可以保留这个部分来处理用户交互，点击图标后进行状态切换
-    document.getElementById('favorite-icon').addEventListener('click', function() {
-      // 在这里可以通过后端接口或者本地逻辑切换喜欢状态
-    console.log('已收藏!');
-    });
+    // Fetch the orders data from the backend
+    fetch('/api/orders')
+        .then(response => response.json())  // Parse the response as JSON
+        .then(data => {
+            console.log(data);  // Output the data to the console to verify its format
+
+            const box1 = document.getElementById("box_1_cards");
+            const box2 = document.getElementById("box_2_cards");
+            const box3 = document.getElementById("box_3_cards");
+
+            data.forEach(order => {
+                const card = document.createElement("div");
+                card.classList.add("Card");
+
+                // Create the card content with image, title, and description
+                card.innerHTML = `
+                    <img src="data:image/png;base64,${order.picurlBase64}" alt="${order.name}" style="width:150;height: 150px;">
+                    <h4>${order.name}</h4>
+                    <p class="title">${order.detail}</p>
+                    <p><button class="Card_btn">閱讀詳細</button></p>
+                `;
+
+                // Add the card to the corresponding box based on the status
+                if (order.status === '進行中') {
+                    box1.appendChild(card);
+                } else if (order.status === '尚未完成') {
+                    box2.appendChild(card);
+                } else if (order.status === '配對') {
+                    box3.appendChild(card);
+                }
+            });
+        })
+        .catch(error => {
+            console.error("Error:", error);  // Log any errors that occur during the fetch process
+        });
 </script>
 
-<!-- 收藏js -->
 
-<script>
-        // 獲取會員收藏的專案
-        fetch(`/api/memberOrders/like/${memberid}`)
-            .then(response => response.json())
-            .then(favoriteProjects => {
-                const container = document.getElementById('Card_out');
-                container.innerHTML = ''; // 清空現有內容
-
-                if (favoriteProjects.length === 0) {
-                    container.innerHTML = '<p>您還沒有收藏任何專案。</p>';
-                } else {
-                    favoriteProjects.forEach(project => {
-                        const card = document.createElement('div');
-                        card.classList.add('Card');
-                        card.innerHTML = `
-                            <img src="data:image/png;base64,${project.picurl}" alt="${project.name}" style="width:150px; height:150px;">
-                            <h4>${project.name}</h4>
-                            <p class="title">${project.description}</p>
-                            <button class="Card_btn">了解詳細</button>
-                        `;
-                        container.appendChild(card);
-                    });
-
-                    // 顯示總收藏數量
-                    const totalFavorites = favoriteProjects.length;
-                    const favoritesCountElement = document.createElement('div');
-                    favoritesCountElement.innerHTML = `<p>您有 ${totalFavorites} 個收藏的專案。</p>`;
-                    container.insertBefore(favoritesCountElement, container.firstChild); // 顯示在卡片列表的上方
-                }
-            })
-            .catch(error => {
-                console.error("Error fetching favorite projects:", error);
-            });
-    </script>
 
     <!-- 下方菜單 -->
     <footer th:fragment="footer">

@@ -15,23 +15,21 @@ import tw.sideproject.model.MemberOrder;
 import tw.sideproject.model.MemberOrderKey;
 import tw.sideproject.model.Order;
 
+
+
 @Repository
 public interface MemberOrderRepository extends JpaRepository<MemberOrder, MemberOrderKey> {
-    // 正确的方法：根据 member 的 id 查找 MemberOrder
-    List<MemberOrder> findByMember_memberid(Long memberid);
     
-    //根據 memberid 查找對應的 Member 實體
-    List<MemberOrder> findAllByMember_memberid(Long memberid);
+	 List<MemberOrder> findAllById_Memberid(Long memberid);  // 由於使用了複合主鍵，所以需要用 `Id_` 來指明 `MemberOrderKey` 的欄位
+
+	 List<MemberOrder> findAllById_Orderid(Long orderid);  // 同理，查詢基於 `orderId`
 	
- // 修正方法，使用 'member' 進行查詢
-    List<MemberOrder> findAllByMember(Member member);
-    
 	// 使用 member.memberid 和 order.orderid 進行查詢
     Optional<MemberOrder> findByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
 	
 	@Modifying
     @Query("DELETE FROM MemberOrder mo WHERE mo.member.id = :memberid")
-    void deleteAllBymemberid(@Param("memberid") Long memberid);
+    void deleteAllByMemberid(@Param("memberid") Long memberid);
 	
     @Modifying
     @Query("DELETE FROM MemberOrder mo WHERE mo.order.id = :orderid")
@@ -43,18 +41,28 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     @Query("DELETE FROM MemberOrder mo WHERE mo.wanted = false AND mo.owned = false")
     void deleteAllByWantedFalseAndOwnedFalse();
     
- // 查找與某個會員相關的所有專案 (基於 member.id)
-    @Query("SELECT mo.order FROM MemberOrder mo WHERE mo.member.id = :memberid")
-    List<Order> findAllOrdersByMemberId(@Param("memberid") Long memberId);
+    // 查找與某個會員相關的所有專案
+    @Query("SELECT mo.order FROM MemberOrder mo WHERE mo.member.memberid = :memberId")
+    List<Order> findAllOrdersByMemberid(Long memberid);
 
-    // 查找與某個專案相關的所有會員 (基於 order.id)
-    @Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.id = :orderId")
-    List<Member> findAllMembersByOrderId(@Param("orderId") Long orderId);
+    // 查找與某個專案相關的所有會員
+    @Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.orderid = :orderId")
+    List<Member> findAllMembersByOrderid(Long orderid);
+    
+    // 查詢某個會員相關的所有專案的關係
+    @Query("SELECT mo FROM MemberOrder mo WHERE mo.member.memberid = :memberId")
+    List<MemberOrder> findAllByMemberid(@Param("memberId") Long memberId);
+    
+ // 查詢會員收藏的所有專案    
+    List<MemberOrder> findByMember_MemberidAndWantedTrue(Long memberId);
 
-    // 查找與某個會員相關的所有專案 (基於 member.id)
-    List<Order> findAllOrdersByMember_memberid(Long memberId);
-   
-    
-    
-    
+    //找member跟order的wanted
+	List<MemberOrder> findWantedByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
+	
+	// 根據 memberId 和 orderId 更新 wanted 屬性
+    @Modifying
+    @Query("UPDATE MemberOrder mo SET mo.wanted = :wanted WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
+    void updateWantedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("wanted") boolean wanted);
+	
+
 }
