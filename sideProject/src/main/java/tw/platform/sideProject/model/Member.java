@@ -26,7 +26,7 @@ public class Member {
     private String name;
     private String birthday;
     private String tel;
-    private byte[] picurl;
+    private byte[] picurl; // String
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
 
