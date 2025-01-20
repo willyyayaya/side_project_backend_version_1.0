@@ -53,6 +53,17 @@
 	<br><br><br><br><br>
 	<br><br><br><br><br>
 
+	<div th:fragment="keywordsearchBox">
+		<div class="row oneCase" th:each="keywordCase : ${keywordCase}">
+			<img src="img/image.png" alt="" class="col-4">
+			<div id="" class="col-8">
+				<h3 th:text=${keywordCase.name}>案件名稱</h3>
+				<p th:text="${keywordCase.tagNames}">案件tag</p>
+				<h5 th:text=${keywordCase.intro}>案件簡介</h5>
+			</div>
+		</div>
+	</div>
+
 	<br><br><br><br><br>
 	<br><br><br><br><br>
 	<br><br><br><br><br>
