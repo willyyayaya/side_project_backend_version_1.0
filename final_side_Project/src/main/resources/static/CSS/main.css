@@ -1,17 +1,9 @@
-header {
-    background: #14518e;
-    border-bottom: 1px solid #c59650;
-}
 
 body {
     background-color: #bbc8d8;
     color: #303030;
 }
 
-footer {
-    background: #14518e;
-    border-top: 1px solid #c59650;
-}
 
 #detailBox,
 #title,

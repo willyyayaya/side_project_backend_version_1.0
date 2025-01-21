@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -88,68 +89,13 @@
                         <button class="keywordBtn">
                             <td th:text=${Keyword.keyword}></td>
                         </button>
+                    </tr>
                 </div>
-                <!-- <div>
-					<span th:text=${kw.keyword}></span>
-					<span th:text=${kw.keyword}></span>
-					<span th:text=${kw.keyword}></span>
-					<span th:text=${kw.keyword}></span>
-					<span th:text=${kw.keyword}></span>
-				</div> -->
                 <div id="btn">
                     <button>發布時間</button>
                     <button>收藏數</button>
                 </div>
-                <div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                    <div class="row oneCase">
-                        <img src="../static/img/image.png" alt="" class="col-4">
-                        <div id="" class="col-8">
-                            <h3>案件名稱</h3>
-                            <h4>案件tag</h4>
-                            <h5>案件簡介</h5>
-                        </div>
-                    </div>
-                </div>
+                <div th:replace="fragments::keywordsearchBox"></div>
             </div>
         </section>
     </main>

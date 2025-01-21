@@ -20,8 +20,8 @@ public class TagService {
     	
     	// 新增技能 (Tag)
         Tag javaTag = new Tag();
-        javaTag.setTagidm(5);
-        javaTag.setTagido(5);
+//        javaTag.setTagidm(5);
+//        javaTag.setTagido(5);
         javaTag.setTagname("JavaScript");
         tagRepository.save(javaTag);
 
@@ -39,7 +39,8 @@ public class TagService {
     public Tag updateTag(int tagId, Tag tagDetails) {
         return tagRepository.findById(tagId).map(tag -> {
             tag.setTagname(tagDetails.getTagname());
-            tag.setTagido(tagDetails.getTagido());
+            tag.setTagid(tagDetails.getTagid());
+//            tag.setTagido(tagDetails.getTagido());
             return tagRepository.save(tag);
         }).orElseThrow(() -> new RuntimeException("標籤ID不存在 (ID: " + tagId + ")"));
     }

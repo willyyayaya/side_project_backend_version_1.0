@@ -1,3 +1,4 @@
+
 package tw.platform.sideProject.model;
 
 import java.util.List;
@@ -46,23 +47,7 @@ public class AddMemberRequest {
         this.name = name;
     }
     
-    public Boolean getIsblocked() {
-		return isblocked;
-	}
-
-	public void setIsblocked(Boolean isblocked) {
-		this.isblocked = isblocked;
-	}
-
-	public List<Integer> getTagIds() {
-        return tagIds;
-    }
-
-    public void setTagIds(List<Integer> tagIds) {
-        this.tagIds = tagIds;
-    }
-
-	public String getBirthday() {
+    public String getBirthday() {
 		return birthday;
 	}
 
@@ -85,5 +70,20 @@ public class AddMemberRequest {
 	public void setPicurl(String picurl) {
 		this.picurl = picurl;
 	}
-}
 
+	public Boolean getIsblocked() {
+		return isblocked;
+	}
+
+	public void setIsblocked(Boolean isblocked) {
+		this.isblocked = isblocked;
+	}
+
+	public List<Integer> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<Integer> tagIds) {
+        this.tagIds = tagIds;
+    }
+}

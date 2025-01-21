@@ -1,3 +1,4 @@
+
 package tw.platform.sideProject.service;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(member.getMemberid());
-            memberTagKey.setTagId(tag.getTagidm());
+            // memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();
@@ -100,30 +101,30 @@ public class MemberService {
     public Member updateMember(Long memberId, Member memberDetails) {
     	return memberRepository.findById(memberId).map(existingMember -> {
             // 僅更新非空欄位
-    		  if (memberDetails.getAccount() != null) {
-                  existingMember.setAccount(memberDetails.getAccount());
-              }
-              if (memberDetails.getPassword() != null) {
-                  existingMember.setPassword(memberDetails.getPassword());
-              }
-              if (memberDetails.getEmail() != null) {
-                  existingMember.setEmail(memberDetails.getEmail());
-              }
-              if (memberDetails.getPicurl() != null) {
-                  existingMember.setPicurl(memberDetails.getPicurl());
-              }
-              if (memberDetails.getName() != null) {
-                  existingMember.setName(memberDetails.getName());
-              }
-              if (memberDetails.getBirthday() != null) {
-                  existingMember.setBirthday(memberDetails.getBirthday());
-              }
-              if (memberDetails.getTel() != null) {
-                  existingMember.setTel(memberDetails.getTel());
-              }
-              if (memberDetails.getIsblocked() != null) {
-                  existingMember.setIsblocked(memberDetails.getIsblocked());
-              }
+            if (memberDetails.getAccount() != null) {
+                existingMember.setAccount(memberDetails.getAccount());
+            }
+            if (memberDetails.getPassword() != null) {
+                existingMember.setPassword(memberDetails.getPassword());
+            }
+            if (memberDetails.getEmail() != null) {
+                existingMember.setEmail(memberDetails.getEmail());
+            }
+            if (memberDetails.getPicurl() != null) {
+                existingMember.setPicurl(memberDetails.getPicurl());
+            }
+            if (memberDetails.getName() != null) {
+                existingMember.setName(memberDetails.getName());
+            }
+            if (memberDetails.getBirthday() != null) {
+                existingMember.setBirthday(memberDetails.getBirthday());
+            }
+            if (memberDetails.getTel() != null) {
+                existingMember.setTel(memberDetails.getTel());
+            }
+            if (memberDetails.getIsblocked() != null) {
+                existingMember.setIsblocked(memberDetails.getIsblocked());
+            }
             // 儲存更新後的資料
             return memberRepository.save(existingMember);
         }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
@@ -154,7 +155,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(memberId);
-            memberTagKey.setTagId(tag.getTagidm());
+            // memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();

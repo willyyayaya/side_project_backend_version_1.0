@@ -13,7 +13,8 @@
 </head>
 
 <body>
-    <header><br><br><br><br></header>
+    <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
+	<div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div> 
     <div class="container w-75 p-2">
         <div id="buttonArea" class="rounded-2">
             <p id="applyPeople"></p>
@@ -72,7 +73,7 @@
         <div id="another" class="row rounded-2">
             <h5>推薦其他專案</h5><hr></div>
     </div>
-    <footer><br><br><br><br></footer>
+    <div th:replace="fragments::footer"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

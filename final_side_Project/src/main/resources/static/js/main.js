@@ -2,7 +2,7 @@ $(document).ready(async function () {
 
     let urlParams = new URLSearchParams(window.location.search);
     let orderId = urlParams.get('orderId'); // 取得 orderId 參數
-    let memberId = 103;
+    let memberId = 1;
     console.log('memberId:' + memberId);
     console.log('orderId:' + orderId);
 

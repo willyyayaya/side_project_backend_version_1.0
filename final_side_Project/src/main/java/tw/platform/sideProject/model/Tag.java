@@ -14,8 +14,8 @@ import jakarta.persistence.Table;
 public class Tag {
 
 	@Id
-    private int tagido;
-    private int tagidm;
+    private int tagid;
+//    private int tagidm;
     private String tagname;
 
     // 關聯到 MemberTag
@@ -29,27 +29,27 @@ public class Tag {
     // Constructors
     public Tag() {}
 
-    public Tag(int tagido, String tagname) {
-        this.tagido = tagido;
-        this.tagname = tagname;
-    }
+//    public Tag(int tagido, String tagname) {
+////        this.tagido = tagido;
+//        this.tagname = tagname;
+//    }
 
-    // Getters and Setters
-    public int getTagidm() {
-        return tagidm;
-    }
+//    // Getters and Setters
+//    public int getTagidm() {
+//        return tagidm;
+//    }
+//
+//    public void setTagidm(int tagidm) {
+//        this.tagidm = tagidm;
+//    }
 
-    public void setTagidm(int tagidm) {
-        this.tagidm = tagidm;
-    }
-
-    public int getTagido() {
-        return tagido;
-    }
-
-    public void setTagido(int tagido) {
-        this.tagido = tagido;
-    }
+//    public int getTagido() {
+//        return tagido;
+//    }
+//
+//    public void setTagido(int tagido) {
+//        this.tagido = tagido;
+//    }
 
     public String getTagname() {
         return tagname;
@@ -74,4 +74,12 @@ public class Tag {
     public void setOrderTags(Set<OrderTag> orderTags) {
         this.orderTags = orderTags;
     }
+
+	public int getTagid() {
+		return tagid;
+	}
+
+	public void setTagid(int tagid) {
+		this.tagid = tagid;
+	}
 }

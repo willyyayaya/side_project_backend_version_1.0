@@ -1,3 +1,4 @@
+
 package tw.platform.sideProject.model;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class mimiTag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long tagid;
-	private Long tagidm;
+	// private Long tagidm;
 	private String tagname;
 	private String category;
 	
@@ -32,12 +33,12 @@ public class mimiTag {
 	public void setTagid(Long tagid) {
 		this.tagid = tagid;
 	}
-	public Long getTagidm() {
-		return tagidm;
-	}
-	public void setTagidm(Long tagidm) {
-		this.tagidm = tagidm;
-	}
+	// public Long getTagidm() {
+	// 	return tagidm;
+	// }
+	// public void setTagidm(Long tagidm) {
+	// 	this.tagidm = tagidm;
+	// }
 	public String getTagname() {
 		return tagname;
 	}

@@ -13,9 +13,9 @@ public interface TagRepository extends JpaRepository<Tag, Integer> {
 
 	List<Tag> findByTagname(String tagname);
 
-	List<Tag> findByTagidm(Integer tagidm);
+//	List<Tag> findByTagidm(Integer tagidm);
 
-	List<Tag> findByTagido(Integer tagido);
+//	List<Tag> findByTagido(Integer tagido);
 
 	//返回所有tagname(order)
 	@Query("SELECT t.tagname FROM Tag t")
