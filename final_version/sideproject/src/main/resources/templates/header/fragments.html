@@ -25,8 +25,17 @@
 	<div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
 	<div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div> 
 	-->
+	<header th:fragment="header">
+		<button id="logoBtn" th:onclick="'window.location.href=\'' + @{/index} + '\''"><img src="LOGO.png"
+				alt=""></button>
+		<div class="headerBtn">
+			<button class="varBtn" th:onclick="'window.location.href=\'' + @{/search} + '\''">找case</button>
+			<!-- 跳轉到登入頁@{登入頁的GetMapping} -->
+			<button class="varBtn" th:onclick="'window.location.href=\'' + @{/login} + '\''">Login</button>
+		</div>
+	</header>
 	<header th:if="${member != null}" th:fragment="userHeader">
-		<button id="logoBtn" th:onclick="'window.location.href=\'' + @{/index} + '\''"><img src="/src/main/resources/static/LOGO.png"
+		<button id="logoBtn" th:onclick="'window.location.href=\'' + @{/index} + '\''"><img src="LOGO.png"
 				alt=""></button>
 		<div class="headerBtn">
 			<button class="varBtn" th:onclick="'window.location.href=\'' + @{/search} + '\''">找case</button>

@@ -1,5 +1,5 @@
 
-/* 上方菜單 */
+/* ä¸Šæ–¹èœå–® */
 /* ======================================================= */
     #menu_t_1{
         display: inline-block;
@@ -7,16 +7,16 @@
         width: 89%;
         /* border: 3px solid; */
         margin-left: 68px;
-        position: fixed;   /* 固定位置 */
-        top: 0;            /* 固定在視窗頂部 */
+        position: fixed;   /* å›ºå®šä½ç½® */
+        top: 0;            /* å›ºå®šåœ¨è¦–çª—é ‚éƒ¨ */
         background-color: #14518e;
-        color: #eaeff3;   /* 文字顏色 */
-         /* 上下內邊距 */
+        color: #eaeff3;   /* æ–‡å­—é¡è‰² */
+         /* ä¸Šä¸‹å…§é‚Šè· */
         z-index: 1000; 
     }
 
     #menu_text{
-        text-align: center; /* 文字置中 */
+        text-align: center; /* æ–‡å­—ç½®ä¸­ */
     }
 
     #menu_t_2{
@@ -51,10 +51,10 @@
         position: relative;
     }
     #logo_top >svg {
-        position: absolute;    /* 絕對定位 */
-        top: 50%;              /* 垂直居中 */
-        left: 50%;             /* 水平居中 */
-        transform: translate(-50%, -50%); /* 調整位置，使其完全居中 */
+        position: absolute;    /* çµ•å°å®šä½ */
+        top: 50%;              /* åž‚ç›´å±…ä¸­ */
+        left: 50%;             /* æ°´å¹³å±…ä¸­ */
+        transform: translate(-50%, -50%); /* èª¿æ•´ä½ç½®ï¼Œä½¿å…¶å®Œå…¨å±…ä¸­ */
         
         }
 
@@ -103,13 +103,13 @@
         display: flexbox;
     }
     #menu_top_2 svg {
-        position: absolute;    /* 絕對定位 */
-        top: 50%;              /* 垂直居中 */
-        left: 50%;             /* 水平居中 */
-        transform: translate(-50%, -50%); /* 調整位置，使其完全居中 */
+        position: absolute;    /* çµ•å°å®šä½ */
+        top: 50%;              /* åž‚ç›´å±…ä¸­ */
+        left: 50%;             /* æ°´å¹³å±…ä¸­ */
+        transform: translate(-50%, -50%); /* èª¿æ•´ä½ç½®ï¼Œä½¿å…¶å®Œå…¨å±…ä¸­ */
     }
 
-/* 中間 */
+/* ä¸­é–“ */
 /* ======================================================= */
 
     #center_1{
@@ -153,12 +153,12 @@
         
     }
 	
-	/*大頭照區*/	
+	/*å¤§é ­ç…§å€*/	
 	/*input[type="file"] {
     display: none;
 	}*/
 	/*.uploadStyle {    
-     樣式 
+     æ¨£å¼ 
      display: inline-flex;
         width: 200px;
         height: 200px;
@@ -249,8 +249,8 @@
         margin-left: 10px;
         margin-top: 5px;
     }
-/* -----------------------------------------------左邊菜單 */
-    #laftmune_2_1,#laftmune_2_2,#laftmune_2_3 {
+/* -----------------------------------------------å·¦é‚Šèœå–® */
+     #laftmune_2_1,#laftmune_2_2,#laftmune_2_3 {
         list-style: none; 
         padding: 0;      
         margin: 5px;
@@ -299,7 +299,7 @@
 
     }
 
-/* 中間變更區域 */
+/* ä¸­é–“è®Šæ›´å€åŸŸ */
 
     #center_result{
         margin-left: 300px;
@@ -307,7 +307,7 @@
         position: absolute;
         background-color: #bbc8d8;
         width: 70%;
-        height: 90%;
+        height: 100%;
         border: 3px dotted #eaeff3;
         padding-top: -10px;
     }
@@ -341,8 +341,8 @@
         color: #eaeff3;
     }
 
-    /* 資料變化區 */
-    /* 收藏========================================== */
+    /* è³‡æ–™è®ŠåŒ–å€ */
+    /* æ”¶è—========================================== */
 
     .boxOut{
         padding-bottom: 10px;
@@ -366,29 +366,30 @@
 
     .box {
         position:relative;
-        display: inline-flex;
-        margin-left: 5px;
+        display: flex;    
+		justify-content: flex-start; /* 排版從左邊開始 */
+        margin-left:5px;
 		border:3px dotted #eaeff3;
 		margin-bottom:50px;
-		flex:1;
+		height:270px;
     }
 
     .Card{
         width: 160px;
         height: 250px;
         /* margin: px; */
-        margin-right: 10px;
-        margin-left: 20px;
+		margin-left:25px;
         margin-top: 10px;
 		margin-bottom:10px;
         position:relative;
         background-color: #eaeff3;
-		display:inline-table;
+        display:inline-block;
     }
 
 	.Card > img{
 		margin-left:5px;
 		margin-top:5px;
+		
 	}
 
 	.title{
@@ -406,6 +407,7 @@
         background-color: #eaeff3;
         font-size: 18px;
         margin: 10px;
+		
     }
 
     .Card_btn{
@@ -424,8 +426,15 @@
         position: absolute;
         border-radius: 10px;
     }
+    
+    .Card_btn:hover {
+    background-color: #bbc8d8;
+    border-radius: 10px;
+    border: 1px solid #14518e;
+    color: #14518e;
+    }
     /* ================================================ */
-/* 下方菜單 */
+/* ä¸‹æ–¹èœå–® */
 /* ======================================================= */
 
     #footer_1{
