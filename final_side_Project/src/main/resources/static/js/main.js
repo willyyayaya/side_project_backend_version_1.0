@@ -189,7 +189,7 @@ $(document).ready(async function () {
     }
 
     edit.onclick = function () {
-        window.location.href = `http://127.0.0.1:5500/%E5%A4%A7%E5%B0%88/order_update/order_update.html?orderId=${orderId}`;
+        window.location.href = `file:///C:/Users/User/git/side_project_backend_version_1.0/final_side_Project/src/main/resources/templates/order_update.html?orderId=${orderId}`;
     }
 
     apply.onclick = function () {

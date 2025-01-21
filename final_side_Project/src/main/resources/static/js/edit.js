@@ -50,8 +50,6 @@ $(document).ready(async function () {
     $("#region").append('<option value="kinmen">金門縣</option>');
     $("#region").append('<option value="lienchiang">連江縣</option>');
     //需求技能(抓資料庫內容)
-    // $("#skill").append('<input type="checkbox" name="needSkill" value="Python">');
-    // $("input[value='Python']").after('<span>' + $('input[value="Python"]').val() + '</span>');
     let skillsUrl = `http://localhost:8080/api/tags/getTagNames`;
     let responseSkill = await fetch(skillsUrl);
     let responseSkillToJSON = await responseSkill.json();
@@ -65,12 +63,13 @@ $(document).ready(async function () {
         let checkbox = $('<input>', {
             type: 'checkbox',
             name: 'needSkill',
-            value: i++
+            value: i++,
+			id:skill
         });
         // 動態添加對應的標籤
-        let span = $('<span>').text(skill);
+        let label = $('<label>',{for:skill}).text(skill);
         // 把checkbox和span放進#skill元素中
-        $("#skill").append(checkbox).append(span);
+        $("#skill").append(checkbox).append(label);
     });
 
     $("input[id='casutamu']").css("display", "none");
@@ -242,7 +241,7 @@ $(document).ready(async function () {
                     })
                 });
                 // 進行重定向
-                const redirectUrl = `http://127.0.0.1:5500/大專/order_main/order_main.html?orderId=${encodeURIComponent(orderId)}`;
+                const redirectUrl = `file:///C:/Users/User/git/side_project_backend_version_1.0/final_side_Project/src/main/resources/templates/order_main.html?orderId=${encodeURIComponent(orderId)}`;
                 window.location.href = redirectUrl;
             } else {
                 console.error('未獲取到 orderId');

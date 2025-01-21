@@ -285,7 +285,7 @@ console.log(responseOrderToJSON.category);
             })
         }).then(response => response.json()
         ).then(data => {
-            const redirectUrl = `http://127.0.0.1:5500/大專/order_main/order_main.html?orderId=${orderId}`;
+            const redirectUrl = `file:///C:/Users/User/git/side_project_backend_version_1.0/final_side_Project/src/main/resources/templates/order_main.html?orderId=${orderId}`;
             window.location.href = redirectUrl;
         }).catch(error => {
             console.error("發生錯誤：", error);
