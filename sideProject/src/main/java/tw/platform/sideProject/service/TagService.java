@@ -19,7 +19,7 @@ public class TagService {
     	
     	// 新增技能 (Tag)
         Tag javaTag = new Tag();
-        javaTag.setTagidm(5);
+        // javaTag.setTagidm(5);
         javaTag.setTagido(5);
         javaTag.setTagname("JavaScript");
         tagRepository.save(javaTag);

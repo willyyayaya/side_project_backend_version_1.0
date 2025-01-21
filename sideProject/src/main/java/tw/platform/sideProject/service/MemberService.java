@@ -53,7 +53,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(member.getMemberid());
-            memberTagKey.setTagId(tag.getTagidm());
+            // memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();
@@ -154,7 +154,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(memberId);
-            memberTagKey.setTagId(tag.getTagidm());
+            // memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();

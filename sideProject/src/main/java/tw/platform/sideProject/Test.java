@@ -69,7 +69,7 @@ public class Test {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(member.getMemberid());
-            memberTagKey.setTagId(tag.getTagidm());
+            // memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();
@@ -91,13 +91,13 @@ public class Test {
     public String addTag() {
         // 新增技能 (Tag)
         Tag javaTag = new Tag();
-        javaTag.setTagidm(5);
+        // javaTag.setTagidm(5);
         javaTag.setTagido(5);
         javaTag.setTagname("JavaScript");
         tagRepository.save(javaTag);
 
         Tag springTag = new Tag();
-        springTag.setTagidm(6);
+        // springTag.setTagidm(6);
         springTag.setTagido(6);
         springTag.setTagname("Python");
         tagRepository.save(springTag);
@@ -122,9 +122,9 @@ public class Test {
             Tag tag = tagRepository.findById(tagId)
                     .orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-            OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
+            // OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
             OrderTag orderTag = new OrderTag();
-            orderTag.setId(orderTagKey);
+            // orderTag.setId(orderTagKey);
             orderTag.setOrder(order);
             orderTag.setTag(tag);
 
