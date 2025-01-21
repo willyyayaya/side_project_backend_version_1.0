@@ -1,9 +1,12 @@
 package tw.platform.sideProject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import tw.platform.sideProject.model.Member;
+import tw.platform.sideProject.model.yuMember;
+import tw.platform.sideProject.model.yuOrder;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,4 +62,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
      * @return 會員清單
      */
     List<Member> findByNameAndIsblocked(String name, Boolean isBlocked);
+
+//    YU新增
+	@Query("SELECT m FROM yuMember m ORDER BY FUNCTION('RAND')")
+	List<yuMember> findRandomYuMembers();
+
+    
 }

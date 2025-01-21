@@ -29,9 +29,9 @@
 		<section class="row">
 			<div class="col-6">
 				<h1>熱門案件推薦</h1>
-				<div class="row" th:each="keywordCase : ${keywordCase}">
+				<div class="row caseBoxIndex" th:each="keywordCase : ${keywordCase}">
 					<div class="col-3">
-						<h2  th:text=${keywordCase.detail}>截止日期</h2>
+						<p  th:text=${keywordCase.deadline}>截止日期</p>
 					</div>
 					<div class="col-9">
 						<h3 th:text=${keywordCase.name}>案件名稱</h3>
@@ -110,37 +110,18 @@
 					</form>
 				</div>
 		</section>
+		<!-- 隨機會員區 -->
 		<section id="memberCard" class="row">
 			<h2>熱門會員</h2>
-			<div class="col-4">
+			<div class="col-4"  th:each="RanMember : ${ranMembers}">
 				<div id="userImg">
 					<img src="img/image.png" alt="">
 				</div>
 				<div id="userData">
-					<h3>會員暱稱</h3>
-					<h4>活躍分數 : 1234</h4>
+					<h3 th:text=${RanMember.account}>會員暱稱</h3>
+					<!-- <h4 th:text="${RanMember.tagNames}">擅長技能</h4> -->
 				</div>
-				<h5>技能tag</h5>
-			</div>
-			<div class="col-4">
-				<div id="userImg">
-					<img src="img/image.png" alt="">
-				</div>
-				<div id="userData">
-					<h3>會員暱稱</h3>
-					<h4>活躍分數 : 1234</h4>
-				</div>
-				<h5>技能tag</h5>
-			</div>
-			<div class="col-4">
-				<div id="userImg">
-					<img src="img/image.png" alt="">
-				</div>
-				<div id="userData">
-					<h3>會員暱稱</h3>
-					<h4>活躍分數 : 1234</h4>
-				</div>
-				<h5>技能tag</h5>
+				<p th:text="${RanMember.tagNames}">擅長技能</p>
 			</div>
 		</section>
 	</main>

@@ -3,6 +3,7 @@ package tw.platform.sideProject.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.OrderTag;
 import tw.platform.sideProject.model.OrderTagKey;
 import tw.platform.sideProject.model.Tag;
+import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.repository.OrderRepository;
 import tw.platform.sideProject.repository.OrderTagRepository;
 import tw.platform.sideProject.repository.TagRepository;
@@ -111,5 +113,14 @@ public class OrderService {
 
 		// 刪除專案
 		orderRepository.deleteById(orderId);
+	}
+
+//	YU新增
+//	抓取隨機5個專案
+	public List<yuOrder> getRandomYuOrders() {
+		System.out.println("進入server");
+		List<yuOrder> allOrders = orderRepository.findRandomYuOrders();
+		// 只取前5個
+		return allOrders.stream().limit(5).collect(Collectors.toList());
 	}
 }

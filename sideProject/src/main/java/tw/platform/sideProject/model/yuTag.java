@@ -22,6 +22,10 @@ public class yuTag {
 
 	@ManyToMany(mappedBy = "tags")
 	private Set<yuOrder> orders = new HashSet<>();
+	
+	@ManyToMany(mappedBy = "tags")
+	private Set<yuMember> members = new HashSet<>();
+
 
 	// Getters and Setters
 	public Long getTagid() {
@@ -46,6 +50,14 @@ public class yuTag {
 
 	public void setOrders(Set<yuOrder> orders) {
 		this.orders = orders;
+	}
+
+	public Set<yuMember> getMembers() {
+		return members;
+	}
+
+	public void setMembers(Set<yuMember> members) {
+		this.members = members;
 	}
 
 }
