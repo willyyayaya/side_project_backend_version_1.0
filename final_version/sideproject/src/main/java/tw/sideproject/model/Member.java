@@ -34,8 +34,7 @@ public class Member {
 	@Column(name = "tel")
     private String tel;
    
-    @Column(name = "picurl" )
-    private byte[] picurl;
+    private String picurl;
     
     private String memberinfo;
     
@@ -110,12 +109,12 @@ public class Member {
         this.tel = tel;
     }
 
-    public byte[] getpicurl() {
+    public String getPicurl() {
         return picurl;
     }
 
-    public void setpicurl(byte[] pic) {
-        this.picurl = pic;
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
     }
 
     public Boolean getIsblocked() {

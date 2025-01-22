@@ -27,16 +27,15 @@ public class test1controller {
     private MemberRepository memberRepository;
 
     // --------------抓取會員資料部分--------------------
-    @GetMapping("/memberHome/{id}")
-    public String getMember(@PathVariable("id") Long id, Model model) {
-        Optional<Member> memberOpt = memberRepository.findById(id);
+ // 從資料庫獲取資料並將其傳遞給模板
+    @GetMapping("/memberHome/{memberid}")
+    public String getMember(@PathVariable("memberid") Long memberid, Model model) {
+        Optional<Member> memberOpt = memberRepository.findById(memberid);
         if (memberOpt.isPresent()) {
             Member member = memberOpt.get();
-            String base64Image = "";
-            if (member.getpicurl() != null) {
-                base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(member.getpicurl());
-            }
-            model.addAttribute("base64Image", base64Image);
+            System.out.println("Picurl from DB: " + member.getPicurl());
+            System.out.println("Picurl: " + member.getPicurl());  // 確保這裡能顯示出 picurl
+
             model.addAttribute("member", member);
         } else {
             model.addAttribute("error", "Member not found");
@@ -44,57 +43,69 @@ public class test1controller {
         return "memberHome";
     }
 
-    @PostMapping("/memberHome/{id}/update")
-    public String updateMember(@PathVariable("id") Long id,
-    											@ModelAttribute Member member,  // 使用 @ModelAttribute 绑定表单数据到 Member 对象
-    											@RequestParam(value = "picurl", required = false) MultipartFile picurl, 
-    												Model model) {
 
-        // 查找数据库中现有的会员数据
-        Optional<Member> memberOpt = memberRepository.findById(id);
+    @PostMapping("/memberHome/{memberid}/update")
+    public String updateMember(@PathVariable("memberid") Long memberid,
+                               @ModelAttribute Member member,  
+                               @RequestParam(value = "picurl", required = false) String picurl, 
+                               Model model) throws IOException {
+
+        // 查找数据库中的会员数据
+        Optional<Member> memberOpt = memberRepository.findById(memberid);
         if (memberOpt.isPresent()) {
             Member existMember = memberOpt.get();
 
-            // 更新其他字段
-            existMember.setAccount(member.getAccount());
-            // 从表单传入的数据更新现有会员的属性
-            existMember.setEmail(member.getEmail());
-            existMember.setPassword(member.getPassword());
-            existMember.setTel(member.getTel());
-            existMember.setBirthday(member.getBirthday());
-            existMember.setMemberinfo(member.getMemberinfo());
-            
-            
-            // 检查更新数据的内容
-            System.out.println("Updating member: " + existMember);  // 查看数据
-            memberRepository.save(existMember);  // 更新数据库中的会员数据
+            // 打印调试信息，确认表单数据是否传递正确
+            System.out.println("收到的会员数据：" + member);
+            System.out.println("原始的图片字段：" + existMember.getPicurl());
 
-            // 处理图片上传
+            // 更新其他字段（检查是否为空，如果不为空才进行更新）
+            if (member.getAccount() != null && !member.getAccount().isEmpty()) {
+                existMember.setAccount(member.getAccount());
+            }
+            if (member.getEmail() != null && !member.getEmail().isEmpty()) {
+                existMember.setEmail(member.getEmail());
+            }
+            if (member.getPassword() != null && !member.getPassword().isEmpty()) {
+                existMember.setPassword(member.getPassword());
+            }
+            if (member.getTel() != null && !member.getTel().isEmpty()) {
+                existMember.setTel(member.getTel());
+            }
+            if (member.getBirthday() != null) {
+                existMember.setBirthday(member.getBirthday());
+            }
+            if (member.getMemberinfo() != null && !member.getMemberinfo().isEmpty()) {
+                existMember.setMemberinfo(member.getMemberinfo());
+            }
+
+            // 处理图片上传（已直接传递 Base64 字符串）
             if (picurl != null && !picurl.isEmpty()) {
-                try {
-                    byte[] imageBytes = picurl.getBytes();
-                    existMember.setpicurl(imageBytes);  // 假设 Member 类中有 pic 属性用来存储图片
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    model.addAttribute("error", "图片上传失败");
-                    return "memberHome";
-                }
+                // 直接将 Base64 字符串赋值给 picurl 字段
+                existMember.setPicurl(picurl);
+                System.out.println("更新后的图片 ：" + picurl);
             }
 
             // 更新数据库中的会员数据
             memberRepository.save(existMember);
 
+            // 打印保存后的会员数据
+            System.out.println("保存后的会员数据：" + existMember.getPicurl());
+
+
             // 将更新后的数据添加到 model 中，以便返回到前端
             model.addAttribute("member", existMember);
-         // 处理图片预览，返回 Base64 编码
-            String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(existMember.getpicurl());
-            model.addAttribute("base64Image", base64Image);
+
+            // 返回更新后的页面
             return "memberHome";  // 返回更新后的页面
         } else {
+            // 如果找不到该会员，则返回错误信息
             model.addAttribute("error", "会员资料更新失败");
-            return "memberHome";
+            return "memberHome";  // 返回错误页面
         }
     }
+
+
     
 //    @PostMapping("/test1/{id}/updateIcon")
     

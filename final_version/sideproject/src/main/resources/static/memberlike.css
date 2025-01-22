@@ -312,7 +312,7 @@
     #center_result_title{
         /* border: 3px solid; */
         /* position: relative; */
-        margin-bottom: 20px;
+        margin-bottom: 30px;
     }
     #center_result_title > h2 {
         display: flex;

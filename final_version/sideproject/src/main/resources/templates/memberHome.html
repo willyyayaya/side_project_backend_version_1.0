@@ -11,9 +11,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
-	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 	<!-- 只有此頁面可以在VS Code用Live Server開啟，CSS link 如下 -->
-	<link rel="stylesheet" href="/src/main/resources/static/fragment.css">
+	<link rel="stylesheet" href="/fragment.css">
 	<!-- 各自頁面要用日蝕spring跑才看得到，CSS link 如下，加在自己頁面的head -->
 	<link rel="stylesheet" href="/memberHome.css">
 	
@@ -25,20 +24,20 @@
 <body>
 
     <!-- 上方菜單 -->
-    <div class="sticky" th:if="${member!= null}" th:insert="~{fragments::userHeader}"></div> 
-
+    
+        <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div> 
 
     <!-- 中間 -->
     <div id="center_1">
     	<div id="center_2">
             <div id="center_icon" style="background-color: #bbc8d8;">
     			<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
-            	<form th:action="@{/memberHome/{id}/updateIcon(id=${member.memberid})}" method="post" enctype="multipart/form-data">
+            	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${member.memberid})}" method="post" enctype="multipart/form-data">
             	<div style="background-color: #bbc8d8;width: 90%;height: 15%;">
                 <!-- 預覽圖片 -->
-    			<img id="icon" th:src="${base64Image}" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
-    			<input type="file" id="upload" name="picurl" accept="image/*" style="display:none;" onchange="previewImage()" />
-    			<button type="submit" id="icon_btn">更換圖片</button>
+    			<img name="picurl" id="icon" th:src="|${member.picurl}|" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
+    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+    			<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
             </div>
         </form>
     </div>
@@ -142,7 +141,7 @@
                     <div id="center_result_inputindex_6">
                         <div id="input_6">
                             <h4>自我介紹:</h4>
-                            <textarea id="input_index_memberinfo" name="memberinfo" style="width: 400px; height: 250px; resize: none;" th:value="${member.memberinfo}" ></textarea>
+                            <textarea id="input_index_memberinfo" name="memberinfo" style="width: 400px; height: 250px; resize: none;" th:text="${member.memberinfo}" ></textarea>
                             <button type="button" onclick="submitField('memberinfo')">編輯</button>
                         </div>
                     </div>
@@ -153,54 +152,71 @@
 
     <!-- 頭像JS部分 -->
     <script>
-        // 顯示選擇的圖片預覽
-        function previewImage() {
-            const file = document.getElementById('upload').files[0];
-            const reader = new FileReader();
+ // 顯示選擇的圖片預覽
+    function previewImage() {
+        const file = document.getElementById('upload').files[0];
+        const reader = new FileReader();
 
-            reader.onloadend = function() {
-                document.getElementById('icon').src = reader.result;
-            }
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
+        reader.onloadend = function() {
+            document.getElementById('icon').src = reader.result;
         }
-    
-    
-   
-        // 提交单个字段的函数
-        function submitField(fieldName) {
-            var form = document.getElementById('updateForm');
-            var formData = new FormData(form);
 
-            // 获取指定字段的值并添加到 FormData 中
-            const inputElement2 = document.getElementById('input_index_' + fieldName).value;
-                console.log(inputElement2);
-            if (inputElement2 != "") {
-                formData.append('value',inputElement2);
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+ // 提交其他字段的更新表单
+    function submitImage(picurl) {
+            var form = document.getElementById('updateIcon'); // 获取图片表单
+            var formData = new FormData(form); // 将图片表单数据转为 FormData 对象
+
+            const base64Image = document.getElementById("icon").src;  // 获取 Base64 字符串
+
+            formData.append('picurl', base64Image);  // 添加 base64 图片数据到 FormData 中
+
+        // 提交数据到后台
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert(picurl + ' 更新成功！');
             } else {
-            	alert("請填寫 " + fieldName);
-                return;
-            }
-
-            // 提交数据到后台
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    alert(fieldName + ' 更新成功！');
-                } else {
-                    alert('更新失敗，請稍後再試！');
-                }
-            })
-            .catch(error => {
-                console.error("錯誤:", error);
                 alert('更新失敗，請稍後再試！');
-            });
+            }
+        })
+        .catch(error => {
+            console.error("錯誤:", error);
+            alert('更新失敗，請稍後再試！');
+        });
+    }
+
+
+// 提交其他字段的更新表单
+function submitField(fieldName) {
+    var form = document.getElementById('updateForm'); // 获取其他字段表单
+    var formData = new FormData(form); // 将表单数据转为 FormData 对象
+
+    // 提交数据到后台
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(fieldName + ' 更新成功！');
+        } else {
+            alert('更新失敗，請稍後再試！');
         }
+    })
+    .catch(error => {
+        console.error("錯誤:", error);
+        alert('更新失敗，請稍後再試！');
+    });
+}
+
     </script>
 
     <!-- 下方菜單 -->

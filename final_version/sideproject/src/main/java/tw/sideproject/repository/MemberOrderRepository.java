@@ -54,15 +54,15 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     List<MemberOrder> findAllByMemberid(@Param("memberId") Long memberId);
     
  // 查詢會員收藏的所有專案    
-    List<MemberOrder> findByMember_MemberidAndWantedTrue(Long memberId);
+    List<MemberOrder> findByMember_MemberidAndCollectedTrue(Long memberId);
 
     //找member跟order的wanted
 	List<MemberOrder> findWantedByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
 	
 	// 根據 memberId 和 orderId 更新 wanted 屬性
     @Modifying
-    @Query("UPDATE MemberOrder mo SET mo.wanted = :wanted WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
-    void updateWantedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("wanted") boolean wanted);
+    @Query("UPDATE MemberOrder mo SET mo.collected = :Collected WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
+    void updateCollectedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("collected") boolean collected);
 	
 
 }

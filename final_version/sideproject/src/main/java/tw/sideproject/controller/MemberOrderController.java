@@ -72,23 +72,23 @@ public class MemberOrderController {
  // 根據 memberId 獲取該會員所有收藏的專案
     @GetMapping("/like/{memberid}")
     public List<MemberOrder> getwanted(@PathVariable Long memberid,Long orderid) {
-        return memberOrderService.getWantedByMemberId(memberid);
+        return memberOrderService.getcollectedByMemberId(memberid);
     }
     
  // 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
     @GetMapping("/memberlike/{memberid}/{orderid}")
-    public boolean getMemberLike(@PathVariable Long memberid, @RequestParam Long orderid) {
+    public boolean getMemberCollected(@PathVariable Long memberid, @RequestParam Long orderid) {
         Optional<MemberOrder> memberOrder = memberOrderService.getOrderByMemberAndOrder(memberid, orderid);
         
         // 返回該會員對某個專案是否有收藏（wanted）
-        return memberOrder.isPresent() && memberOrder.get().getWanted();
+        return memberOrder.isPresent() && memberOrder.get().getcollected();
     }
     
  // 更新會員對專案的收藏狀態
     @Transactional
     @PostMapping("/updateWantedStatus")
-    public void updateWantedStatus(@RequestParam Long memberid, @RequestParam Long orderid, @RequestParam boolean wanted) {
-        memberOrderService.updateWantedStatus(memberid, orderid, wanted);
+    public void updateCollectedStatus(@RequestParam Long memberid, @RequestParam Long orderid, @RequestParam boolean collected) {
+        memberOrderService.updateCollectedStatus(memberid, orderid, collected);
     }
     
 }

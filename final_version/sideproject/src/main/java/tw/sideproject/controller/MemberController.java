@@ -72,7 +72,7 @@ public class MemberController {
 //    }
  // 查詢指定 id 的會員資料
 
-    @GetMapping("p1/memberHome/{id}")
+    @GetMapping("/memberHome/{memberid}")
     public String getmember(@PathVariable("id") Long id, Model model) {
         // 假設這裡有一些處理邏輯，比如從資料庫獲取產品
     	

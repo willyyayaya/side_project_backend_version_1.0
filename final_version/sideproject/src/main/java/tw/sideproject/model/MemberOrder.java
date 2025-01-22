@@ -72,11 +72,11 @@ public class MemberOrder {
         this.wanted = wanted;
     }
 
-	public Boolean getCollected() {
+	public Boolean getcollected() {
 		return collected;
 	}
 
-	public void setCollected(Boolean collected) {
+	public void setcollected(Boolean collected) {
 		this.collected = collected;
 	}
     
