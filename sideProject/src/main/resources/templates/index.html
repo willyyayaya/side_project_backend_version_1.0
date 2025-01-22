@@ -16,6 +16,7 @@
 	<link rel="stylesheet" href="CSS/index.css">
 	<link rel="stylesheet" href="/src/main/resources/static/CSS/index.css">
 	<link rel="stylesheet" href="/src/main/resources/static/CSS/fragment.css">
+
 </head>
 
 <body>
@@ -31,7 +32,7 @@
 				<h1>熱門案件推薦</h1>
 				<div class="row caseBoxIndex" th:each="keywordCase : ${keywordCase}">
 					<div class="col-3">
-						<p  th:text=${keywordCase.deadline}>截止日期</p>
+						<p th:text=${keywordCase.deadline}>截止日期</p>
 					</div>
 					<div class="col-9">
 						<h3 th:text=${keywordCase.name}>案件名稱</h3>
@@ -115,15 +116,28 @@
 			<h2>熱門會員</h2>
 			<div class="col-4"  th:each="RanMember : ${ranMembers}">
 				<div id="userImg">
-					<img src="img/image.png" alt="">
+					<img th:src="@{(${RanMember.picurl})}" alt="">
 				</div>
 				<div id="userData">
-					<h3 th:text=${RanMember.account}>會員暱稱</h3>
+					<h3 th:text="${RanMember.account}">會員暱稱</h3>
 					<!-- <h4 th:text="${RanMember.tagNames}">擅長技能</h4> -->
 				</div>
 				<p th:text="${RanMember.tagNames}">擅長技能</p>
 			</div>
 		</section>
+		<!-- <section id="memberCard" class="row">
+			<h2>隨機推薦會員</h2>
+			<div class="col-4">
+				<div id="userImg">
+					<img src="img/image.png" alt="">
+				</div>
+				<div id="userData">
+					<h3>會員暱稱</h3>
+					<h4>擅長技能</h4>
+				</div>
+				<p>擅長技能</p>
+			</div>
+		</section> -->
 	</main>
 	<div th:replace="fragments::footer"></div>
 	<script src="js/jquery-3.7.1.js"></script>

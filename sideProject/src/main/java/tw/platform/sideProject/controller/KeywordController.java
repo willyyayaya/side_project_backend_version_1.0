@@ -30,37 +30,23 @@ public class KeywordController {
 	@PostMapping("/SaveAndSearchKeyword")
 	@ResponseBody // 回傳片段
 	public void SaveAndSearchKeyword(@RequestParam String userKeyword, Model model, HttpSession session) {
-		// TODO bug從找case進入時會帶入上一次搜尋的資料
-		System.out.println("使用者輸入: "+userKeyword);
-		if (userKeyword != "") {
-			// 存關鍵字邏輯
-			keywordService.saveKeyword(userKeyword);
+		
+		// 存關鍵字邏輯
+		System.out.println("使用者輸入: " + userKeyword);
+		keywordService.saveKeyword(userKeyword);
 
-			// 查詢關鍵字
-			List<yuOrder> list = keywordService.searchKeywords(userKeyword);
-			System.out.println("根據關鍵詞 " + userKeyword + " 搜尋共有 " + list.size() + " 筆資料");
+		// 查詢關鍵字
+		List<yuOrder> list = keywordService.searchKeywords(userKeyword);
+		System.out.println("根據關鍵詞 " + userKeyword + " 搜尋共有 " + list.size() + " 筆資料");
 
-			// TODO 抓圖片邏輯從這邊加入
-			// 確認一下搜尋到的資料(都完成後可刪除)
-			for (yuOrder order : list) {
-				String tagNames = order.getTagNames();
-				System.out.printf("專案id %d.專案名稱:%s,簡介:%s,標籤:%s%n", order.getOrderid(), order.getName(),
-						order.getIntro(), tagNames);
-				// 將這邊的結果存到session，帶至搜尋頁
-				session.setAttribute("keywordCase", list);
-			}
-		} else {
-			// 隨機專案資料帶入
-			List<yuOrder> ranList = orderService.getRandomYuOrders();
-			System.out.println("隨機專案數: " + ranList.size());
-			// 確認一下搜尋到的資料(都完成後可刪除)
-			for (yuOrder order : ranList) {
-				String tagNames = order.getTagNames();
-				System.out.printf("專案id %d.專案名稱:%s,簡介:%s,標籤:%s%n", order.getOrderid(), order.getName(),
-						order.getIntro(), tagNames);
-				// 將這邊的結果存到session，帶至搜尋頁
-				session.setAttribute("keywordCase", ranList);
-			}
+		// 確認一下搜尋到的資料(都完成後可刪除)
+		for (yuOrder order : list) {
+			String tagNames = order.getTagNames();
+			System.out.printf("專案id %d.專案名稱:%s,簡介:%s,標籤:%s%n", order.getOrderid(), order.getName(), order.getIntro(),
+					tagNames);
+			// 將這邊的結果存到session，帶至搜尋頁
+			session.setAttribute("keywordCase", list);
+
 		}
 
 	}

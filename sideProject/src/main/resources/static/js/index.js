@@ -84,4 +84,5 @@ $(document).ready(function () {
         $("#keyword").val($(this).text().trim());
         $("#searchButton").click();
     })
+
 });

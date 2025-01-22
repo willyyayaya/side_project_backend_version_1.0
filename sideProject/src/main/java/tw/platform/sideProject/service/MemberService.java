@@ -184,11 +184,13 @@ public class MemberService {
 		}
 		memberRepository.deleteById(memberId);
 	}
-	
+
 //	YU新增
+//	首頁隨抓取會員資料
 	public List<yuMember> getRandomYuMembers() {
 		List<yuMember> allMembers = memberRepository.findRandomYuMembers();
 		// 只取前6個
 		return allMembers.stream().limit(6).collect(Collectors.toList());
 	}
+
 }
