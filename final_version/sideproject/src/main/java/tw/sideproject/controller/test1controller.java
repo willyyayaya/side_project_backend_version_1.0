@@ -33,8 +33,8 @@ public class test1controller {
         Optional<Member> memberOpt = memberRepository.findById(memberid);
         if (memberOpt.isPresent()) {
             Member member = memberOpt.get();
-            System.out.println("Picurl from DB: " + member.getPicurl());
-            System.out.println("Picurl: " + member.getPicurl());  // 確保這裡能顯示出 picurl
+            //System.out.println("Picurl from DB: " + member.getPicurl());
+           // System.out.println("Picurl: " + member.getPicurl());  // 確保這裡能顯示出 picurl
 
             model.addAttribute("member", member);
         } else {
@@ -56,8 +56,8 @@ public class test1controller {
             Member existMember = memberOpt.get();
 
             // 打印调试信息，确认表单数据是否传递正确
-            System.out.println("收到的会员数据：" + member);
-            System.out.println("原始的图片字段：" + existMember.getPicurl());
+          //  System.out.println("收到的会员数据：" + member);
+            //System.out.println("原始的图片字段：" + existMember.getPicurl());
 
             // 更新其他字段（检查是否为空，如果不为空才进行更新）
             if (member.getAccount() != null && !member.getAccount().isEmpty()) {
@@ -83,14 +83,14 @@ public class test1controller {
             if (picurl != null && !picurl.isEmpty()) {
                 // 直接将 Base64 字符串赋值给 picurl 字段
                 existMember.setPicurl(picurl);
-                System.out.println("更新后的图片 ：" + picurl);
+                //System.out.println("更新后的图片 ：" + picurl);
             }
 
             // 更新数据库中的会员数据
             memberRepository.save(existMember);
 
             // 打印保存后的会员数据
-            System.out.println("保存后的会员数据：" + existMember.getPicurl());
+           // System.out.println("保存后的会员数据：" + existMember.getPicurl());
 
 
             // 将更新后的数据添加到 model 中，以便返回到前端

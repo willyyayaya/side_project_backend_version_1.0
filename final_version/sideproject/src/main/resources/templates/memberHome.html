@@ -175,8 +175,15 @@
 
             formData.append('picurl', base64Image);  // 添加 base64 图片数据到 FormData 中
 
-        // 提交数据到后台
-        fetch(form.action, {
+            // 假设 URL 为 /memberHome/12345
+            const path = window.location.pathname;
+			const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+            // 动态构建 URL，替换 {memberid} 为实际的 memberid
+            var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+            // 通过 Fetch 请求将 Base64 字符串传递到后端
+            fetch(url, {
             method: 'POST',
             body: formData
         })
@@ -199,8 +206,14 @@ function submitField(fieldName) {
     var form = document.getElementById('updateForm'); // 获取其他字段表单
     var formData = new FormData(form); // 将表单数据转为 FormData 对象
 
-    // 提交数据到后台
-    fetch(form.action, {
+    const path = window.location.pathname;
+	const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+    // 动态构建 URL，替换 {memberid} 为实际的 memberid
+    var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+    // 通过 Fetch 请求将 Base64 字符串传递到后端
+    fetch(url, {
         method: 'POST',
         body: formData
     })
