@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Message {
@@ -27,8 +28,9 @@ public class Message {
 	@ManyToOne//根據Memberid匯入receiverid
 	@JoinColumn(name = "receiverid")
 	private mimiMember receiverid;
-	
+	@NotBlank(message = "不可為空")
 	private String title;
+	@NotBlank(message = "不可為空")
 	private String content;
 	
     @CreationTimestamp

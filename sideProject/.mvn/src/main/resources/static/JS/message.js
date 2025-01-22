@@ -22,22 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const deleteButtons = document.querySelectorAll("#del");
     const replyButtons = document.querySelectorAll("#back");
 
-    // 刪除訊息
-    deleteButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            const messageId = button.getAttribute("data-id");
-            fetch(`/api/messages/${messageId}`, {
-                method: "DELETE",
-            }).then(response => {
-                if (response.ok) {
-                    alert("訊息已刪除！");
-                    location.reload();
-                } else {
-                    alert("刪除失敗！");
-                }
-            });
-        });
-    });
+    
 
     // 回信
     replyButtons.forEach(button => {

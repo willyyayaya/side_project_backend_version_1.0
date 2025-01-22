@@ -36,21 +36,25 @@ public class MessageService {
 	}
 	
 	//
-	public Message getMessageById(Long messageid) {
-		return messageRepository.findById(messageid).orElse(null);
+	public Message getMessageById(Long messageId) {
+	    Optional<Message> messageOpt = messageRepository.findById(messageId);
+	    if (messageOpt.isPresent()) {
+	        Message message = messageOpt.get();
+	        System.out.println("Receiver ID (mimiMember): " + message.getReceiverid().getMemberid());  // 假設 mimiMember 類型有 getMemberId 方法
+	        return message;
+	    } else {
+	        System.out.println("Message not found with ID: " + messageId);
+	        return null;
+	    }
 	}
+
+
 	
-	//拿到senderid的Email
-	public String getEmailBySenderId(Long senderid) {
-		mimiMember sender = memberRepository.findById(senderid).orElseThrow(() -> new RuntimeException("Sender not found"));
-		return sender.getEmail();	
-	}
-	
+
 	//查找某個會員顯示信件
 	public List<Message> getMessagesByReceiverid(Long receiverid) { 
 		return messageRepository.findByReceiverid(receiverid); 
 	}
-	
 	
 	//刪除信件
 	public void deleteMessage(Long messageId) {
@@ -59,24 +63,27 @@ public class MessageService {
 	
 	
 	//回信
-	public String getSenderEmailById(Long senderId) {
-	     // 假設 Message 實體有 senderEmail 屬性
-		Optional<Message> messageOptional = messageRepository.findById(senderId);
-		if (messageOptional.isPresent()) {
-			return messageOptional.get().getSenderid().getEmail();
-		}
-		return null; // 如果找不到 senderId，返回 null
+	public String getSenderEmailById(Long messageId) {
+	    // 根據 messageId 查找對應的 Message 實體
+	    Optional<Message> messageOptional = messageRepository.findById(messageId);
+	    if (messageOptional.isPresent()) {
+	        // 返回 senderid 的 email
+	        return messageOptional.get().getSenderid().getEmail();
 	    }
-	 
-	 
-	 // 處理回信
-	 public boolean sendReply(String senderEmail, String messageContent) {
-	     // 在這裡您可以實現回信的邏輯，例如發送郵件或儲存回信
-	     // 這裡假設總是返回 true，實際應根據具體情況處理
-	     return true;
-	 }
-
+	    return null; // 如果找不到對應的 messageId，返回 null
+	}
+//update	 
 	public void updateMessage(Message message) {
 		 messageRepository.save(message);
 	}
+	
+	public Message findByMessageId(Long messageid) {
+	       Optional<Message> message = messageRepository.findByMessageid(messageid);
+	       if (message.isPresent()) {
+	           return message.get();
+	       } else {
+	           // 可以根據需求自定義異常處理
+	           throw new RuntimeException("Message not found with ID: " + messageid);
+	       }
+    }
 }

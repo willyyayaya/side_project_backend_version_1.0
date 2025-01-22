@@ -37,5 +37,9 @@ public class mimiMemberService {
 		}
 	}
 	
-
+	//拿到memberid
+		public Long getMemberid(Long memberid) {
+			mimiMember member = memberRepository.findById(memberid).orElseThrow(() -> new RuntimeException("Member not found"));
+			return member.getMemberid();	
+		}
 }
