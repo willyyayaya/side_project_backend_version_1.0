@@ -25,7 +25,7 @@ public class MemberTag {
 	 @ManyToOne
 	 @MapsId("tagId")
 	 @JsonBackReference
-	 @JoinColumn(name = "tagidm")
+	 @JoinColumn(name = "tagid")
 	 private Tag tag;
 
 	 // Getters and Setters

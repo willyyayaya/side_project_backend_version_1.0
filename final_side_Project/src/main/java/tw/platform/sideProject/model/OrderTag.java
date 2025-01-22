@@ -25,7 +25,7 @@ public class OrderTag {
     @ManyToOne
     @MapsId("tagId")
 	@JsonBackReference
-    @JoinColumn(name = "tagido")
+    @JoinColumn(name = "tagid")
     private Tag tag;
 
     // Getters and Setters

@@ -62,17 +62,18 @@ $(document).ready(async function () {
     $("#skill").empty();
     // 動態生成checkbox和對應的標籤
     var i = 1;
-    responseSkillToJSON.forEach(skill => {
-        // 動態添加checkbox
-        let checkbox = $('<input>', {
-            type: 'checkbox',
-            name: 'needSkill',
-            value: i++
-        });
-        // 動態添加對應的標籤
-        let span = $('<span>').text(skill);
-        // 把checkbox和span放進#skill元素中
-        $("#skill").append(checkbox).append(span);
+	responseSkillToJSON.forEach(skill => {
+	       // 動態添加checkbox
+	       let checkbox = $('<input>', {
+	           type: 'checkbox',
+	           name: 'needSkill',
+	           value: i++,
+			   id:skill
+	       });
+	       // 動態添加對應的標籤
+	       let label = $('<label>',{for:skill}).text(skill);
+	       // 把checkbox和span放進#skill元素中
+	       $("#skill").append(checkbox).append(label);
     });
 
     //抓預設
@@ -130,7 +131,7 @@ console.log(responseOrderToJSON.category);
     let responseDefultToJSON = await responseDefult.json();
 
     $("input[name='needSkill']").each(function (index) {
-        if (responseDefultToJSON.includes($(this).next('span').text().trim())) {  // 比較 span 的文字
+        if (responseDefultToJSON.includes($(this).next('label').text().trim())) {  // 比較 span 的文字
             $(this).prop('checked', true);  // 設置該 checkbox 為選中
         }
     });

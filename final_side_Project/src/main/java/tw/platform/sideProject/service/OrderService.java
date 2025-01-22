@@ -129,9 +129,9 @@ public class OrderService {
 	    			Tag tag = tagRepository.findById(tagId)
 	    					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-//	                OrderTagKey orderTagKey = new OrderTagKey(orderId, tag.getTagidm());
+	                OrderTagKey orderTagKey = new OrderTagKey(orderId, tag.getTagid());
 	                OrderTag orderTag = new OrderTag();
-//	                orderTag.setId(orderTagKey);
+	                orderTag.setId(orderTagKey);
 	                orderTag.setOrder(existingOrder);  // 設定訂單
 	                orderTag.setTag(tag);  // 設定標籤
 

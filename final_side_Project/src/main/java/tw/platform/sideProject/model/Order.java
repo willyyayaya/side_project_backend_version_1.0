@@ -44,8 +44,8 @@ public class Order {
     @JsonIgnore
     @JoinTable(
         name = "ordertag",
-        joinColumns = @JoinColumn(name = "orderid")
-//        inverseJoinColumns = @JoinColumn(name = "tagido")
+        joinColumns = @JoinColumn(name = "orderid"),
+        inverseJoinColumns = @JoinColumn(name = "tagid")
     )
     private Set<Tag> tags = new HashSet<>();
 

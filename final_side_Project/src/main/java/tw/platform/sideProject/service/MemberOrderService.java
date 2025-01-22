@@ -174,7 +174,7 @@ public class MemberOrderService {
 
 		if (ranks.isEmpty()) {
 			// 如果沒有找到相關專案，則返回 null 或者其他預設值
-			return null;
+			return 0.0;
 		}
 
 		// 計算平均 rank 分數，將 null 視為 0
