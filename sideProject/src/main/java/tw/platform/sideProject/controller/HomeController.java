@@ -30,6 +30,7 @@ public class HomeController {
 
 	@GetMapping("/index")
 	public String index(Model model, HttpSession session) {
+		System.out.println("---home---");
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName());
@@ -41,8 +42,7 @@ public class HomeController {
 		List<yuMember> ranMembers = memberService.getRandomYuMembers();
 		for (yuMember member : ranMembers) {
 			if (member.getPicurl() == null || member.getPicurl() == "") {
-				member.setPicurl(
-						"https://fastly.picsum.photos/id/490/200/200.jpg?hmac=7WZhaN9NS8sb08YmpHre_3NGnVUsmH8X5W_GlG2Mry4");
+				member.setPicurl("../img/memberImg.jpg");
 			}
 			System.out.println(member.getPicurl());
 		}
@@ -50,7 +50,7 @@ public class HomeController {
 		// 抓取隨機專案
 		List<yuOrder> ranOrders = orderService.getRandomYuOrders();
 		for (yuOrder order : ranOrders) {
-			order.setPicurl("https://example.com/path/to/image.jpg");
+			order.setPicurl("../img/caseImg.jpg");
 			System.out.println(order.getPicurl());
 		}
 		model.addAttribute("keywordCase", ranOrders);
@@ -61,10 +61,10 @@ public class HomeController {
 		return "index";
 	}
 
-//原本的
+	//搜尋鈕
 	@GetMapping("/search")
 	public String search(Model model, HttpSession session) {
-		System.out.println("進入搜尋");
+		System.out.println("---搜尋---");
 		// 判斷是否有登入狀態
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
@@ -86,8 +86,7 @@ public class HomeController {
 			for (yuOrder order : keywordCase) {
 				// 如果訂單沒圖片，加入圖片
 				if (order.getPicurl() == null) {
-					order.setPicurl(
-							"https://fastly.picsum.photos/id/955/200/200.jpg?hmac=_m3ln1pswsR9s9hWuWrwY_O6N4wizKmukfhvyaTrkjE");
+					order.setPicurl("../img/caseImg.jpg");
 				}
 //				System.out.println(order.getPicurl());
 			}
@@ -95,6 +94,7 @@ public class HomeController {
 		} else {
 			System.out.println("注入失敗");
 		}
+		session.setAttribute("keywordCase", keywordCase);
 		return "search";
 	}
 
@@ -119,13 +119,12 @@ public class HomeController {
 		List<yuOrder> ranOrders = orderService.getRandomYuOrders();
 		for (yuOrder order : ranOrders) {
 			if (order.getPicurl() == null) {
-				order.setPicurl(
-						"https://fastly.picsum.photos/id/955/200/200.jpg?hmac=_m3ln1pswsR9s9hWuWrwY_O6N4wizKmukfhvyaTrkjE");
+				order.setPicurl("../img/caseImg.jpg");
 			}
 			System.out.println(order.getPicurl());
 		}
 		model.addAttribute("keywordCase", ranOrders);
-
+		session.setAttribute("keywordCase", ranOrders);
 		return "search";
 	}
 

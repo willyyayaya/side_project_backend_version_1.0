@@ -1,5 +1,6 @@
 package tw.platform.sideProject.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -74,6 +75,21 @@ public class KeywordService {
 			e.printStackTrace();
 		}
 		return jsonResult;
+	}
+	
+	public void timeSortASC(List<yuOrder> keyOrder){
+		if(keyOrder!=null) {			
+			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline).reversed());
+		}else {
+			System.out.println("無收到訂單資料");
+		}
+	}
+	public void timeSortDSC(List<yuOrder> keyOrder){
+		if(keyOrder!=null) {			
+			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline));
+		}else {
+			System.out.println("無收到訂單資料");
+		}
 	}
 
 }

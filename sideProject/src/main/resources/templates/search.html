@@ -91,10 +91,23 @@
                     </tr>
                 </div>
                 <div id="btn">
-                    <button>發布時間</button>
-                    <button>收藏數</button>
+                    <button id="caseTimeDSC">截止日(近→遠)預設</button>
+                    <button id="caseTimeASC">截止日(遠→近)</button>
+                    <button id="caseWant">收藏數</button>
                 </div>
-                <div th:replace="fragments::keywordsearchBox"></div>
+                <div id="keywordsearchBox">
+                    <div class="row oneCase" th:each="keywordCase : ${keywordCase}">
+                        <img th:src="@{(${keywordCase.picurl})}" alt="" class="col-4">
+                        <div id="" class="col-8">
+                            <h3 th:text="${keywordCase.name}">案件名稱</h3>
+                            <p th:text="${keywordCase.tagNames}">案件tag</p>
+                            <p>類型&地點debug用後刪</p>
+                            <span th:text="${keywordCase.Category}">案件類型</span>、<span
+                                th:text="${keywordCase.Location}">案件地點</span>
+                            <h5 th:text="${keywordCase.intro}">案件簡介</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>

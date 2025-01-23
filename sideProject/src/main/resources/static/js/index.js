@@ -11,6 +11,7 @@ function getRandomKeyword() {
         .catch(error => console.error('抓取關鍵字錯誤:', error));
 }
 
+//使用者點搜尋框時清除隨機關鍵字
 function clearPlaceholder() {
     var searchInput = $("#keyword");
     if (searchInput.val() === randomKeyword) {
@@ -48,33 +49,30 @@ $(document).ready(function () {
         $("input[name='options']:checked").each(function () {
             option.push($(this).val());
         });
-        // console.log(option.length);
-
+        option = option.length ? option : [];
+        console.log(option.length);
+        //交給後端存入關鍵字
         if (keyword != "" || option.length != 0) {
             var params = new URLSearchParams();
-            params.append("keyword", keyword);
+            params.append("keyword", encodeURIComponent(keyword));
             option.forEach(option =>
-                params.append("options", option));
+                params.append("options", encodeURIComponent(option)));
 
-            //交給後端存入關鍵字
-            if (keyword != "") {
-                $.post("/SaveAndSearchKeyword", { userKeyword: keyword }, function (response) {
-                    console.log("關鍵字已儲存");
-                    //利用thymeleaf模板返回搜尋資料
-                    fetch("/SaveAndSearchKeyword")
-                        .then(response => response.text())
-                        .then(data => {
-                            $("#keywordsearchBox").html(data);
-                        })
-                        .catch(error => console.error('Error loading content:', error));
-                    //存為URL
-                    window.location.href = "/search?" + params.toString();
-                }).fail(function (jqXHR, textStatus, errorThrown) {
-                    console.log("請求失敗: " + textStatus + ", " + errorThrown);
-                });
-            }
+            $.post("/SaveAndSearchKeyword", { userKeyword: keyword, options: option }, function (response) {
+                console.log("關鍵字已儲存");
+                //利用thymeleaf模板返回搜尋資料
+                fetch("/SaveAndSearchKeyword")
+                    .then(response => response.text())
+                    .then(data => {
+                        $("#keywordsearchBox").html(data);
+                    })
+                    .catch(error => console.error('Error loading content:', error));
+                //存為URL
+                window.location.href = "/search?" + params.toString();
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.log("請求失敗: " + textStatus + ", " + errorThrown);
+            });
             console.log("使用者輸入為: " + keyword + ",checkbox: " + option);
-
         }
 
     });

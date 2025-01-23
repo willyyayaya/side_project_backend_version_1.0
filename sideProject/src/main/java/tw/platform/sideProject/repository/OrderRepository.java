@@ -29,8 +29,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	List<yuOrder> searchByKeyword(@Param("keyword") String keyword);
 	
 //	抓取隨機專案
-//	@Query(value = "SELECT * FROM orderform ORDER BY RAND() LIMIT 5", nativeQuery = true)
-//	@Query("SELECT o FROM yuOrder o ORDER BY RAND()")
 	@Query("SELECT o FROM yuOrder o ORDER BY FUNCTION('RAND')")
 	List<yuOrder> findRandomYuOrders();
 }

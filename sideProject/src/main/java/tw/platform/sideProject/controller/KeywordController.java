@@ -1,6 +1,8 @@
 package tw.platform.sideProject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
+import tw.platform.sideProject.model.SearchRequest;
 import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.service.KeywordService;
 import tw.platform.sideProject.service.OrderService;
@@ -29,31 +33,120 @@ public class KeywordController {
 	// 針對關鍵字進行搜尋，並將搜尋資料回傳至fragments的keywordsearchBox
 	@PostMapping("/SaveAndSearchKeyword")
 	@ResponseBody // 回傳片段
-	public void SaveAndSearchKeyword(@RequestParam String userKeyword, Model model, HttpSession session) {
-		
-		// 存關鍵字邏輯
-		System.out.println("使用者輸入: " + userKeyword);
-		keywordService.saveKeyword(userKeyword);
+	public ResponseEntity<?> SaveAndSearchKeyword(@RequestBody SearchRequest searchRequest, Model model,
+			HttpSession session) {
+		String userKeyword = searchRequest.getUserKeyword();
+		List<String> options = searchRequest.getOptions();
 
-		// 查詢關鍵字
-		List<yuOrder> list = keywordService.searchKeywords(userKeyword);
-		System.out.println("根據關鍵詞 " + userKeyword + " 搜尋共有 " + list.size() + " 筆資料");
+		List<yuOrder> list = new ArrayList<>();
 
-		// 確認一下搜尋到的資料(都完成後可刪除)
-		for (yuOrder order : list) {
-			String tagNames = order.getTagNames();
-			System.out.printf("專案id %d.專案名稱:%s,簡介:%s,標籤:%s%n", order.getOrderid(), order.getName(), order.getIntro(),
-					tagNames);
-			// 將這邊的結果存到session，帶至搜尋頁
-			session.setAttribute("keywordCase", list);
+		System.out.println("-----------");
+		System.out.println("進入存+搜關鍵字");
+		System.out.println(userKeyword);
+		System.out.println(options);
 
+		if (options == null) {
+			options = new ArrayList<>();
+		}
+		if (userKeyword != "") {
+			// 存關鍵字邏輯
+			System.out.println("使用者輸入: " + userKeyword);
+			keywordService.saveKeyword(userKeyword);
+			// 查詢關鍵字
+			list = keywordService.searchKeywords(userKeyword);
+			System.out.println("根據關鍵詞 " + userKeyword + " 搜尋共有 " + list.size() + " 筆資料");
+		} else {
+			// 無關鍵字，查詢所有專案
+			list = orderService.getAllYuOrders();
+			System.out.println("無關鍵字輸入，查詢所有專案");
 		}
 
+		// 比對查詢到的結果
+		List<yuOrder> userList = new ArrayList<>();
+		for (yuOrder order : list) {
+			for (String option : options) {
+				if (order.getTagNames().contains(option)
+						|| order.getLocation() != null && order.getLocation().contains(option)
+						|| order.getCategory() != null && order.getCategory().contains(option)) {
+					userList.add(order);
+					if (order.getTagNames().contains(option)) {
+						System.out.println("專案所需技能: " + order.getTagNames());
+					} else if (order.getLocation().contains(option)) {
+						System.out.println("專案所在地: " + order.getLocation());
+					} else {
+						System.out.println("專案類型: " + order.getCategory());
+					}
+					break; // 若找到tag與location與使用者輸入符合的專案即加入並退出內層循環
+				}
+			}
+		}
+
+		System.out.println("符合查詢的訂單: " + userList.size());
+
+		// 確認一下搜尋到的資料(都完成後可刪除)
+		for (yuOrder order : userList) {
+			String tagNames = order.getTagNames();
+			System.out.printf("專案id %d.專案名稱:%s,類型:%s,地點:%s,標籤:%s,簡介:%s%n", order.getOrderid(), order.getName(),
+					order.getCategory(), order.getLocation(), tagNames, order.getIntro());
+			// 將這邊的結果存到session，帶至搜尋頁
+			session.setAttribute("keywordCase", userList);
+		}
+		return ResponseEntity.ok("處理成功");
 	}
 
 	@GetMapping("/randomKeyword")
 	public ResponseEntity<String> getRandomKeyword() {
 		String randomKeyword = keywordService.getRandomKeyword();
 		return new ResponseEntity<>(randomKeyword, HttpStatus.OK);
+	}
+	
+	@GetMapping("/caseTimeDSC")
+	public String caseTimeDSC(Model model, HttpSession session){
+		System.out.println("進入到期日排序後端");
+		@SuppressWarnings("unchecked")
+		List<yuOrder> caseTime = (List<yuOrder>) session.getAttribute("keywordCase");
+		
+		keywordService.timeSortDSC(caseTime);
+		for(yuOrder order:caseTime) {
+			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		}
+		session.setAttribute("keywordCase", caseTime);
+		model.addAttribute("keywordCase", caseTime);
+		System.out.println("注入完成");
+		return "search::#keywordsearchBox";
+	}
+	@GetMapping("/caseTimeASC")
+	public String caseTimeASC(Model model, HttpSession session){
+		System.out.println("進入到期日排序後端");
+		@SuppressWarnings("unchecked")
+		List<yuOrder> caseTime = (List<yuOrder>) session.getAttribute("keywordCase");
+		
+		keywordService.timeSortASC(caseTime);
+		for(yuOrder order:caseTime) {
+			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		}
+		session.setAttribute("keywordCase", caseTime);
+		model.addAttribute("keywordCase", caseTime);
+		System.out.println("注入完成");
+		return "search::#keywordsearchBox";
+	}
+	
+	//TODO 未完成
+	@GetMapping("/caseWant")
+	public String caseWant(Model model, HttpSession session) {
+		
+		System.out.println("進入到收藏排序後端");
+		@SuppressWarnings("unchecked")
+		List<yuOrder> caseWant = (List<yuOrder>) session.getAttribute("keywordCase");
+		
+		keywordService.timeSortASC(caseWant);
+		for(yuOrder order:caseWant) {
+			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		}
+		session.setAttribute("keywordCase", caseWant);
+		model.addAttribute("keywordCase", caseWant);
+		System.out.println("注入完成");
+		return "search::#keywordsearchBox";
+		
 	}
 }

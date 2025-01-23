@@ -28,6 +28,7 @@ public class yuOrder {
 	private String picurl;
 	private String location;
 	private String rank;
+	private String category;
 	private Integer people = 1;
 
 	@ManyToMany
@@ -116,4 +117,13 @@ public class yuOrder {
 		this.tags = tags;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	
 }

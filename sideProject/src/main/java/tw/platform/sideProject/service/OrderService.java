@@ -118,9 +118,12 @@ public class OrderService {
 //	YU新增
 //	抓取隨機5個專案
 	public List<yuOrder> getRandomYuOrders() {
-		System.out.println("進入server");
 		List<yuOrder> allOrders = orderRepository.findRandomYuOrders();
 		// 只取前5個
 		return allOrders.stream().limit(5).collect(Collectors.toList());
+	}
+	
+	public List<yuOrder> getAllYuOrders() {
+		return orderRepository.findRandomYuOrders();
 	}
 }
