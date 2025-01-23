@@ -44,6 +44,10 @@ public class MemberService {
 		member.setPicurl(request.getPicurl());
 		member.setIsblocked(false);
 		memberRepository.save(member);
+            // 建立 MemberTagKey 作為複合主鍵
+            MemberTagKey memberTagKey = new MemberTagKey();
+            memberTagKey.setMemberId(member.getMemberid());
+            // memberTagKey.setTagId(tag.getTagidm());
 
 		// 處理傳入的 tagIds，建立 MemberTag 資料
 		List<MemberTag> memberTags = new ArrayList<>();
@@ -53,9 +57,9 @@ public class MemberService {
 					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
 			// 建立 MemberTagKey 作為複合主鍵
-			MemberTagKey memberTagKey = new MemberTagKey();
-			memberTagKey.setMemberId(member.getMemberid());
-			memberTagKey.setTagId(tag.getTagidm());
+			// MemberTagKey memberTagKey = new MemberTagKey();
+			// memberTagKey.setMemberId(member.getMemberid());
+			// memberTagKey.setTagId(tag.getTagido());
 
 			// 建立 MemberTag 並設置關聯
 			MemberTag memberTag = new MemberTag();
@@ -152,11 +156,15 @@ public class MemberService {
 			// 查找對應的 Tag
 			Tag tag = tagRepository.findById(tagId)
 					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
+            // 建立 MemberTagKey 作為複合主鍵
+            MemberTagKey memberTagKey = new MemberTagKey();
+            memberTagKey.setMemberId(memberId);
+            // memberTagKey.setTagId(tag.getTagidm());
 
 			// 建立 MemberTagKey 作為複合主鍵
-			MemberTagKey memberTagKey = new MemberTagKey();
-			memberTagKey.setMemberId(memberId);
-			memberTagKey.setTagId(tag.getTagidm());
+			// MemberTagKey memberTagKey = new MemberTagKey();
+			// memberTagKey.setMemberId(memberId);
+			// memberTagKey.setTagId(tag.getTagid());
 
 			// 建立 MemberTag 並設置關聯
 			MemberTag memberTag = new MemberTag();

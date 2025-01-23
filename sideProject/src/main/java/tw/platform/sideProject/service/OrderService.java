@@ -49,9 +49,9 @@ public class OrderService {
 			Tag tag = tagRepository.findById(tagId)
 					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-			OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
+			// OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
 			OrderTag orderTag = new OrderTag();
-			orderTag.setId(orderTagKey);
+			// orderTag.setId(orderTagKey);
 			orderTag.setOrder(order);
 			orderTag.setTag(tag);
 
