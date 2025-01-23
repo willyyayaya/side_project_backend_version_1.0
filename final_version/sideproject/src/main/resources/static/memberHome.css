@@ -199,6 +199,7 @@
         height: 25px;
         border-radius: 10px;
         width: 70px;
+		font-size:14px;
     }
     #icon_btn:hover{
         background-color: #14518e;
@@ -328,7 +329,7 @@
         background-color: #bbc8d8;
     }
 
-    #center_result_index > button:hover{
+    #center_result_index  button:hover{
         background-color: #14518e;
         color: #eaeff3;
     }
@@ -572,7 +573,40 @@ background-color: #bbc8d8;
     margin-left: 13px;
 }
 /* --------------------------------------------- */
+#input_8{
+    display: flex;
+    /* border: 1px dotted #14518e; */
+    border-radius: 8px;
+    background-color: #bbc8d8;
+    color: #14518e;
+    align-items: center;
+    margin-left: 30px;
+}
 
+#input_8 > h4 , button , input{
+	font-size:20px;
+}
+
+#input_index_github{
+    border: 1px dotted #14518e;
+    width: 250px;
+    height: 30px;
+    margin-left: 30px ;
+
+}
+
+#center_result  button {
+	background-color: #bbc8d8;
+    color: #14518e;
+    border: 1px solid #14518e;
+    height: 25px;
+    border-radius: 10px;
+    width: 80px;
+    height: 40px;
+    margin-left: 13px;
+	font-size:large;
+}
+/* --------------------------------------------- */
 
 
 /* 下方菜單 */

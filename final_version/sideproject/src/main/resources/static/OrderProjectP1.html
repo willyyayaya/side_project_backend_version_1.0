@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/memberProject.css">
 
 
-<title>memberProjectP2</title>
+<title>OrderProjectP1</title>
 </head>
 <body>
 
@@ -50,16 +50,15 @@
                 <div style="background-color: #bbc8d8; height: 44%;" id="center_laftmune_2">
                     <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
                         <ul id="laftmune_2_1">
-    						<a id="link1" href="#">進行中</a>
-    						<li>已結束</li>
+    						<li>進行中</li>
+    						<a id="link1" href="#">已結束</a>
 						</ul>
 						<ul id="laftmune_2_2" style="font-weight: bold;">收藏
 						    <br/>
 						    <a id="link2" href="#">資料夾管理</a>
 						</ul>
 						<ul id="laftmune_2_3" style="font-weight: bold;">帳號管理
-						    <br/>
-						    <a id="link3" href="#">會員資料編輯</a>
+						    <li>會員資料編輯</li>
 						</ul>
                     </div>
                 </div>
@@ -81,18 +80,25 @@
             <div style="background-color: #bbc8d8; height: 90%;width: 95%;margin-left: 20px" id="center_result_index">
                 <!-- 中間有變化區塊 -->
                 <div id="box_1" class="boxOut">
-                    <div id="Card_out">已結束</div>
+                    <div id="Card_out">進行中</div>
                     <div  class="box" id="box_1_cards">
                     </div>
 
                 <div id="box_2" class="boxOut">
-                    <div id="Card_out">查看評價</div>
+                    <div id="Card_out">尚未完成</div>
                     <div  class="box" id="box_2_cards">
+
                     </div>
+
+                <div id="box_3" class="boxOut">
+                    <div id="Card_out">配對</div>
+                    <div  class="box" id="box_3_cards">
+                    </div>                    
+                </div>
             </div>
         </div>
     </div>
-    
+
 <!-- 頭像JS部分 -->
 <script>
 //顯示選擇的圖片預覽
@@ -171,6 +177,7 @@ function submitImage(picurl) {
                 .then(data => {
                     const box1 = document.getElementById("box_1_cards");
                     const box2 = document.getElementById("box_2_cards");
+                    const box3 = document.getElementById("box_3_cards");
              
                     
                     //console.log("Fetched data:", data);
@@ -186,12 +193,11 @@ function submitImage(picurl) {
                          // 獲取連結元素
                             const link1 = document.getElementById("link1");
                             const link2 = document.getElementById("link2");
-                            const link3 = document.getElementById("link3");
                             
                          // 設置 href 屬性，附加查詢字符串
-                            link1.href = `/memberProjectP1/${memberid}`;
+                            link1.href = `/memberProjectP2/${memberid}`;
                             link2.href = `/memberlike/${memberid}`;
-                            link3.href = `/api/members/memberHome/${memberid}`;
+                            
                             
                             //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
                             
@@ -212,12 +218,17 @@ function submitImage(picurl) {
                                 <p class="title">${order.detail}</p>
                                 <p><button class="Card_btn">閱讀詳細</button></p>
                             `;
-
-                            if (order.status === '已完成') {
-                                box1.appendChild(card);
-                            } else if (order.status === '查看評價') {
-                                box2.appendChild(card);
-                            } 
+	
+                            if(order.owned == true){
+                            	if (order.status === '進行中') {
+                                    box1.appendChild(card);
+                                } else if (order.status === '尚未完成') {
+                                    box2.appendChild(card);
+                                } else if (order.status === '配對') {
+                                    box3.appendChild(card);
+                                }
+                            }
+                            
                         });
                     } else {
                         console.error("Received data is not an array or is empty.");

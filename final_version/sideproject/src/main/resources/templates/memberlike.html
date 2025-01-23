@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="/memberlike.css">
 
 
-<title>p5</title>
+<title>memberlike</title>
 </head>
 <body>
 
@@ -32,17 +32,16 @@
 
 
     <!-- 中間 -->
-    <div id="center_1" >
-        <div id="center_2">
+    <div id="center_1">
+    	<div id="center_2">
             <div id="center_icon" style="background-color: #bbc8d8;">
     			<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
-        		<form th:action="@{/test1/{memberid}/update(memberid=${member.memberid})}" method="post" enctype="multipart/form-data">
+            	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${member.memberid})}" method="post" enctype="multipart/form-data">
             	<div style="background-color: #bbc8d8;width: 90%;height: 15%;">
                 <!-- 預覽圖片 -->
-				<img id="icon" th:src="'data:image/png;base64,' + ${base64Image}" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
-                <input type="file" id="upload" name="picurl" accept="image/*" style="display:none;" onchange="previewImage()" />
-                
-                <button id="icon_btn" type="submit">更換圖片</button>
+    			<img name="picurl" id="icon" th:src="|${member.picurl}|" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
+    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+    			<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
             </div>
         </form>
     </div>
@@ -113,35 +112,94 @@
         </div>
     </div>
 
-<!-- 頭像JS部分 -->
-<script>
-    // 顯示選擇的圖片預覽
+ <!-- 頭像JS部分 -->
+    <script>
+ // 顯示選擇的圖片預覽
     function previewImage() {
         const file = document.getElementById('upload').files[0];
         const reader = new FileReader();
 
         reader.onloadend = function() {
-            document.getElementById('icon').src = reader.result;  // 更新img元素的src為選擇的圖片
+            document.getElementById('icon').src = reader.result;
         }
 
         if (file) {
-            reader.readAsDataURL(file);  // 將選擇的文件轉換為Base64 URL
+            reader.readAsDataURL(file);
         }
     }
-</script>
 
-<!-- 收藏按鈕js -->
-<script>
-    // 你可以保留这个部分来处理用户交互，点击图标后进行状态切换
-    document.getElementById('favorite-icon').addEventListener('click', function() {
-      // 在这里可以通过后端接口或者本地逻辑切换喜欢状态
-    console.log('已收藏!');
+ // 提交其他字段的更新表单
+    function submitImage(picurl) {
+            var form = document.getElementById('updateIcon'); // 获取图片表单
+            var formData = new FormData(form); // 将图片表单数据转为 FormData 对象
+
+            const base64Image = document.getElementById("icon").src;  // 获取 Base64 字符串
+
+            formData.append('picurl', base64Image);  // 添加 base64 图片数据到 FormData 中
+
+            // 假设 URL 为 /memberHome/12345
+            const path = window.location.pathname;
+			const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+            // 动态构建 URL，替换 {memberid} 为实际的 memberid
+            var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+            // 通过 Fetch 请求将 Base64 字符串传递到后端
+            fetch(url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                alert(picurl + ' 更新成功！');
+            } else {
+                alert('更新失敗，請稍後再試！');
+            }
+        })
+        .catch(error => {
+            console.error("錯誤:", error);
+            alert('更新失敗，請稍後再試！');
+        });
+    }
+
+
+// 提交其他字段的更新表单
+function submitField(fieldName) {
+    var form = document.getElementById('updateForm'); // 获取其他字段表单
+    var formData = new FormData(form); // 将表单数据转为 FormData 对象
+
+    const path = window.location.pathname;
+	const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+    // 动态构建 URL，替换 {memberid} 为实际的 memberid
+    var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+    // 通过 Fetch 请求将 Base64 字符串传递到后端
+    fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(fieldName + ' 更新成功！');
+        } else {
+            alert('更新失敗，請稍後再試！');
+        }
+    })
+    .catch(error => {
+        console.error("錯誤:", error);
+        alert('更新失敗，請稍後再試！');
     });
-</script>
+}
 
+    </script>
 <!-- 收藏js -->
 
 <script>
+
+		const path = window.location.pathname;
+		const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
         // 獲取會員收藏的專案
         fetch(`/api/memberOrders/like/${memberid}`)
             .then(response => response.json())

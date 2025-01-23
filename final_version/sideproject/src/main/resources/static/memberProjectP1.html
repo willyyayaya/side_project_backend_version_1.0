@@ -6,9 +6,8 @@
     <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="fragment.css">
+    <link rel="stylesheet" href="/fragment.css">
     <link rel="stylesheet" href="/memberProject.css">
-    
 
 
 <title>memberProjectP1</title>
@@ -32,17 +31,15 @@
 
 
     <!-- 中間 -->
-    <div id="center_1" >
-        <div id="center_2">
+    <div id="center_1">
+    	<div id="center_2">
             <div id="center_icon" style="background-color: #bbc8d8;">
     			<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
-        		<form th:action="@{/memberHome/{memberid}/update(memberid=${member.memberid})}" method="post" enctype="multipart/form-data">
-            	<div style="background-color: #bbc8d8;width: 90%;height: 15%;">
+            	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+            	<div style="background-color: #bbc8d8;width: 90%;height: 15%;" id=icon_test>
                 <!-- 預覽圖片 -->
-				<img id="icon" th:src="'data:image/png;base64,' + ${base64Image}" width="100%" height="100%" alt="icon image" onclick="document.getElementById('upload').click();" />
-                <input type="file" id="upload" name="picurl" accept="image/*" style="display:none;" onchange="previewImage()" />
-                
-                <button id="icon_btn" type="submit">更換圖片</button>
+    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+    			<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
             </div>
         </form>
     </div>
@@ -52,25 +49,23 @@
                 <div style="background-color: #bbc8d8; height: 5%;font-weight: bold;" id="center_laftmune_1">功能列</div>
                 <div style="background-color: #bbc8d8; height: 44%;" id="center_laftmune_2">
                     <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
-                        <ul  id="laftmune_2_1">
-                            <li>進行中</li>
-                            <a href="memberProjectP2.html">已結束</a>
-                        </ul>
-                        <ul  id="laftmune_2_2" style="font-weight: bold;">收藏
-                        <br/>
-                            <a href="memberlike.html">資料夾管理</a>
-                        </ul>
-                        <ul  id="laftmune_2_3" style="font-weight: bold;">帳號管理
-                        <br/>
-                            <a href="memberHome.html">會員資料編輯</a>
-                        </ul>
+                        <ul id="laftmune_2_1">
+    						<li>進行中</li>
+    						<a id="link1" href="#">已結束</a>
+						</ul>
+						<ul id="laftmune_2_2" style="font-weight: bold;">收藏
+						    <br/>
+						    <a id="link2" href="#">資料夾管理</a>
+						</ul>
+						<ul id="laftmune_2_3" style="font-weight: bold;">帳號管理
+						    <li>會員資料編輯</li>
+						</ul>
                     </div>
                 </div>
 
                 <div style="background-color: #bbc8d8; height: 30%;" id="center_laftmune_2">
                     <div style="background-color: #bbc8d8; height: 90%; color:#14518e;font-weight: bold;">案件管理
                         <ul  id="laftmune_3_1">
-                            <li>未開通</li>
                             <li>進行中</li>
                             <li>已結案</li>
                         </ul>
@@ -106,59 +101,141 @@
 
 <!-- 頭像JS部分 -->
 <script>
-    // 顯示選擇的圖片預覽
-    function previewImage() {
-        const file = document.getElementById('upload').files[0];
-        const reader = new FileReader();
+//顯示選擇的圖片預覽
+function previewImage() {
+    const file = document.getElementById('upload').files[0];
+    const reader = new FileReader();
 
-        reader.onloadend = function() {
-            document.getElementById('icon').src = reader.result;  // 更新img元素的src為選擇的圖片
-        }
-
-        if (file) {
-            reader.readAsDataURL(file);  // 將選擇的文件轉換為Base64 URL
-        }
+    reader.onloadend = function() {
+        document.getElementById('icon').src = reader.result;
     }
+
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
+// 提交圖片新表单
+function submitImage(picurl) {
+        var form = document.getElementById('updateIcon'); // 获取图片表单
+        var formData = new FormData(form); // 将图片表单数据转为 FormData 对象
+
+        const base64Image = document.getElementById("icon").src;  // 获取 Base64 字符串
+
+        formData.append('picurl', base64Image);  // 添加 base64 图片数据到 FormData 中
+
+        // 假设 URL 为 /memberHome/12345
+        const path = window.location.pathname;
+		const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+        // 动态构建 URL，替换 {memberid} 为实际的 memberid
+        var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+        // 通过 Fetch 请求将 Base64 字符串传递到后端
+        fetch(url, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            alert(picurl + ' 更新成功！');
+        } else {
+            alert('更新失敗，請稍後再試！');
+        }
+    })
+    .catch(error => {
+        console.error("錯誤:", error);
+        alert('更新失敗，請稍後再試！');
+    });
+}
+
 </script>
 
 <!-- card js -->
 
-<script>
-fetch('/api/orders')
-  .then(response => response.json())
-  .then(data => {
-    const box1 = document.getElementById("box_1_cards");
-    const box2 = document.getElementById("box_2_cards");
-    const box3 = document.getElementById("box_3_cards");
+ <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            const path = window.location.pathname;
+            const pathParts = path.split('/');
+            const memberid = pathParts[pathParts.length - 1];
+            //console.log("Extracted memberid:", memberid);
 
+            if (!memberid || isNaN(memberid)) {
+                console.error("Invalid memberid:", memberid);
+                alert("Invalid member ID");
+                return;
+            }
 
-    if (data && Array.isArray(data)) {
-      data.forEach(order => {
-        const card = document.createElement("div");
-        card.classList.add("Card");
+            const url = `/api/memberOrders/getOrdersByMemberid/${memberid}`;
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const box1 = document.getElementById("box_1_cards");
+                    const box2 = document.getElementById("box_2_cards");
+                    const box3 = document.getElementById("box_3_cards");
+             
+                    
+                    //console.log("Fetched data:", data);
+                    if (Array.isArray(data)) {
+                        data.forEach(orderData  => {
+                            const card = document.createElement("div");
+                            card.classList.add("Card");
+                            
+                         // 使用變數抓取對應的資料
+                            const order = orderData.order;  // order 資料
+                            const member = orderData.member;  // member 資料
+                            
+                         // 獲取連結元素
+                            const link1 = document.getElementById("link1");
+                            const link2 = document.getElementById("link2");
+                            
+                         // 設置 href 屬性，附加查詢字符串
+                            link1.href = `/memberProjectP2/${memberid}`;
+                            link2.href = `/memberlike/${memberid}`;
+                            
+                            
+                            //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
+                            
+                            const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
+                            memberpicDiv.innerHTML = `
+                            	<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
+                            	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+                            	<div style="background-color: #bbc8d8;width: 90%;height: 15%;" id=icon_test>
+                            	<img  name="picurl" id="icon" src="${member.picurl}" 
+                                	width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+                    			<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+                              `;
+                            
+                            
+                            card.innerHTML = `
+                                <img src="${order.picurl}" alt="${order.name}" style="width:150px;height:150px;">
+                                <h4>${order.name}</h4>
+                                <p class="title">${order.detail}</p>
+                                <p><button class="Card_btn">閱讀詳細</button></p>
+                            `;
 
-        card.innerHTML = `
-          <img src="${order.picurl}" alt="${order.name}" style="width:150;height:150px;">
-          <h4>${order.name}</h4>
-          <p class="title">${order.detail}</p>
-          <p><button class="Card_btn">閱讀詳細</button></p>
-        `;
-
-                // Add the card to the corresponding box based on the status
-                if (order.status === '進行中') {
-                    box1.appendChild(card);
-                } else if (order.status === '尚未完成') {
-                    box2.appendChild(card);
-                } else if (order.status === '配對') {
-                    box3.appendChild(card);
-                }
-      });
-    }
-  })
-  .catch(error => {
-    console.error("Error fetching orders:", error);
-  });
-</script>
+                            if (order.status === '進行中') {
+                                box1.appendChild(card);
+                            } else if (order.status === '尚未完成') {
+                                box2.appendChild(card);
+                            } else if (order.status === '配對') {
+                                box3.appendChild(card);
+                            }
+                        });
+                    } else {
+                        console.error("Received data is not an array or is empty.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching orders:", error);
+                });
+        });
+    </script>
 
 
 

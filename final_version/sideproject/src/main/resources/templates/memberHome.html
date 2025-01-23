@@ -136,6 +136,15 @@
                             <button type="button" onclick="submitField('birthday')">編輯</button>
                         </div>
                     </div>
+                    
+                    <!-- github -->
+                    <div id="center_result_inputindex_8">
+                        <div id="input_8">
+                            <h4>getGithub連結:</h4>
+                            <input type="github" th:value="${member.github}" id="input_index_github" name="github" />
+                            <button type="button" onclick="submitField('github')">編輯</button>
+                        </div>
+                    </div>
 
                     <!-- 自我介紹 -->
                     <div id="center_result_inputindex_6">
@@ -166,7 +175,7 @@
         }
     }
 
- // 提交其他字段的更新表单
+ // 提交圖片新表单
     function submitImage(picurl) {
             var form = document.getElementById('updateIcon'); // 获取图片表单
             var formData = new FormData(form); // 将图片表单数据转为 FormData 对象
@@ -212,7 +221,7 @@ function submitField(fieldName) {
     // 动态构建 URL，替换 {memberid} 为实际的 memberid
     var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
 
-    // 通过 Fetch 请求将 Base64 字符串传递到后端
+    // 通过 Fetch 请求将字符串传递到后端
     fetch(url, {
         method: 'POST',
         body: formData

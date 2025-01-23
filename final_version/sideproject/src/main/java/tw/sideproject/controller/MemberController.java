@@ -103,6 +103,11 @@ public class MemberController {
             if (member.getTel() != null && !member.getTel().isEmpty()) {
                 existMember.setTel(member.getTel());
             }
+            
+            if (member.getGithub() != null && !member.getGithub().isEmpty()) {
+                existMember.setGithub(member.getGithub());
+            }
+            
             if (member.getBirthday() != null) {
                 existMember.setBirthday(member.getBirthday());
             }

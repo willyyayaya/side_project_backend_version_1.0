@@ -1,5 +1,6 @@
 package tw.sideproject.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,9 +55,13 @@ public class MemberOrderController {
     
     // 查詢某個會員相關的所有專案
     @GetMapping("/getOrdersByMemberid/{memberid}")
-    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) {
-        return memberOrderService.getOrdersByMemberid(memberid);
+    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) throws IOException {
+        // 查询所有对应 memberid 的订单
+        List<MemberOrder> orders = memberOrderRepository.findAllById_Memberid(memberid);
+        
+        return orders;
     }
+
 
     // 查詢某個專案相關的所有會員
     @GetMapping("/getMembersByOrderid/{orderid}")
@@ -76,7 +81,7 @@ public class MemberOrderController {
     }
     
  // 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
-    @GetMapping("/memberlike/{memberid}/{orderid}")
+    @GetMapping("/memberlike/{memberid}")
     public boolean getMemberCollected(@PathVariable Long memberid, @RequestParam Long orderid) {
         Optional<MemberOrder> memberOrder = memberOrderService.getOrderByMemberAndOrder(memberid, orderid);
         

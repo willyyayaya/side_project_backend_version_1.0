@@ -38,6 +38,8 @@ public class Member {
     
     private String memberinfo;
     
+    private String github;
+    
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
 
@@ -46,12 +48,22 @@ public class Member {
     private List<MemberTag> memberTags;
 
     // Getters and Setters
-
+    
 
     public String getAccount() {
         return account;
     }
     
+
+	public String getGithub() {
+		return github;
+	}
+
+
+	public void setGithub(String github) {
+		this.github = github;
+	}
+
 
 	public Long getMemberid() {
 		return memberid;
