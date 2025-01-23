@@ -28,6 +28,8 @@ public class MemberOrder {
     private Boolean wanted;
     private boolean collected;
     private String evaluate;
+    private boolean getproject;
+
 
     // Getters and Setters
     public MemberOrderKey getId() {
@@ -84,5 +86,13 @@ public class MemberOrder {
 
 	public void setCollected(boolean collected) {
 		this.collected = collected;
+	}
+
+	public boolean isGetproject() {
+		return getproject;
+	}
+
+	public void setGetproject(boolean getproject) {
+		this.getproject = getproject;
 	}
 }

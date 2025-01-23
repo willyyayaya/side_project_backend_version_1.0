@@ -2,7 +2,7 @@ $(document).ready(async function() {
 
 	let urlParams = new URLSearchParams(window.location.search);
 	let orderId = urlParams.get('orderId'); // 取得 orderId 參數
-	let memberId = 5;
+	let memberId = 2;
 	console.log('memberId:' + memberId);
 	console.log('orderId:' + orderId);
 
@@ -140,36 +140,164 @@ $(document).ready(async function() {
 	//內容
 	detail.innerHTML = responseOrderToJSON.detail;
 
-	//推薦其他專案
-	let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
-	let responseAnother = await fetch(anotherUrl);
-	let responseAnotherToJSON = await responseAnother.json();
+	//看目前使用者是誰來決定要顯示其他案件或是決定接案者
+	if (responseMemberToJSON[0].memberid == `${memberId}`) {
+		$('#another').css('display', 'none');
+		//列出已決定的申請案件人
+		let getedUrl = `http://localhost:8080/api/memberOrders/allMemberGeted/${orderId}`;
+		let responseGeted = await fetch(getedUrl);
+		let responseGetedToJSON = await responseGeted.json();
+		console.log(responseGetedToJSON);
 
-	for (let i = 0; i < 4; i++) {
-		const element = responseAnotherToJSON[i];
-		// console.log(element);
-		let another1 = $('<div>', {
-			id: 'another1',
-			class: 'mx-auto rounded-2',
+		responseGetedToJSON.forEach(item => {
+
+			let another2 = $('<div>', {
+				id: 'another2',
+				class: 'mx-auto rounded-2',
+			});
+
+			let anotherTitle2 = $('<div>', {
+				id: 'anotherTitle',
+				text: item.name,
+			});
+
+			let anotherImg2 = $('<img>', {
+				id: 'anotherImg',
+				src: item.picurl,
+				class: "img-fluid object-fit-contain"
+			});
+
+
+			let anotherButtonArea = $('<div>', {
+				id: 'ButtonArea',
+				class: "mt-2"
+			});
+
+			let anotherButton = $('<button>', {
+				id: 'anotherButton',
+				text: "已決定",
+				class: "btn btn-outline-primary",
+				disabled:'true'
+			});
+			//console.log(anotherButton);
+			anotherButtonArea.append(anotherButton);
+			another2.append(anotherTitle2, anotherImg2, anotherButtonArea);
+
+			let anotherpro2 = $('<a>', {
+				class: 'd-inline col-md-3 mt-1',
+				href: '',
+			});
+			anotherpro2.append(another2);
+			$('#getProject').append(anotherpro2);
+		});
+		//列出來還未決定但來申請案件的人
+		let getUrl = `http://localhost:8080/api/memberOrders/allMemberWanted/${orderId}`;
+		let responseGet = await fetch(getUrl);
+		let responseGetToJSON = await responseGet.json();
+		console.log(responseGetToJSON);
+
+		responseGetToJSON.forEach(item => {
+
+			let another2 = $('<div>', {
+				id: 'another2',
+				class: 'mx-auto rounded-2',
+			});
+
+			let anotherTitle2 = $('<div>', {
+				id: 'anotherTitle',
+				text: item.name,
+			});
+
+			let anotherImg2 = $('<img>', {
+				id: 'anotherImg',
+				src: item.picurl,
+				class: "img-fluid object-fit-contain"
+			});
+
+
+			let anotherButtonArea = $('<div>', {
+				id: 'ButtonArea',
+				class: "mt-2"
+			});
+
+			let anotherButton = $('<button>', {
+				id: 'anotherButton',
+				text: "決定交給他了",
+				class: "btn btn-outline-primary"
+			});
+			//console.log(anotherButton);
+			anotherButtonArea.append(anotherButton);
+			another2.append(anotherTitle2, anotherImg2, anotherButtonArea);
+
+			let anotherpro2 = $('<a>', {
+				class: 'd-inline col-md-3 mt-1',
+				href: '',
+			});
+
+			anotherpro2.append(another2);
+			$('#getProject').append(anotherpro2);
+
+			anotherButton[0].onclick = function() {
+				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
+				fetch(ButtonUrl, {
+					method: 'PUT',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						memberId: item.memberid,
+						orderId: orderId,
+						"getproject": 1
+					})
+				})
+				alert('就決定是他了');
+			}
 		});
 
-		let anotherTitle = $('<div>', {
-			id: 'anotherTitle',
-			text: element.name,
-		});
+	} else {
+		$('#getProject').css('display', 'none');
+		//推薦其他專案
+		let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
+		let responseAnother = await fetch(anotherUrl);
+		let responseAnotherToJSON = await responseAnother.json();
+		let availableItems = [...responseAnotherToJSON];
 
-		let anotherImg = $('<div>', {
-			id: 'anotherImg',
-			text: element.intro,
-		});
-		another1.append(anotherTitle, anotherImg)
-		let anotherpro = $('<a>', {
-			class: 'd-inline col-md-3',
-			href: '',
-		});
-		anotherpro.append(another1);
-		$('#another').append(anotherpro);
+		for (let i = 0; i < 4; i++) {
+			if (availableItems.length === 0) break;  // 如果沒有足夠資料，跳出循環
+
+			const index = Math.floor(Math.random() * availableItems.length);
+			const element = availableItems[index];
+
+			// 從可用的資料中移除選中的元素，避免重複
+			availableItems.splice(index, 1);
+
+			//const element = responseAnotherToJSON[i];
+			// console.log(element);
+			let another1 = $('<div>', {
+				id: 'another1',
+				class: 'mx-auto rounded-2',
+			});
+
+			let anotherTitle = $('<div>', {
+				id: 'anotherTitle',
+				text: element.name,
+			});
+
+			let anotherImg = $('<div>', {
+				id: 'anotherImg',
+				text: element.intro,
+			});
+			another1.append(anotherTitle, anotherImg)
+			let anotherpro = $('<a>', {
+				class: 'd-inline col-md-3 mt-1',
+				href: '',
+			});
+			anotherpro.append(another1);
+			$('#another').append(anotherpro);
+		}
+
 	}
+
 
 	//編輯和申請按鈕
 	if (responseMemberToJSON[0].memberid == `${memberId}`) {
@@ -183,10 +311,6 @@ $(document).ready(async function() {
 		if (responseWantToJSON == true) {
 			$('#apply').text('已申請');
 		};
-	}
-
-	if ($('#apply').text() === '已申請') {
-		$('#apply').prop('disabled', true);
 	}
 
 	edit.onclick = function() {
@@ -206,7 +330,13 @@ $(document).ready(async function() {
 				"wanted": 1,
 			})
 		})
-		window.location.reload();
+		//window.location.reload();
+		$('#apply').text('已申請');
+		$('#apply').prop('disabled', true);
+	}
+
+	if ($('#apply').text() === '已申請') {
+		$('#apply').prop('disabled', true);
 	}
 
 	//顯示申請人數

@@ -92,13 +92,13 @@ public class Test {
         // 新增技能 (Tag)
         Tag javaTag = new Tag();
 //        javaTag.setTagidm(5);
-        javaTag.setTagido(5);
+//        javaTag.setTagido(5);
         javaTag.setTagname("JavaScript");
         tagRepository.save(javaTag);
 
         Tag springTag = new Tag();
 //        springTag.setTagidm(6);
-        springTag.setTagido(6);
+//        springTag.setTagido(6);
         springTag.setTagname("Python");
         tagRepository.save(springTag);
 

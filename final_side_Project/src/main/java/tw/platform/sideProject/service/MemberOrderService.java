@@ -255,6 +255,11 @@ public class MemberOrderService {
 		return wanted;
 	}
 
+	// 查詢所有wanted(除了已決定get)的人(order)
+	public List<Member> getAllMemberWanted(Long orderId) {
+		return memberOrderRepository.getAllMemberWanted(orderId);
+	}
+
 	// 查詢收藏案件是否為true(order)
 	public Boolean getMemberCollected(Long orderId, Long memberId) {
 		Boolean Collected = memberOrderRepository.getMemberCollected(orderId, memberId);
@@ -263,5 +268,32 @@ public class MemberOrderService {
 		}
 		return Collected;
 	}
+
+	// 查詢所有決定get案件後的人(order)
+	public List<Member> getallMemberGeted(Long orderId) {
+		return memberOrderRepository.getallMemberGeted(orderId);
+	}
+
+	// 決定get案件的人(order)
+	@Transactional
+	public String getproject(AddMemberOrderRequest request) {
+	    memberOrderRepository.getproject(request.isGetproject(), request.getMemberId(), request.getOrderId());
+	    return "會員的 getproject 狀態已更新";
+	}
+
+	// 根据 memberId 获取该会员的所有订单(member)
+	public List<MemberOrder> getAllOrdersByMemberid(Long memberid) {
+		return memberOrderRepository.findAllById_Memberid(memberid); // 查詢方法使用复合主鍵
+	}
+
+	// 根据 memberId 和 orderId 查找特定的订单(member)
+	public Optional<MemberOrder> getOrderByMemberAndOrder(Long memberId, Long orderId) {
+		return memberOrderRepository.findByMember_memberidAndOrder_orderid(memberId, orderId);
+	}
+
+//	// 更新會員對某個專案的收藏狀態(member)
+//	public void updateCollectedStatus(Long memberid, Long orderid, boolean collected) {
+//		memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
+//	}
 
 }

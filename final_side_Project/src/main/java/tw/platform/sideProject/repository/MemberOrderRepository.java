@@ -65,6 +65,10 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	@Query("SELECT mo.wanted FROM MemberOrder mo WHERE mo.id.orderid = :orderId AND mo.id.memberid = :memberId")
 	Boolean getMemberWanted(@Param("orderId") Long orderId, @Param("memberId") Long memberId);
 
+	// 查詢該專案所有Wanted(除了已決定get)的人(order)
+	@Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.wanted = true AND mo.getproject = false")
+	List<Member> getAllMemberWanted(@Param("orderId") Long orderId);
+
 	// 查詢收藏案件是否為true(order)
 	@Query("SELECT mo.collected FROM MemberOrder mo WHERE mo.id.orderid = :orderId AND mo.id.memberid = :memberId")
 	Boolean getMemberCollected(@Param("orderId") Long orderId, @Param("memberId") Long memberId);
@@ -75,5 +79,27 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	@Query("UPDATE MemberOrder mo SET mo.collected = :collected WHERE mo.member.id = :memberId AND mo.order.id = :orderId")
 	void updateCollectedStatus(@Param("collected") boolean collected, @Param("memberId") Long memberId,
 			@Param("orderId") Long orderId);
+
+	// 更新getproject狀態(order)
+	@Modifying
+	@Query("UPDATE MemberOrder mo SET mo.getproject = :getproject WHERE mo.member.id = :memberId AND mo.order.id = :orderId")
+	void getproject(@Param("getproject") boolean getproject, @Param("memberId") Long memberId,
+			@Param("orderId") Long orderId);
+
+	// // 查詢所有決定get案件後的人(order)
+	@Modifying
+	@Query("SELECT mo.member FROM MemberOrder mo WHERE mo.id.orderid = :orderId AND mo.getproject = true ")
+	List<Member> getallMemberGeted(@Param("orderId") Long orderId);
+
+	// (member)
+	List<MemberOrder> findAllById_Memberid(Long memberid); // 由於使用了複合主鍵，所以需要用 `Id_` 來指明 `MemberOrderKey` 的欄位
+
+	List<MemberOrder> findAllById_Orderid(Long orderid); // 同理，查詢基於 `orderId`
+
+	// 查詢會員收藏的所有專案
+	List<MemberOrder> findByMember_MemberidAndCollectedTrue(Long memberId);
+
+	// 找member跟order的wanted
+	List<MemberOrder> findWantedByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
 
 }
