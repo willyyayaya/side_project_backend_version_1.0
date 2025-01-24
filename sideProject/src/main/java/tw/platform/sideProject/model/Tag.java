@@ -15,7 +15,7 @@ public class Tag {
 
 	@Id
     private int tagido;
-    // private int tagidm;
+    private int tagidm;
     private String tagname;
 
     // 關聯到 MemberTag
@@ -34,14 +34,14 @@ public class Tag {
         this.tagname = tagname;
     }
 
-    // Getters and Setters
-    // public int getTagidm() {
-    //     return tagidm;
-    // }
+//     Getters and Setters
+     public int getTagidm() {
+         return tagidm;
+     }
 
-    // public void setTagidm(int tagidm) {
-    //     this.tagidm = tagidm;
-    // }
+     public void setTagidm(int tagidm) {
+         this.tagidm = tagidm;
+     }
 
     public int getTagido() {
         return tagido;
