@@ -120,15 +120,6 @@ $(document).ready(function () {
         $("#searchButton").click();
     })
 
-    // $("#caseTime").on('click', function() {
-    //     console.log("排序被點擊")
-    //     $.get("/caseTime", function(data) {
-    //         $("#keywordsearchBox").html(data);
-    //     }).fail(function(jqXHR, textStatus, errorThrown) {
-    //         console.error('Error loading content:', textStatus, errorThrown);
-    //     });
-    // });
-
     //排序按鈕
     $("#caseTimeDSC").on('click', function () {
         console.log("排序被點擊");
@@ -159,6 +150,25 @@ $(document).ready(function () {
                 console.log('Content loaded successfully.');
             }
         });
+    });
+    //新增全選選項
+    $("input").change(function () {
+        $(`input[class='${this.id}']`).prop('checked', this.checked);
+        $(`input[id='location']`).prop('checked',
+            $(`input[class='location']:checked`).length ==
+            $(`input[class='location']`).length);
+        $(`input[id='category']`).prop('checked',
+            $(`input[class='category']:checked`).length ==
+            $(`input[class='category']`).length);
+        $(`input[id='front']`).prop('checked',
+            $(`input[class='front']:checked`).length ==
+            $(`input[class='front']`).length);
+        $(`input[id='back']`).prop('checked',
+            $(`input[class='back']:checked`).length ==
+            $(`input[class='back']`).length);
+        $(`input[id='database']`).prop('checked',
+            $(`input[class='database']:checked`).length ==
+            $(`input[class='database']`).length);
     });
 
 });

@@ -36,7 +36,7 @@ public class HomeController {
 			System.out.println("index目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
 		} else {
-			System.out.println("目前無登入紀錄");
+			System.out.println("index訪客模式");
 		}
 		// 抓取隨機會員資料
 		List<yuMember> ranMembers = memberService.getRandomYuMembers();
@@ -44,14 +44,12 @@ public class HomeController {
 			if (member.getPicurl() == null || member.getPicurl() == "") {
 				member.setPicurl("../img/memberImg.jpg");
 			}
-			System.out.println(member.getPicurl());
 		}
 		model.addAttribute("ranMembers", ranMembers);
 		// 抓取隨機專案
 		List<yuOrder> ranOrders = orderService.getRandomYuOrders();
 		for (yuOrder order : ranOrders) {
 			order.setPicurl("../img/caseImg.jpg");
-			System.out.println(order.getPicurl());
 		}
 		model.addAttribute("keywordCase", ranOrders);
 		// 抓取隨機關鍵字
@@ -68,10 +66,10 @@ public class HomeController {
 		// 判斷是否有登入狀態
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("index目前登入狀態:" + member.getName());
+			System.out.println("search目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
 		} else {
-			System.out.println("indexXX");
+			System.out.println("search訪客模式");
 		}
 
 		// 隨機關鍵字
@@ -88,7 +86,6 @@ public class HomeController {
 				if (order.getPicurl() == null) {
 					order.setPicurl("../img/caseImg.jpg");
 				}
-//				System.out.println(order.getPicurl());
 			}
 			model.addAttribute("keywordCase", keywordCase);
 		} else {
@@ -101,14 +98,14 @@ public class HomeController {
 	// 找case進入
 	@GetMapping("/searchCase")
 	public String searchCase(Model model, HttpSession session) {
-		System.out.println("進入搜尋");
+		System.out.println("---進入searchCase---");
 		// 判斷是否有登入狀態
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("index目前登入狀態:" + member.getName());
+			System.out.println("searchCase目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
 		} else {
-			System.out.println("indexXX");
+			System.out.println("searchCase訪客模式");
 		}
 
 		// 隨機關鍵字
@@ -121,7 +118,6 @@ public class HomeController {
 			if (order.getPicurl() == null) {
 				order.setPicurl("../img/caseImg.jpg");
 			}
-			System.out.println(order.getPicurl());
 		}
 		model.addAttribute("keywordCase", ranOrders);
 		session.setAttribute("keywordCase", ranOrders);

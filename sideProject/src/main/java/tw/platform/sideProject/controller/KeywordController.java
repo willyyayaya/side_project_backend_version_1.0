@@ -2,7 +2,6 @@ package tw.platform.sideProject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -42,12 +40,7 @@ public class KeywordController {
 
 		System.out.println("-----------");
 		System.out.println("進入存+搜關鍵字");
-		System.out.println(userKeyword);
-		System.out.println(options);
 
-		if (options == null) {
-			options = new ArrayList<>();
-		}
 		if (userKeyword != "") {
 			// 存關鍵字邏輯
 			System.out.println("使用者輸入: " + userKeyword);
@@ -61,36 +54,47 @@ public class KeywordController {
 			System.out.println("無關鍵字輸入，查詢所有專案");
 		}
 
-		// 比對查詢到的結果
-		List<yuOrder> userList = new ArrayList<>();
-		for (yuOrder order : list) {
-			for (String option : options) {
-				if (order.getTagNames().contains(option)
-						|| order.getLocation() != null && order.getLocation().contains(option)
-						|| order.getCategory() != null && order.getCategory().contains(option)) {
-					userList.add(order);
-					if (order.getTagNames().contains(option)) {
-						System.out.println("專案所需技能: " + order.getTagNames());
-					} else if (order.getLocation().contains(option)) {
-						System.out.println("專案所在地: " + order.getLocation());
-					} else {
-						System.out.println("專案類型: " + order.getCategory());
+		if (options == null) {
+			// options為null，則給一個空的陣列
+			options = new ArrayList<>();
+			// 確認一下搜尋到的資料(都完成後可刪除)
+			for (yuOrder order : list) {
+				String tagNames = order.getTagNames();
+				System.out.printf("無options，符合關鍵字查詢的專案為 : 專案id %d.專案名稱:%s%n", order.getOrderid(), order.getName());
+				// 將這邊的結果存到session，帶至搜尋頁
+				session.setAttribute("keywordCase", list);
+			}
+		} else {
+			// options不為null則比對查詢到的結果
+			List<yuOrder> userList = new ArrayList<>();
+			for (yuOrder order : list) {
+				for (String option : options) {
+					if (order.getTagNames().contains(option)
+							|| order.getLocation() != null && order.getLocation().contains(option)
+							|| order.getCategory() != null && order.getCategory().contains(option)) {
+						userList.add(order);
+						if (order.getTagNames().contains(option)) {
+							System.out.println("專案所需技能: " + order.getTagNames());
+						} else if (order.getLocation().contains(option)) {
+							System.out.println("專案所在地: " + order.getLocation());
+						} else {
+							System.out.println("專案類型: " + order.getCategory());
+						}
+						break; // 若找到tag與location與使用者輸入符合的專案即加入並退出內層循環
 					}
-					break; // 若找到tag與location與使用者輸入符合的專案即加入並退出內層循環
 				}
+			}
+			System.out.println("符合關鍵字+options查詢的訂單: " + userList.size());
+			// 確認一下搜尋到的資料(都完成後可刪除)
+			for (yuOrder order : userList) {
+				String tagNames = order.getTagNames();
+				System.out.printf("專案id %d.專案名稱:%s,類型:%s,地點:%s,標籤:%s,簡介:%s%n", order.getOrderid(), order.getName(),
+						order.getCategory(), order.getLocation(), tagNames, order.getIntro());
+				// 將這邊的結果存到session，帶至搜尋頁
+				session.setAttribute("keywordCase", userList);
 			}
 		}
 
-		System.out.println("符合查詢的訂單: " + userList.size());
-
-		// 確認一下搜尋到的資料(都完成後可刪除)
-		for (yuOrder order : userList) {
-			String tagNames = order.getTagNames();
-			System.out.printf("專案id %d.專案名稱:%s,類型:%s,地點:%s,標籤:%s,簡介:%s%n", order.getOrderid(), order.getName(),
-					order.getCategory(), order.getLocation(), tagNames, order.getIntro());
-			// 將這邊的結果存到session，帶至搜尋頁
-			session.setAttribute("keywordCase", userList);
-		}
 		return ResponseEntity.ok("處理成功");
 	}
 
@@ -99,54 +103,55 @@ public class KeywordController {
 		String randomKeyword = keywordService.getRandomKeyword();
 		return new ResponseEntity<>(randomKeyword, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/caseTimeDSC")
-	public String caseTimeDSC(Model model, HttpSession session){
+	public String caseTimeDSC(Model model, HttpSession session) {
 		System.out.println("進入到期日排序後端");
 		@SuppressWarnings("unchecked")
 		List<yuOrder> caseTime = (List<yuOrder>) session.getAttribute("keywordCase");
-		
+
 		keywordService.timeSortDSC(caseTime);
-		for(yuOrder order:caseTime) {
-			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		for (yuOrder order : caseTime) {
+			System.out.println("專案名稱:" + order.getName() + ",到期日" + order.getDeadline());
 		}
 		session.setAttribute("keywordCase", caseTime);
 		model.addAttribute("keywordCase", caseTime);
 		System.out.println("注入完成");
 		return "search::#keywordsearchBox";
 	}
+
 	@GetMapping("/caseTimeASC")
-	public String caseTimeASC(Model model, HttpSession session){
+	public String caseTimeASC(Model model, HttpSession session) {
 		System.out.println("進入到期日排序後端");
 		@SuppressWarnings("unchecked")
 		List<yuOrder> caseTime = (List<yuOrder>) session.getAttribute("keywordCase");
-		
+
 		keywordService.timeSortASC(caseTime);
-		for(yuOrder order:caseTime) {
-			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		for (yuOrder order : caseTime) {
+			System.out.println("專案名稱:" + order.getName() + ",到期日" + order.getDeadline());
 		}
 		session.setAttribute("keywordCase", caseTime);
 		model.addAttribute("keywordCase", caseTime);
 		System.out.println("注入完成");
 		return "search::#keywordsearchBox";
 	}
-	
-	//TODO 未完成
+
+	// TODO 未完成
 	@GetMapping("/caseWant")
 	public String caseWant(Model model, HttpSession session) {
-		
+
 		System.out.println("進入到收藏排序後端");
 		@SuppressWarnings("unchecked")
 		List<yuOrder> caseWant = (List<yuOrder>) session.getAttribute("keywordCase");
-		
+
 		keywordService.timeSortASC(caseWant);
-		for(yuOrder order:caseWant) {
-			System.out.println("專案名稱:"+order.getName()+",到期日"+order.getDeadline());
+		for (yuOrder order : caseWant) {
+			System.out.println("專案名稱:" + order.getName() + ",到期日" + order.getDeadline());
 		}
 		session.setAttribute("keywordCase", caseWant);
 		model.addAttribute("keywordCase", caseWant);
 		System.out.println("注入完成");
 		return "search::#keywordsearchBox";
-		
+
 	}
 }

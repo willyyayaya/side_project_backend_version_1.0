@@ -55,10 +55,6 @@ public class KeywordService {
 
 //	利用關鍵字查詢，將查詢結果存在List(目前關鍵字搜尋的邏輯)
 	public List<yuOrder> searchKeywords(String keyword) {
-		List<yuOrder> list = orderRepository.searchByKeyword(keyword);
-		for(yuOrder order:list) {
-			System.out.println(order.getTagNames());
-		}
 		return orderRepository.searchByKeyword(keyword);
 	}
 
