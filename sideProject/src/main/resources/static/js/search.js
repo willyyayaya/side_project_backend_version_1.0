@@ -141,9 +141,9 @@ $(document).ready(function () {
             }
         });
     });
-    $("#caseWant").on('click', function () {
+    $("#caseCollected").on('click', function () {
         console.log("收藏排序被點擊");
-        $("#keywordsearchBox").load("/caseWant", function (response, status, xhr) {
+        $("#keywordsearchBox").load("/caseCollected", function (response, status, xhr) {
             if (status === "error") {
                 console.error('Error loading content:', xhr.statusText);
             } else {

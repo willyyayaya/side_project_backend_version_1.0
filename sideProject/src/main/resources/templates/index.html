@@ -29,15 +29,17 @@
 		</section> -->
 		<section class="row">
 			<div class="col-6">
-				<h1>熱門案件推薦</h1>
-				<div class="row caseBoxIndex" th:each="keywordCase : ${keywordCase}">
-					<div class="col-3">
-						<p th:text=${keywordCase.deadline}>截止日期</p>
-					</div>
-					<div class="col-9">
-						<h3 th:text=${keywordCase.name}>案件名稱</h3>
-						<p th:text="${keywordCase.tagNames}">案件tag</p>
-					</div>
+				<h1>熱門申請案件推薦</h1>
+				<div class="row caseBoxIndex" th:each="keywordCase, iter : ${keywordCase}">
+					<a th:href="@{/orderShow(orderid=${keywordCase.orderid})}">
+						<div class="col-9">
+							<h3 th:text=${keywordCase.name}>案件名稱</h3>
+							<p th:text="${keywordCase.tagNames}">案件tag</p>
+						</div>
+						<div class="col-3">
+							<p>申請人數 : <span th:text=${wantCounts[iter.index]}></span></p>
+						</div>
+					</a>
 				</div>
 			</div>
 			<!-- 搜尋框框 -->
@@ -121,14 +123,16 @@
 		<section id="memberCard" class="row">
 			<h2>熱門會員</h2>
 			<div class="col-4"  th:each="RanMember : ${ranMembers}">
-				<div id="userImg">
-					<img th:src="@{(${RanMember.picurl})}" alt="">
-				</div>
-				<div id="userData">
-					<h3 th:text="${RanMember.account}">會員暱稱</h3>
-					<!-- <h4 th:text="${RanMember.tagNames}">擅長技能</h4> -->
-				</div>
-				<p th:text="${RanMember.tagNames}">擅長技能</p>
+				<a th:href="@{/memberShow(orderid=${RanMember.email})}">
+					<div id="userImg">
+						<img th:src="@{(${RanMember.picurl})}" alt="">
+					</div>
+					<div id="userData">
+						<h3 th:text="${RanMember.account}">會員暱稱</h3>
+						<!-- <h4 th:text="${RanMember.tagNames}">擅長技能</h4> -->
+					</div>
+					<p th:text="${RanMember.tagNames}">擅長技能</p>
+				</a>
 			</div>
 		</section>
 		<!-- <section id="memberCard" class="row">

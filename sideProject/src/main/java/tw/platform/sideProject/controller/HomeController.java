@@ -1,14 +1,19 @@
 package tw.platform.sideProject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import tw.platform.sideProject.model.Keywords;
+import tw.platform.sideProject.model.Member;
+import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.model.yuMember;
 import tw.platform.sideProject.model.yuOrder;
@@ -43,15 +48,28 @@ public class HomeController {
 		for (yuMember member : ranMembers) {
 			if (member.getPicurl() == null || member.getPicurl() == "") {
 				member.setPicurl("../img/memberImg.jpg");
+				System.out.println(member.getMemberid());
 			}
 		}
 		model.addAttribute("ranMembers", ranMembers);
-		// 抓取隨機專案
-		List<yuOrder> ranOrders = orderService.getRandomYuOrders();
-		for (yuOrder order : ranOrders) {
-			order.setPicurl("../img/caseImg.jpg");
+		// 抓取熱門申請專案
+		List<Object[]> owentLise = orderService.getWantedCountByOrderId();
+		List<yuOrder> wentOrders = new ArrayList<>();
+		List<Long> wantCounts = new ArrayList<>();
+		int caseCouunt = 0;
+		for (Object[] lists : owentLise) {
+			if (caseCouunt>=6) {
+				break;
+			}
+			yuOrder order = (yuOrder)lists[0];
+			Long want =(Long)lists[1];
+			System.out.println("訂單: " + order.getName() + ", 申請人數: " + lists[1]+",截止日期:"+order.getDeadline());
+			wentOrders.add(order);
+			wantCounts.add(want);
+			caseCouunt++;
 		}
-		model.addAttribute("keywordCase", ranOrders);
+		model.addAttribute("keywordCase", wentOrders);
+		model.addAttribute("wantCounts", wantCounts);
 		// 抓取隨機關鍵字
 		List<Keywords> list = keywordService.getKeywordDesc();
 		model.addAttribute("kw", list);
@@ -122,6 +140,37 @@ public class HomeController {
 		model.addAttribute("keywordCase", ranOrders);
 		session.setAttribute("keywordCase", ranOrders);
 		return "search";
+	}
+	
+	@GetMapping("/orderShow")
+	public String orderShow(@RequestParam Long orderid,Model model) {
+		System.out.println("前端傳送的專案ID : " + orderid);
+		List<yuOrder> order = orderService.getyuOrderById(orderid);
+		for (yuOrder orderCheck : order) {
+			// 如果訂單沒圖片，加入圖片
+			if (orderCheck.getPicurl() == null) {
+				orderCheck.setPicurl("../img/caseImg.jpg");
+			}
+		}
+		model.addAttribute("order", order);
+		return "orderShow";
+	}
+	
+	@GetMapping("/memberShow")
+	public String memberShow(@RequestParam String memberEmail,Model model) {
+		System.out.println("前端傳送的會員email : " + memberEmail);
+		Optional<Member> members = memberService.getMemberByEmail(memberEmail);
+		
+		if(members.isPresent()) {
+			Member member = members.get();
+			System.out.println(member.getAccount());
+			System.out.println(member.getName());
+			System.out.println(member.getBirthday());
+			System.out.println(member.getEmail());
+			System.out.println(member.getMemberTags());
+			model.addAttribute("member", member);
+		}
+		return "memberShow";
 	}
 
 }

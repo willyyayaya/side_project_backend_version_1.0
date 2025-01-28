@@ -72,19 +72,29 @@ public class KeywordService {
 		}
 		return jsonResult;
 	}
-	
-	public void timeSortASC(List<yuOrder> keyOrder){
-		if(keyOrder!=null) {			
+
+	// 將搜尋結果按時間排序
+	public void timeSortASC(List<yuOrder> keyOrder) {
+		if (keyOrder != null) {
 			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline).reversed());
-		}else {
-			System.out.println("無收到訂單資料");
+		} else {
+			System.out.println("訂單注入失敗");
 		}
 	}
-	public void timeSortDSC(List<yuOrder> keyOrder){
-		if(keyOrder!=null) {			
+
+	public void timeSortDSC(List<yuOrder> keyOrder) {
+		if (keyOrder != null) {
 			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline));
-		}else {
-			System.out.println("無收到訂單資料");
+		} else {
+			System.out.println("訂單注入失敗");
+		}
+	}
+
+	public void getCollectedSort(List<yuOrder> keyOrder) {
+		if (keyOrder != null && !keyOrder.isEmpty()) {
+			keyOrder.sort(Comparator.comparing(yuOrder::getCollectCount).reversed());
+		} else {
+			System.out.println("訂單注入失敗");
 		}
 	}
 

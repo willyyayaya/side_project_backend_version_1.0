@@ -1,9 +1,16 @@
 package tw.platform.sideProject.model;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,6 +18,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,7 +30,7 @@ public class yuOrder {
 	private Long orderid;
 
 	private String name;
-	private String deadline;
+	private Date deadline; //Deadline的類型改為Date 
 	private String intro;
 	private String detail;
 	private String picurl;
@@ -30,10 +38,15 @@ public class yuOrder {
 	private String rank;
 	private String category;
 	private Integer people = 1;
+	private Long collectCount;
 
 	@ManyToMany
 	@JoinTable(name = "ordertag", joinColumns = @JoinColumn(name = "orderid"), inverseJoinColumns = @JoinColumn(name = "tagid"))
 	private Set<yuTag> tags = new HashSet<>();
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<MemberOrder> memberOrders = new ArrayList<>();
 
 	// get set
 	public Long getOrderid() {
@@ -52,11 +65,12 @@ public class yuOrder {
 		this.name = name;
 	}
 
-	public String getDeadline() {
+	//Deadline的類型改為Date 
+	public Date getDeadline() {
 		return deadline;
 	}
 
-	public void setDeadline(String deadline) {
+	public void setDeadline(Date deadline) {
 		this.deadline = deadline;
 	}
 
@@ -123,6 +137,14 @@ public class yuOrder {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public Long getCollectCount() {
+		return collectCount;
+	}
+
+	public void setCollectCount(Long collectCount) {
+		this.collectCount = collectCount;
 	}
 
 	

@@ -28,7 +28,11 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 	@Query("SELECT o FROM yuOrder o WHERE o.name LIKE %:keyword% OR o.intro LIKE %:keyword%")
 	List<yuOrder> searchByKeyword(@Param("keyword") String keyword);
 	
-//	抓取隨機專案
+	// 抓取隨機專案
 	@Query("SELECT o FROM yuOrder o ORDER BY FUNCTION('RAND')")
 	List<yuOrder> findRandomYuOrders();
+
+	// 抓取指定id的專案資料
+	@Query("SELECT o FROM yuOrder o WHERE o.orderid = :orderid")
+	List<yuOrder> findYuOrdersById(@Param("orderid") Long orderid);
 }

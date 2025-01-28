@@ -10,10 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
+import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.SearchRequest;
 import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.service.KeywordService;
@@ -104,6 +106,7 @@ public class KeywordController {
 		return new ResponseEntity<>(randomKeyword, HttpStatus.OK);
 	}
 
+	// 針對關鍵字搜尋到的專案進行日期排序
 	@GetMapping("/caseTimeDSC")
 	public String caseTimeDSC(Model model, HttpSession session) {
 		System.out.println("進入到期日排序後端");
@@ -136,22 +139,35 @@ public class KeywordController {
 		return "search::#keywordsearchBox";
 	}
 
-	// TODO 未完成
-	@GetMapping("/caseWant")
+	// 針對關鍵字搜尋到的專案進行收藏數排序
+	@GetMapping("/caseCollected")
 	public String caseWant(Model model, HttpSession session) {
 
 		System.out.println("進入到收藏排序後端");
 		@SuppressWarnings("unchecked")
-		List<yuOrder> caseWant = (List<yuOrder>) session.getAttribute("keywordCase");
+		List<yuOrder> caseCollected = (List<yuOrder>) session.getAttribute("keywordCase");
 
-		keywordService.timeSortASC(caseWant);
-		for (yuOrder order : caseWant) {
-			System.out.println("專案名稱:" + order.getName() + ",到期日" + order.getDeadline());
+		// 針對搜尋到的專案獲取每個訂單的收藏人數
+		for (yuOrder order : caseCollected) {
+			Long collectCount = orderService.getCollectedCountByOrderId(order.getOrderid());
+			order.setCollectCount(collectCount);
 		}
-		session.setAttribute("keywordCase", caseWant);
-		model.addAttribute("keywordCase", caseWant);
+		// 按收藏人數對列表進行排序
+		keywordService.getCollectedSort(caseCollected);
+		for (yuOrder order : caseCollected) {
+			System.out.println("專案名稱:" + order.getName() + ",收藏人數:" + order.getCollectCount());
+		}
+
+		session.setAttribute("keywordCase", caseCollected);
+		model.addAttribute("keywordCase", caseCollected);
 		System.out.println("注入完成");
 		return "search::#keywordsearchBox";
-
 	}
+
+	@GetMapping("/getOrderID")
+	public String getOrderID(@RequestParam Long orderID) {
+		System.out.println("前端傳送的ID : " + orderID);
+		return "memberShow";
+	}
+
 }

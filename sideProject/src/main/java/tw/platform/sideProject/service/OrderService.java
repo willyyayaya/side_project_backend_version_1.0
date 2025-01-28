@@ -14,6 +14,7 @@ import tw.platform.sideProject.model.OrderTag;
 import tw.platform.sideProject.model.OrderTagKey;
 import tw.platform.sideProject.model.Tag;
 import tw.platform.sideProject.model.yuOrder;
+import tw.platform.sideProject.repository.MemberOrderRepository;
 import tw.platform.sideProject.repository.OrderRepository;
 import tw.platform.sideProject.repository.OrderTagRepository;
 import tw.platform.sideProject.repository.TagRepository;
@@ -29,6 +30,9 @@ public class OrderService {
 
 	@Autowired
 	private OrderTagRepository orderTagRepository;
+
+	@Autowired
+	private MemberOrderRepository memberOrderRepository;
 
 	// 新增專案
 	public String addOrder(AddOrderRequest request) {
@@ -49,9 +53,9 @@ public class OrderService {
 			Tag tag = tagRepository.findById(tagId)
 					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-			 OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
+			OrderTagKey orderTagKey = new OrderTagKey(order.getOrderid(), tag.getTagidm());
 			OrderTag orderTag = new OrderTag();
-			 orderTag.setId(orderTagKey);
+			orderTag.setId(orderTagKey);
 			orderTag.setOrder(order);
 			orderTag.setTag(tag);
 
@@ -122,8 +126,30 @@ public class OrderService {
 		// 只取前5個
 		return allOrders.stream().limit(5).collect(Collectors.toList());
 	}
-	
+
 	public List<yuOrder> getAllYuOrders() {
 		return orderRepository.findRandomYuOrders();
 	}
+
+	//抓取所有專案申請人數
+	public List<Object[]> getWantedCountByOrderId() {
+		return memberOrderRepository.findWantedCountByOrderId();
+	}
+	//抓取所有專案收藏人數
+//	public List<Object[]> getAllcaseCollectedCount() {
+//		return memberOrderRepository.findCollectedCountByOrderId();
+//	}
+	//抓取指定專案收藏人數
+	public Long getCollectedCountByOrderId(Long orderId) {
+	    List<Object[]> result = memberOrderRepository.findCollectedCountByOrderId(orderId);
+	    if (result.isEmpty()) {
+	        return 0L;
+	    }
+	    return (Long) result.get(0)[0];
+	}
+	
+	public List<yuOrder> getyuOrderById(Long orderid){
+		return orderRepository.findYuOrdersById(orderid);
+	}
+
 }
