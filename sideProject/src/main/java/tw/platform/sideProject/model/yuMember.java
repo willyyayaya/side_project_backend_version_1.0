@@ -28,6 +28,8 @@ public class yuMember {
     private String name;
     private String birthday;
     private String tel;
+    private String intro;
+    private String github;
     private String picurl;
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
@@ -116,5 +118,23 @@ public class yuMember {
 	public void setTags(Set<yuTag> tags) {
 		this.tags = tags;
 	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+
+	public String getGithub() {
+		return github;
+	}
+
+	public void setGithub(String github) {
+		this.github = github;
+	}
+	
+	
 
 }

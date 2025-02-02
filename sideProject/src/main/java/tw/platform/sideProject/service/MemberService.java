@@ -15,6 +15,7 @@ import tw.platform.sideProject.model.MemberTag;
 import tw.platform.sideProject.model.MemberTagKey;
 import tw.platform.sideProject.model.Tag;
 import tw.platform.sideProject.model.yuMember;
+import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.repository.MemberRepository;
 import tw.platform.sideProject.repository.MemberTagRepository;
 import tw.platform.sideProject.repository.TagRepository;
@@ -199,6 +200,10 @@ public class MemberService {
 		List<yuMember> allMembers = memberRepository.findRandomYuMembers();
 		// 只取前6個
 		return allMembers.stream().limit(6).collect(Collectors.toList());
+	}
+	
+	public List<yuMember> getyuMemberById(Long memberid){
+		return memberRepository.findYuMemberByMemberId(memberid);
 	}
 
 }

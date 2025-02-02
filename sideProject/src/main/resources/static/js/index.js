@@ -20,6 +20,24 @@ function clearPlaceholder() {
     }
 }
 
+function subMemberid(memberid){
+    console.log('進入傳輸表單的function')
+    var form = $('<form>',{
+        'method':'POST',
+        'action':'/memberShow'
+    });
+
+    var input =$('<input>',{
+        'type':'hidden',
+        'name':'memberid',
+        'value':memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();
+}
+
 $(document).ready(function () {
     console.log("I'm ready !!!");
 
@@ -102,5 +120,14 @@ $(document).ready(function () {
             $(`input[class='database']:checked`).length ==
             $(`input[class='database']`).length);
     });
+
+    //點擊框
+    $('.memberLink').click(function(event){
+        console.log('我被點到了');
+        event.preventDefault();
+        var memberid = $(this).data('memberid');
+        console.log(memberid);
+        subMemberid(memberid);
+    })
 
 });

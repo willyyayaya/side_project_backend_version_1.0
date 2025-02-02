@@ -68,5 +68,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	List<yuMember> findRandomYuMembers();
 
 	@Query("SELECT m FROM yuMember m WHERE m.memberid = :memberId")
-	yuMember findYuMemberByMemberId(String memberId);
+	List<yuMember> findYuMemberByMemberId(Long memberId);
 }
