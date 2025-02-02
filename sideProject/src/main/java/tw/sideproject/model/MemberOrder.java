@@ -30,13 +30,67 @@ public class MemberOrder {
     private Boolean owned;
     private Boolean wanted;
     private Boolean collected;
+    private Boolean evaluate;
+    private String picurl;   // 確保有這個屬性
+    private String name;
+    private String detail;
+
 
     // Getters and Setters
+    
+    public Long getMemberid() {
+        return id.getMemberid();
+    }
+
+    public Long getOrderid() {
+        return id.getOrderid();
+    }
+
+    
     public MemberOrderKey getId() {
         return id;
     }
 
-    public void setId(MemberOrderKey id) {
+
+	public String getPicurl() {
+		return picurl;
+	}
+
+
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public String getDetail() {
+		return detail;
+	}
+
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
+
+	public Boolean getEvaluate() {
+		return evaluate;
+	}
+
+	public void setEvaluate(Boolean evaluate) {
+		this.evaluate = evaluate;
+	}
+
+	public void setId(MemberOrderKey id) {
         this.id = id;
     }
 
@@ -76,8 +130,20 @@ public class MemberOrder {
 		return collected;
 	}
 
+
 	public void setCollected(Boolean collected) {
 		this.collected = collected;
 	}
     
+	@Override
+	public String toString() {
+	    return "MemberOrder{" +
+	            "orderid=" + getOrderid() +
+	            ", name='" + name + '\'' +
+	            ", picurl='" + picurl + '\'' +
+	            ", collected=" + collected +
+	            '}';
+	}
+
+	
 }

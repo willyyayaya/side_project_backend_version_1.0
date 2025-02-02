@@ -20,24 +20,23 @@
 
 
 
-    <title>memberProject</title>
+    <title>OrderProjectP1</title>
 </head>
 
 <body>
 
-    <!-- 上方菜單 -->
+<!-- 上方菜單 -->
     <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
-    <!-- 中間 -->
+<!-- 中間 -->
     <div id="outSide">
         <div id="User">
-            <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post"
-                enctype="multipart/form-data">
-                <div id=icon_test>
-                    <!-- 預覽圖片 -->
-                    <input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-                    <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-                </div>
-            </form>
+            <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+            	<div id=icon_test>
+                <!-- 預覽圖片 -->
+    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+    			<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+            </div>
+        </form>
             <!-- 功能列 -->
             <div id="UserUse">
                 <b>功能列</b>
@@ -53,28 +52,28 @@
             </div>
         </div>
 
-        <!-- 左側操作區域 -->
+<!-- 左側操作區域 -->
         <div id="leftArea">
             <h2>專案管理</h2>
             <!-- 中間有變化區塊 -->
             <div id="box_1" class="boxOut">
                 <b id="Card_out">進行中</b>
-                <div class="box" id="box_1_cards">
+                <div  class="box" id="box_1_cards">
                 </div>
 
-                <div id="box_2" class="boxOut">
-                    <b id="Card_out">申請中</b>
-                    <div class="box" id="box_2_cards">
+            <div id="box_2" class="boxOut">
+                <b id="Card_out">申請中</b>
+                <div  class="box" id="box_2_cards">
 
-                    </div>
-
-                    <div id="box_3" class="boxOut">
-                        <b id="Card_out">已結束</b>
-                        <div class="box" id="box_3_cards">
-                        </div>
-                    </div>
                 </div>
+
+            <div id="box_3" class="boxOut">
+                <b id="Card_out">已結束</b>
+                <div  class="box" id="box_3_cards">
+                </div>                    
             </div>
+        </div>
+    </div>
         </div>
     </div>
     <!-- 下方菜單 -->
@@ -83,9 +82,9 @@
         <a href="SideProject123@gmail.com">SideProject123@gmail.com</a>
         <p>&copy; 2025 ee91_SideProject. All rights reserved</p>
     </footer>
-
+    
     <!-- 引入 JavaScript -->
-    <script th:src="@{/js/memberProject.js}"></script>
+    <script th:src="@{/js/OrderProject.js}"></script>
 
 </body>
 

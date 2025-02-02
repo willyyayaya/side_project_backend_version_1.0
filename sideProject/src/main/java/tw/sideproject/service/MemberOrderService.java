@@ -102,8 +102,8 @@ public class MemberOrderService {
     }
     
  // 根據 memberId 獲取該會員所有收藏的專案
-    public List<MemberOrder> getWantedByMemberId(Long memberid) {
-        return memberOrderRepository.findByMember_MemberidAndWantedTrue(memberid);  // 這個方法返回會員收藏的專案
+    public List<MemberOrder> getcollectedByMemberId(Long memberid) {
+        return memberOrderRepository.findByMember_MemberidAndCollectedTrue(memberid);  // 這個方法返回會員收藏的專案
     }
 
     // 會員刪除專案 (僅限 owned = true 的會員執行)
@@ -142,8 +142,9 @@ public class MemberOrderService {
     }
     
  // 更新會員對某個專案的收藏狀態
-    public void updateWantedStatus(Long memberid, Long orderid, boolean wanted) {
-        memberOrderRepository.updateWantedStatus(memberid, orderid, wanted);
+    public void updateCollectedStatus(Long memberid, Long orderid, boolean collected) {
+        memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
     }
+
     
 }

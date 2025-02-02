@@ -34,10 +34,11 @@ public class Member {
 	@Column(name = "tel")
     private String tel;
    
-    @Column(name = "picurl" )
-    private byte[] picurl;
+    private String picurl;
     
     private String memberinfo;
+    
+    private String github;
     
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
@@ -47,12 +48,22 @@ public class Member {
     private List<MemberTag> memberTags;
 
     // Getters and Setters
-
+    
 
     public String getAccount() {
         return account;
     }
     
+
+	public String getGithub() {
+		return github;
+	}
+
+
+	public void setGithub(String github) {
+		this.github = github;
+	}
+
 
 	public Long getMemberid() {
 		return memberid;
@@ -110,12 +121,12 @@ public class Member {
         this.tel = tel;
     }
 
-    public byte[] getpicurl() {
+    public String getPicurl() {
         return picurl;
     }
 
-    public void setpicurl(byte[] pic) {
-        this.picurl = pic;
+    public void setPicurl(String picurl) {
+        this.picurl = picurl;
     }
 
     public Boolean getIsblocked() {

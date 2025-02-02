@@ -1,5 +1,6 @@
 package tw.sideproject.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import tw.sideproject.model.AddMemberOrderRequest;
 import tw.sideproject.model.Member;
 import tw.sideproject.model.MemberOrder;
 import tw.sideproject.model.Order;
+import tw.sideproject.model.UpdateFavoriteRequest;
 import tw.sideproject.repository.MemberOrderRepository;
 import tw.sideproject.service.MemberOrderService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,9 +56,13 @@ public class MemberOrderController {
     
     // 查詢某個會員相關的所有專案
     @GetMapping("/getOrdersByMemberid/{memberid}")
-    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) {
-        return memberOrderService.getOrdersByMemberid(memberid);
+    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) throws IOException {
+        // 查询所有对应 memberid 的订单
+        List<MemberOrder> orders = memberOrderRepository.findAllById_Memberid(memberid);
+        
+        return orders;
     }
+
 
     // 查詢某個專案相關的所有會員
     @GetMapping("/getMembersByOrderid/{orderid}")
@@ -71,24 +77,23 @@ public class MemberOrderController {
     
  // 根據 memberId 獲取該會員所有收藏的專案
     @GetMapping("/like/{memberid}")
-    public List<MemberOrder> getwanted(@PathVariable Long memberid,Long orderid) {
-        return memberOrderService.getWantedByMemberId(memberid);
+    public List<MemberOrder> getcollected(@PathVariable Long memberid,Long orderid) {
+        return memberOrderService.getcollectedByMemberId(memberid);
     }
     
  // 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
-    @GetMapping("/memberlike/{memberid}/{orderid}")
-    public boolean getMemberLike(@PathVariable Long memberid, @RequestParam Long orderid) {
+    @GetMapping("/memberlike/{memberid}")
+    public boolean getMemberCollected(@PathVariable Long memberid, @RequestParam Long orderid) {
         Optional<MemberOrder> memberOrder = memberOrderService.getOrderByMemberAndOrder(memberid, orderid);
         
         // 返回該會員對某個專案是否有收藏（wanted）
-        return memberOrder.isPresent() && memberOrder.get().getWanted();
+        return memberOrder.isPresent() && memberOrder.get().getCollected();
     }
     
- // 更新會員對專案的收藏狀態
-    @Transactional
-    @PostMapping("/updateWantedStatus")
-    public void updateWantedStatus(@RequestParam Long memberid, @RequestParam Long orderid, @RequestParam boolean wanted) {
-        memberOrderService.updateWantedStatus(memberid, orderid, wanted);
+ // 更新收藏狀態
+    @PostMapping("/updateFavoriteStatus")
+    public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
+        memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
     }
     
 }

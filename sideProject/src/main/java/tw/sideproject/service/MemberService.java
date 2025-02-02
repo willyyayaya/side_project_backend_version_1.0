@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import tw.sideproject.model.AddMemberRequest;
 import tw.sideproject.model.Member;
+import tw.sideproject.model.MemberOrder;
 import tw.sideproject.model.MemberTag;
 import tw.sideproject.model.MemberTagKey;
 import tw.sideproject.model.Tag;
+import tw.sideproject.repository.MemberOrderRepository;
 import tw.sideproject.repository.MemberRepository;
 import tw.sideproject.repository.MemberTagRepository;
 import tw.sideproject.repository.TagRepository;
@@ -39,7 +41,7 @@ public class MemberService {
         member.setName(request.getName());
         member.setBirthday(request.getBirthday());
         member.setTel(request.getTel());
-        member.setpicurl(request.getPic());
+        member.setPicurl(request.getPic());
         member.setIsblocked(false);
         memberRepository.save(member);
 
@@ -111,8 +113,8 @@ public class MemberService {
      * @param memberDetails 包含更新內容的 Member 物件
      * @return 更新後的 Member 物件
      */
-    public Member updateMember(Long memberId, Member memberDetails) {
-    	return memberRepository.findById(memberId).map(existingMember -> {
+    public Member updateMember(Long memberid, Member memberDetails) {
+    	return memberRepository.findById(memberid).map(existingMember -> {
             // 僅更新非空欄位
             if (memberDetails.getAccount() != null) {
                 existingMember.setAccount(memberDetails.getAccount());
@@ -123,8 +125,8 @@ public class MemberService {
             if (memberDetails.getEmail() != null) {
                 existingMember.setEmail(memberDetails.getEmail());
             }
-            if (memberDetails.getpicurl() != null) {
-                existingMember.setpicurl(memberDetails.getpicurl());
+            if (memberDetails.getPicurl() != null) {
+                existingMember.setPicurl(memberDetails.getPicurl());
             }
             if (memberDetails.getName() != null) {
                 existingMember.setName(memberDetails.getName());
@@ -140,7 +142,7 @@ public class MemberService {
             }
             // 儲存更新後的資料
             return memberRepository.save(existingMember);
-        }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
+        }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberid));
     }
     
     /**
@@ -196,4 +198,6 @@ public class MemberService {
         }
         memberRepository.deleteById(memberId);
     }
+    
+    
 }

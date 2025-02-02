@@ -51,4 +51,5 @@ public class MemberOrderKey implements Serializable {
         MemberOrderKey that = (MemberOrderKey) obj;
         return Objects.equals(memberid, that.memberid) && Objects.equals(orderid, that.orderid);
     }
+    
 }

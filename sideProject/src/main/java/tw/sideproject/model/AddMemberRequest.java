@@ -10,7 +10,7 @@ public class AddMemberRequest {
     private String name;
     private LocalDate birthday;
     private String tel;
-    private byte[] pic;
+    private String pic;
     private Boolean isblocked;
     private List<Integer> tagIds;
 
@@ -63,11 +63,11 @@ public class AddMemberRequest {
 		this.tel = tel;
 	}
 
-	public byte[] getPic() {
+	public String getPic() {
 		return pic;
 	}
 
-	public void setPic(byte[] pic) {
+	public void setPic(String pic) {
 		this.pic = pic;
 	}
 
