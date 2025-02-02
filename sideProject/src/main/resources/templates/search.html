@@ -23,66 +23,68 @@
     <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
     <main>
         <section class="row">
-            <div class="col-4 formBoxBorder">
-                <form id="searchForm" action="/search" method="get">
-                    地區：
-                    <label><input type="checkbox" id="location" name="options" value="location">地區全選</label><br>
-                    <label><input type="checkbox" class="location" name="options" value="taipei">台北市</label>
-                    <label><input type="checkbox" class="location" name="options" value="newTaipei">新北市</label>
-                    <label><input type="checkbox" class="location" name="options" value="taoyuan">桃園市</label>
-                    <label><input type="checkbox" class="location" name="options" value="keelung">基隆市</label>
-                    <label><input type="checkbox" class="location" name="options" value="hsinchuCounty">新竹縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="hsinchuCity">新竹市</label>
-                    <label><input type="checkbox" class="location" name="options" value="yilan">宜蘭縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="miaoli">苗栗縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="yunlin">雲林縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="taichung">台中市</label>
-                    <label><input type="checkbox" class="location" name="options" value="changhua">彰化縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="nantou">南投縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="tainan">台南市</label>
-                    <label><input type="checkbox" class="location" name="options" value="kaohsiung">高雄市</label>
-                    <label><input type="checkbox" class="location" name="options" value="chiayiCounty">嘉義縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="chiayiCity">嘉義市</label>
-                    <label><input type="checkbox" class="location" name="options" value="hualien">花蓮縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="taitung">台東縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="pingtung">屏東縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="penghu">澎湖縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="kinmen">金門縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="lienchiang">連江縣</label>
-                    <label><input type="checkbox" class="location" name="options" value="remote">遠端</label>
-                    <br>類型：
-                    <label><input type="checkbox" id="category" name="options" value="category">類型全選</label><br>
-                    <label><input type="checkbox" class="category" name="options" value="web">網頁</label>
-                    <label><input type="checkbox" class="category" name="options" value="game">遊戲</label>
-                    <label><input type="checkbox" class="category" name="options" value="app">APP</label>
-                    <br>前端技能：
-                    <label><input type="checkbox" id="front" name="options" value="front">前端技能全選</label><br>
-                    <label><input type="checkbox" class="front" name="options" value="CSS">CSS</label>
-                    <label><input type="checkbox" class="front" name="options" value="SCSS">SCSS</label>
-                    <label><input type="checkbox" class="front" name="options" value="Sass">Sass</label>
-                    <label><input type="checkbox" class="front" name="options" value="JavaScript">JavaScript</label>
-                    <label><input type="checkbox" class="front" name="options" value="JQuery">JQuery</label>
-                    <label><input type="checkbox" class="front" name="options" value="Vue">Vue</label>
-                    <label><input type="checkbox" class="front" name="options" value="React">React</label>
-                    <label><input type="checkbox" class="front" name="options" value="Angular">Angular</label>
-                    <br>後端技能：
-                    <label><input type="checkbox" id="back" name="options" value="back">後端技能全選</label><br>
-                    <label><input type="checkbox" class="back" name="options" value="Java">JAVA</label>
-                    <label><input type="checkbox" class="back" name="options" value="Python">Python</label>
-                    <label><input type="checkbox" class="back" name="options" value="Ruby">Ruby</label>
-                    <label><input type="checkbox" class="back" name="options" value="PHP">PHP</label>
-                    <label><input type="checkbox" class="back" name="options" value="C#">C#</label>
-                    <label><input type="checkbox" class="back" name="options" value="C++">C++</label>
-                    <label><input type="checkbox" class="back" name="options" value="Go">Go</label>
-                    <label><input type="checkbox" class="back" name="options" value="Node.js">Node.js</label>
-                    <br>資料庫：
-                    <label><input type="checkbox" id="database" name="options" value="database">資料庫全選</label><br>
-                    <label><input type="checkbox" class="database" name="options" value="MySQL">MySQL</label>
-                    <label><input type="checkbox" class="database" name="options" value="SQLServer">SQL
-                        Server</label>
-                    <label><input type="checkbox" class="database" name="options" value="PostgreSQL">PostgreSQL</label>
-                    <label><input type="checkbox" class="database" name="options" value="MongoDB">MongoDB</label>
-                </form>
+            <div class="col-4">
+                <div class="formBoxBorder">
+                    <form id="searchForm" action="/search" method="get">
+                        地區：
+                        <label><input type="checkbox" id="location" name="options" value="location">地區全選</label><br>
+                        <label><input type="checkbox" class="location" name="options" value="taipei">台北市</label>
+                        <label><input type="checkbox" class="location" name="options" value="newTaipei">新北市</label>
+                        <label><input type="checkbox" class="location" name="options" value="taoyuan">桃園市</label>
+                        <label><input type="checkbox" class="location" name="options" value="keelung">基隆市</label>
+                        <label><input type="checkbox" class="location" name="options" value="hsinchuCounty">新竹縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="hsinchuCity">新竹市</label>
+                        <label><input type="checkbox" class="location" name="options" value="yilan">宜蘭縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="miaoli">苗栗縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="yunlin">雲林縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="taichung">台中市</label>
+                        <label><input type="checkbox" class="location" name="options" value="changhua">彰化縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="nantou">南投縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="tainan">台南市</label>
+                        <label><input type="checkbox" class="location" name="options" value="kaohsiung">高雄市</label>
+                        <label><input type="checkbox" class="location" name="options" value="chiayiCounty">嘉義縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="chiayiCity">嘉義市</label>
+                        <label><input type="checkbox" class="location" name="options" value="hualien">花蓮縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="taitung">台東縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="pingtung">屏東縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="penghu">澎湖縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="kinmen">金門縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="lienchiang">連江縣</label>
+                        <label><input type="checkbox" class="location" name="options" value="remote">遠端</label>
+                        <br>類型：
+                        <label><input type="checkbox" id="category" name="options" value="category">類型全選</label><br>
+                        <label><input type="checkbox" class="category" name="options" value="web">網頁</label>
+                        <label><input type="checkbox" class="category" name="options" value="game">遊戲</label>
+                        <label><input type="checkbox" class="category" name="options" value="app">APP</label>
+                        <br>前端技能：
+                        <label><input type="checkbox" id="front" name="options" value="front">前端技能全選</label><br>
+                        <label><input type="checkbox" class="front" name="options" value="CSS">CSS</label>
+                        <label><input type="checkbox" class="front" name="options" value="SCSS">SCSS</label>
+                        <label><input type="checkbox" class="front" name="options" value="Sass">Sass</label>
+                        <label><input type="checkbox" class="front" name="options" value="JavaScript">JavaScript</label>
+                        <label><input type="checkbox" class="front" name="options" value="JQuery">JQuery</label>
+                        <label><input type="checkbox" class="front" name="options" value="Vue">Vue</label>
+                        <label><input type="checkbox" class="front" name="options" value="React">React</label>
+                        <label><input type="checkbox" class="front" name="options" value="Angular">Angular</label>
+                        <br>後端技能：
+                        <label><input type="checkbox" id="back" name="options" value="back">後端技能全選</label><br>
+                        <label><input type="checkbox" class="back" name="options" value="Java">JAVA</label>
+                        <label><input type="checkbox" class="back" name="options" value="Python">Python</label>
+                        <label><input type="checkbox" class="back" name="options" value="Ruby">Ruby</label>
+                        <label><input type="checkbox" class="back" name="options" value="PHP">PHP</label>
+                        <label><input type="checkbox" class="back" name="options" value="C#">C#</label>
+                        <label><input type="checkbox" class="back" name="options" value="C++">C++</label>
+                        <label><input type="checkbox" class="back" name="options" value="Go">Go</label>
+                        <label><input type="checkbox" class="back" name="options" value="Node.js">Node.js</label>
+                        <br>資料庫：
+                        <label><input type="checkbox" id="database" name="options" value="database">資料庫全選</label><br>
+                        <label><input type="checkbox" class="database" name="options" value="MySQL">MySQL</label>
+                        <label><input type="checkbox" class="database" name="options" value="SQLServer">SQL
+                            Server</label>
+                        <label><input type="checkbox" class="database" name="options" value="PostgreSQL">PostgreSQL</label>
+                        <label><input type="checkbox" class="database" name="options" value="MongoDB">MongoDB</label>
+                    </form>
+                </div>
             </div>
             <div id="caseBox" class="col-8">
                 <div class="searchContainer">
@@ -112,7 +114,7 @@
                             </div>
                             <div class="col-8">
                                 <h3 th:text="${keywordCase.name}">案件名稱</h3>
-                                <p th:text="${keywordCase.tagNames}">案件tag</p>
+                                <p th:utext="${keywordCase.tagNames}">案件tag</p>
                                 <h5 th:text="${keywordCase.intro}">案件簡介</h5>
                             </div>
                         </a>

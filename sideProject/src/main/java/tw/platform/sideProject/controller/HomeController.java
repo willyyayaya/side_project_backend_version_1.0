@@ -57,7 +57,7 @@ public class HomeController {
 		List<Long> wantCounts = new ArrayList<>();
 		int caseCouunt = 0;
 		for (Object[] lists : owentLise) {
-			if (caseCouunt >= 6) {
+			if (caseCouunt >= 3) {
 				break;
 			}
 			yuOrder order = (yuOrder) lists[0];

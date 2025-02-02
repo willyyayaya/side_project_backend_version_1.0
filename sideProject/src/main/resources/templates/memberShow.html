@@ -26,8 +26,8 @@
     <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
     <!-- 中間 -->
     <main>
-        <div class="caseShowMember mag" th:each="memberShow:${memberShow}">
-            <div class="caseShowMemberView">
+        <div class="caseShowMember" th:each="memberShow:${memberShow}">
+            <div class="caseShowMemberViewImg">
                 <img name="picurl" id="caseMemberIcon" th:src="${memberShow.picurl}" alt="" />
             </div>
             <div class="viewText caseShowMemberView">
@@ -38,7 +38,7 @@
                 <b>生&nbsp;&nbsp;日：</b>
                 <span th:text="${memberShow.birthday}">我是生日</span><br>
                 <b>擅長技能：</b>
-                <span th:text="${memberShow.tagNames}">我是技能</span><br>
+                <span th:utext="${memberShow.tagNames}">我是技能</span><br>
                 <b>Github：</b>
                 <a th:href="${memberShow.github}"><span th:text="${memberShow.name}+'的GitHub'">會員GitHub</span></a><br>
             </div>

@@ -2,7 +2,7 @@
     background-color: #bbc8d8;
 }
 main {
-    padding: 50px 10%;
+    padding: 130px 10%;
 }
 
 /* 共用CSS */
@@ -17,10 +17,21 @@ main {
     font-size: 1.2rem;
     text-decoration: none;
     color: #c59650;
+    padding: 2px;
+}
+.viewText a:hover{
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #c59650;
 }
 
 .viewText {
-    line-height: 32px;
+    line-height: 38px;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    overflow-wrap: break-word;
+    padding: 0 20px;
 }
 
 .caseShowMember {
@@ -32,14 +43,17 @@ main {
     height: auto;
 }
 
+.caseShowMemberViewImg {
+    display: flexbox;
+    width: 20%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
 .caseShowMemberView {
     display: flexbox;
-    width: 100%;
-
+    width: 40%;
     word-wrap: break-word;
-    /* For older browsers */
     overflow-wrap: break-word;
-    /* For modern browsers */
 }
 
 #caseMemberIcon {
@@ -59,7 +73,7 @@ main {
     border: none;
     border: solid 1px #c59650;
     border-radius: 5px;
-    width: 100%;
+    /* width: 100%; */
     background-color: #eaeff3;
     min-height: 200px;
     flex-grow: 1;

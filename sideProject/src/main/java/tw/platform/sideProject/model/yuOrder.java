@@ -124,7 +124,23 @@ public class yuOrder {
 
 	// 改寫getTagNames
 	public String getTagNames() {
-		return tags.stream().map(yuTag::getTagname).collect(Collectors.joining(","));
+		return tags.stream().map(tag -> {
+			String cssClass = getTagCssClass(tag.getTagname());
+			return "<span class=\"" + cssClass + "\">" + "#"+tag.getTagname() + "</span>";
+		}).collect(Collectors.joining());
+	}
+
+	private String getTagCssClass(String tagname) {
+		if (tagname.equals("MongoDB") || tagname.equals("PostgreSQL") || tagname.equals("SQLServer")|| tagname.equals("MySQL")) {
+			return "tagDatabase";
+		} else if (tagname.equals("Angular")|| tagname.equals("CSS")
+				|| tagname.equals("SCSS")|| tagname.equals("Sass")
+				|| tagname.equals("JavaScript")|| tagname.equals("jQuery")
+				|| tagname.equals("Vue")|| tagname.equals("React")) {
+			return "tagFront";
+		} else {
+			return "tagBack";
+		}
 	}
 
 	public void setTags(Set<yuTag> tags) {

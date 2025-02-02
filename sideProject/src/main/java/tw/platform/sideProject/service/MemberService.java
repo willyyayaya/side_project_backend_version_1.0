@@ -198,7 +198,7 @@ public class MemberService {
 	public List<yuMember> getRandomYuMembers() {
 		List<yuMember> allMembers = memberRepository.findRandomYuMembers();
 		// 只取前6個
-		return allMembers.stream().limit(6).collect(Collectors.toList());
+		return allMembers.stream().limit(4).collect(Collectors.toList());
 	}
 	
 	public List<yuMember> getyuMemberById(Long memberid){
