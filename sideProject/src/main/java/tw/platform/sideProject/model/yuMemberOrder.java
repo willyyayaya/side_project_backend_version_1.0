@@ -11,22 +11,24 @@ import jakarta.persistence.Table;
 @Table(name = "memberorder")
 public class yuMemberOrder {
 
-    @EmbeddedId
-    private yuMemberOrderKey id;
-    
+	@EmbeddedId
+	private yuMemberOrderKey id;
+
 	@ManyToOne
-    @MapsId("memberid")
-    @JoinColumn(name = "memberid", insertable = false, updatable = false)
-    private yuMember member;
+	@MapsId("memberid")
+	@JoinColumn(name = "memberid", insertable = false, updatable = false)
+	private yuMember member;
 
-    @ManyToOne
-    @MapsId("orderid")
-    @JoinColumn(name = "orderid", insertable = false, updatable = false)
-    private yuOrder order;
+	@ManyToOne
+	@MapsId("orderid")
+	@JoinColumn(name = "orderid", insertable = false, updatable = false)
+	private yuOrder order;
 
-    private Boolean wanted;
-    
-    private Boolean collected;
+	private Boolean owned;
+
+	private Boolean wanted;
+
+	private Boolean collected;
 
 	public yuMemberOrderKey getId() {
 		return id;
@@ -52,6 +54,14 @@ public class yuMemberOrder {
 		this.order = order;
 	}
 
+	public Boolean getOwned() {
+		return owned;
+	}
+
+	public void setOwned(Boolean owned) {
+		this.owned = owned;
+	}
+
 	public Boolean getWanted() {
 		return wanted;
 	}
@@ -68,7 +78,4 @@ public class yuMemberOrder {
 		this.collected = collected;
 	}
 
-	
-	
-    
 }

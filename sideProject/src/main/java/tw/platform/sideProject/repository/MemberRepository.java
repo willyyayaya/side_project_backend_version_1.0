@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 import tw.platform.sideProject.model.Member;
 import tw.platform.sideProject.model.yuMember;
-import tw.platform.sideProject.model.yuOrder;
 
 import java.util.List;
 import java.util.Optional;

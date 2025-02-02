@@ -2,10 +2,8 @@ package tw.platform.sideProject.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import tw.platform.sideProject.model.Keywords;
-import tw.platform.sideProject.model.Member;
-import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.model.yuMember;
 import tw.platform.sideProject.model.yuOrder;
@@ -172,22 +168,6 @@ public class HomeController {
 		}
 		model.addAttribute("memberShow", memberShow);
 		return "memberShow";
-	}
-
-	@GetMapping("/caseMember2")
-	public String caseMember2(@RequestParam("memberid") Long memberid, Model model) {
-		System.out.println("V1前端傳送的會員ID : " + memberid);
-		List<yuMember> caseMember = memberService.getyuMemberById(memberid);
-		for (yuMember memberCheck : caseMember) {
-			System.out.println(memberCheck.getName());
-			// 如果訂單沒圖片，加入圖片
-			if (memberCheck.getPicurl() == null) {
-				memberCheck.setPicurl("../img/caseImg.jpg");
-			}
-		}
-		model.addAttribute("caseMember", caseMember);
-		return "indexText::.leftAreaContainer";
-//		return "caseMember::#leftArea";
 	}
 
 	// --------測試項目-----------

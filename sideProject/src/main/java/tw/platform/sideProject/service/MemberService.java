@@ -15,7 +15,6 @@ import tw.platform.sideProject.model.MemberTag;
 import tw.platform.sideProject.model.MemberTagKey;
 import tw.platform.sideProject.model.Tag;
 import tw.platform.sideProject.model.yuMember;
-import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.repository.MemberRepository;
 import tw.platform.sideProject.repository.MemberTagRepository;
 import tw.platform.sideProject.repository.TagRepository;

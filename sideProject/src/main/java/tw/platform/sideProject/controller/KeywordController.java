@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.servlet.http.HttpSession;
-import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.SearchRequest;
 import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.service.KeywordService;
