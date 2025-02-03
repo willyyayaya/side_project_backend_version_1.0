@@ -35,7 +35,7 @@
 		</div>
 	</header>
 	<header th:if="${member != null}" th:fragment="userHeader">
-		<button id="logoBtn" th:onclick="'window.location.href=\'' + @{/index} + '\''"><img th:src="@{/img/logowhite.png}"
+		<button id="logoBtn" th:onclick="'window.location.href=\'' + @{/index} + '\''"><img src="img/logowhite.png"
 				alt=""></button>
 		<div class="headerBtn">
 			<button class="varBtn" th:onclick="'window.location.href=\'' + @{/search} + '\''">找case</button>

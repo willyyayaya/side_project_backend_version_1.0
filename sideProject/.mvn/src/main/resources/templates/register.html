@@ -25,11 +25,10 @@
     <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
     <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
 
-
     <!-- 會員註冊窗口 -->
     <div id="bigOut">
         <div id="register" class="m-5">
-            <form class="row justify-content-md-center" th:action="@{/reg_submit}" th:object="${member}" method="post"
+            <form class="row justify-content-md-center" th:action="@{/reg_submit}" th:object="${newMember}" method="post"
                 enctype="multipart/form-data" onsubmit="return validatePassword()">
                 <div class="col-sm-12 all">
                     <h3>註冊帳號</h3>

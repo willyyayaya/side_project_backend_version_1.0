@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 a {
     text-decoration: none;
 }
@@ -9,6 +11,7 @@ body {
     width: 100vw;
     flex-direction: column;
 }
+
 
 
 h3 {
@@ -50,7 +53,7 @@ h5:hover {
 }
 
 #sign {
-    margin: 50px;
+    /* margin: 50px; */
     padding: 20px;
     width: 350px;
     /* height: 370px; */
@@ -61,6 +64,7 @@ h5:hover {
     text-align: center;
     /* box-shadow: 0 0px 70px rgba(0, 0, 0, 0.1); */
 }
+
 
 .submit {
     color: #14518e;
@@ -81,7 +85,6 @@ h5:hover {
 
 input {
     padding: 15px;
-
     border: solid 1px #c59650;
     border-radius: 5px;
     background-color: #eaeff3;
