@@ -36,7 +36,7 @@ public class Member {
    
     private String picurl;
     
-    private String memberinfo;
+    private String Intro;
     
     private String github;
     
@@ -145,13 +145,17 @@ public class Member {
         this.memberTags = memberTags;
     }
 
-	public String getMemberinfo() {
-		return memberinfo;
+
+	public String getIntro() {
+		return Intro;
 	}
 
-	public void setMemberinfo(String memberinfo) {
-		this.memberinfo = memberinfo;
+
+	public void setIntro(String intro) {
+		Intro = intro;
 	}
+
+
     
     
 }

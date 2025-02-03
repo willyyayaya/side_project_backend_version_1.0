@@ -155,13 +155,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const status = deadline > today ? '進行中' : '已完成';
 
 
-
+					//console.log("orderData:", orderData);
                     // 使用變數抓取對應的資料
                     const order = orderData.order;  // order 資料
                     const member = orderData.member;  // member 資料
 
                     card.innerHTML = `
-                            <img src="${order.picurl}" alt="${order.name}" style="width:150px;height:150px;">
+                            <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
                             <h4>${order.name}</h4>
                             <p class="title">${order.detail}</p>
                             <button class="Card_btn">閱讀詳細</button>
@@ -169,17 +169,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 
                     // 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
-                    if (status === '進行中' && orderData.evaluate == false && orderData.wanted === true) {
+                    if (status === '進行中' && orderData.getproject == true && orderData.wanted === true) {
                         box1.appendChild(card);
                     }
 
                     // 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
-                    if (status === '已完成' && orderData.evaluate == true && orderData.wanted === true) {
+                    if (status === '已完成' && orderData.getproject == true && orderData.wanted === true) {
                         box3.appendChild(card);
                     }
 
                     // 如果 order.status 是 '尚未完成'，將 card 加入 box2 (申請)
-                    if (status === '進行中' && orderData.evaluate == true && orderData.wanted === true) {
+                    if (status === '進行中' && orderData.getproject == false && orderData.wanted === true) {
                         box2.appendChild(card);
                     }
 

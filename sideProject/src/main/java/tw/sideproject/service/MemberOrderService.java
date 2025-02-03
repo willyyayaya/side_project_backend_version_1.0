@@ -146,5 +146,52 @@ public class MemberOrderService {
         memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
     }
 
+	// 新增評價(order)
+	public String addEvaluate(Long orderid, AddMemberOrderRequest request) {
+		// 查找與指定訂單號碼對應的所有 MemberOrder
+		List<MemberOrder> memberOrders = memberOrderRepository.findByOrder_orderid(orderid);
+
+		if (memberOrders.isEmpty()) {
+			return "找不到對應的訂單，無法新增評價";
+		}
+
+		MemberOrder memberOrder = memberOrders.get(0); // 取得第一個匹配的紀錄
+
+		// 設定評分和評價
+		memberOrder.setEvaluate(request.getEvaluate());
+
+		// 儲存評價
+		memberOrderRepository.save(memberOrder);
+
+		return "評價已成功新增";
+	}
+
+	// 查找某個會員相關的所有專案平均評分(order)
+	public Double getAverageRankByMemberId(Long memberid) {
+		// 查找該會員所有擁有的專案的 rank 分數
+		List<Integer> ranks = memberOrderRepository.findRanksByMemberIdAndOwnedTrue(memberid);
+
+		if (ranks.isEmpty()) {
+			// 如果沒有找到相關專案，則返回 null 或者其他預設值
+			return 0.0;
+		}
+
+		// 計算平均 rank 分數，將 null 視為 0
+		double sum = 0;
+		int count = 0;
+
+		for (Integer rank : ranks) {
+			sum += (rank != null ? rank : 0); // 使用 0 代替 null
+			count++;
+		}
+
+		return sum / count; // 返回所有 rank 的平均分數
+	}
+
+	// 尋找某個專案的發行會員(order)
+	public List<Member> getMemberByOrderId(Long orderid) {
+		return memberOrderRepository.findMemberByOrderid(orderid);
+	}
+
     
 }

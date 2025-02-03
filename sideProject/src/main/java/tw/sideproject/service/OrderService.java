@@ -120,4 +120,15 @@ public class OrderService {
         // 刪除專案
         orderRepository.deleteById(orderId);
     }
+
+    public Integer addRank(Long orderId, AddOrderRequest rank) {
+		Optional<Order> orderOptional = orderRepository.findById(orderId);
+		if (orderOptional.isPresent()) {
+			Order order = orderOptional.get();
+			order.setRank(rank.getRank()); // 更新 rank 分數
+			orderRepository.save(order); // 保存更新後的訂單
+			return order.getRank(); // 回傳新的 rank
+		}
+		throw new RuntimeException("專案 ID 不存在: " + orderId);
+	}
 }	

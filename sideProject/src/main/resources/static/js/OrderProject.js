@@ -157,28 +157,33 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const order = orderData.order;  // order 資料
                     const member = orderData.member;  // member 資料
 
-                    card.innerHTML = `
-                            <img src="${order.picurl}" alt="${order.name}" style="width:150px;height:150px;">
-                            <h4>${order.name}</h4>
-                            <p class="title">${order.detail}</p>
-                            <button class="Card_btn">閱讀詳細</button>
-                        `;
+					card.innerHTML = `
+					    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+					    <h4>${order.name}</h4>
+					    <p class="title">${order.detail}</p>
+					    <!-- 只在 box3 中的卡片按鈕才帶有觸發彈窗的功能 -->
+					    ${status === '已完成' ? 
+					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 
+					        : 
+					        `<button class="Card_btn">編輯</button>`
+					    }
+					`;
 
+					// 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
+					if (status === '進行中' && orderData.getproject == true && orderData.owned === true) {
+					    box1.appendChild(card);
+					}
 
-                    // 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
-                    if (status === '進行中' && orderData.evaluate == false && orderData.owned === true) {
-                        box1.appendChild(card);
-                    }
+					// 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
+					if (status === '已完成' && orderData.getproject == true && orderData.owned === true) {
+					    box3.appendChild(card);
+					}
 
-                    // 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
-                    if (status === '已完成' && orderData.evaluate == true && orderData.owned === true) {
-                        box3.appendChild(card);
-                    }
+					// 如果 order.status 是 '尚未完成'，將 card 加入 box2 (申請)
+					if (status === '進行中' && orderData.getproject == false && orderData.owned === true) {
+					    box2.appendChild(card);
+					}
 
-                    // 如果 order.status 是 '尚未完成'，將 card 加入 box2 (申請)
-                    if (status === '進行中' && orderData.evaluate == true && orderData.owned === true) {
-                        box2.appendChild(card);
-                    }
 
                 });
             } else {

@@ -67,4 +67,12 @@ public class OrderController {
         orderService.deleteOrder(orderId);
         return "專案已成功刪除";
     }
+    
+    // 新增分數
+    @PostMapping("/addRank/{orderid}")
+    public Integer addRank(@PathVariable Long orderid, @RequestBody AddOrderRequest rank) {
+        return orderService.addRank(orderid, rank);
+    }
+    
+    
 }

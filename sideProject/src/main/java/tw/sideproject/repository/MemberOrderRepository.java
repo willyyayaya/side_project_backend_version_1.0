@@ -65,4 +65,15 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     @Query("UPDATE MemberOrder mo SET mo.collected = :collected WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
     void updateCollectedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("collected") boolean collected);
 	
+    
+    List<MemberOrder> findByOrder_orderid(Long orderId);
+
+	// 查找會員的所有專案評分的平均(order)
+	@Query("SELECT o.rank FROM MemberOrder mo JOIN mo.order o WHERE mo.member.memberid = :memberId AND mo.owned = true")
+	List<Integer> findRanksByMemberIdAndOwnedTrue(@Param("memberId") Long memberId);
+
+	// 查發布專案的會員(order)
+	@Query("SELECT mo.member FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.owned = true")
+	List<Member> findMemberByOrderid(@Param("orderId") Long orderId);
+
 }

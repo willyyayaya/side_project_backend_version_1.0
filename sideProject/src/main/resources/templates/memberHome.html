@@ -49,6 +49,7 @@
                     <dt>專案收藏</dt>
                     <a id="link2" href="#">資料夾管理</a>
                     <dt>站內信件</dt>
+                    <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
                 </dl>
             </div>
         </div>
@@ -100,9 +101,9 @@
                 <!-- 自我介紹 -->
                 <div class="revise">
                     <b id="my">自我介紹：</b>
-                    <textarea id="input_index_memberinfo" name="memberinfo"
-                        style="width: 400px; height: 250px; resize: none;" th:text="${member.memberinfo}"></textarea>
-                    <button type="button" onclick="submitField('memberinfo')">編輯</button>
+                    <textarea id="input_index_memberinfo" name="Intro"
+                        style="width: 400px; height: 250px; resize: none;" th:text="${member.Intro}"></textarea>
+                    <button type="button" onclick="submitField('Intro')">編輯</button>
                 </div>
             </form>
         </div>

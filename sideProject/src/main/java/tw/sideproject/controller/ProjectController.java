@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import tw.sideproject.model.Member;
+import tw.sideproject.model.Order;
 import tw.sideproject.repository.MemberOrderRepository;
 import tw.sideproject.repository.MemberRepository;
 
@@ -44,6 +45,13 @@ public class ProjectController {
             model.addAttribute("member", member);
         }
         return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+    }
+    
+    @GetMapping("/getMembersByorderid/{orderid}")
+    public String getorderByorderid(@PathVariable Long orderid, Model model) {
+        model.addAttribute("orderid", orderid); // 将 memberid 传递给前端
+        
+        return "evaluate"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
     }
     
     

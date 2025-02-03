@@ -111,8 +111,8 @@ public class MemberController {
             if (member.getBirthday() != null) {
                 existMember.setBirthday(member.getBirthday());
             }
-            if (member.getMemberinfo() != null && !member.getMemberinfo().isEmpty()) {
-                existMember.setMemberinfo(member.getMemberinfo());
+            if (member.getIntro() != null && !member.getIntro().isEmpty()) {
+                existMember.setIntro(member.getIntro());
             }
 
             // 处理图片上传（已直接传递 Base64 字符串）

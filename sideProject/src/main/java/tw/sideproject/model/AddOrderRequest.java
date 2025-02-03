@@ -1,14 +1,20 @@
 package tw.sideproject.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddOrderRequest {
 	private String name;
     private String deadline;
+    private String budget;
+    private String upload;
+    private String newdate;
     private String intro;
+    private String category;    
     private String detail;
     private String picurl;
     private String location;
+    private Integer rank;
     private int people;
     private List<Integer> tagIds; // 傳入的 Tag IDs
 
@@ -49,8 +55,8 @@ public class AddOrderRequest {
 		return picurl;
 	}
 
-	public String setPicurl(String picurl) {
-		return this.picurl = picurl;
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
 	}
 
 	public String getLocation() {
@@ -70,15 +76,50 @@ public class AddOrderRequest {
     }
 
     public List<Integer> getTagIds() {
-        return tagIds;
+    	   return tagIds == null ? new ArrayList<>() : tagIds;  // 如果为null，返回一个空的List
     }
 
     public void setTagIds(List<Integer> tagIds) {
         this.tagIds = tagIds;
     }
 
-	public void setStatus(String string) {
-		// TODO Auto-generated method stub
-		this.setStatus(string);
+	public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public String getBudget() {
+		return budget;
+	}
+
+	public void setBudget(String budget) {
+		this.budget = budget;
+	}
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
+	}
+
+	public String getNewdate() {
+		return newdate;
+	}
+
+	public void setNewdate(String newdate) {
+		this.newdate = newdate;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 }

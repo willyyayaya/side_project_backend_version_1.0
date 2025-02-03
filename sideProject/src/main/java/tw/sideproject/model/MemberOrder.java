@@ -30,10 +30,12 @@ public class MemberOrder {
     private Boolean owned;
     private Boolean wanted;
     private Boolean collected;
-    private Boolean evaluate;
+    private Boolean getproject;
+    private String evaluate;
     private String picurl;   // 確保有這個屬性
     private String name;
     private String detail;
+    
 
 
     // Getters and Setters
@@ -81,14 +83,6 @@ public class MemberOrder {
 		this.detail = detail;
 	}
 
-
-	public Boolean getEvaluate() {
-		return evaluate;
-	}
-
-	public void setEvaluate(Boolean evaluate) {
-		this.evaluate = evaluate;
-	}
 
 	public void setId(MemberOrderKey id) {
         this.id = id;
@@ -145,5 +139,22 @@ public class MemberOrder {
 	            '}';
 	}
 
+	public Boolean getGetproject() {
+		return getproject;
+	}
+
+	public void setGetproject(Boolean getproject) {
+		this.getproject = getproject;
+	}
+
+	public String getEvaluate() {
+		return evaluate;
+	}
+
+	public void setEvaluate(String evaluate) {
+		this.evaluate = evaluate;
+	}
+
+	
 	
 }

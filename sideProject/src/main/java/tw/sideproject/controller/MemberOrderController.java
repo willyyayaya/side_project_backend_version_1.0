@@ -66,9 +66,10 @@ public class MemberOrderController {
 
     // 查詢某個專案相關的所有會員
     @GetMapping("/getMembersByOrderid/{orderid}")
-    public List<Member> getMembersByOrderId(@PathVariable Long orderid) {
-        return memberOrderService.getMembersByOrderId(orderid);
-    }
+    public List<MemberOrder> getMembersByOrderId(@PathVariable Long orderid) {
+    	List<MemberOrder> orders = memberOrderRepository.findAllById_Orderid(orderid);
+        
+        return orders;    }
 
     
   //======新增===================================
@@ -95,5 +96,26 @@ public class MemberOrderController {
     public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
         memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
     }
+    
+    @GetMapping("/Evaluate/{orderid}")
+ 	public String Evaluate(@PathVariable Long orderid, @RequestBody AddMemberOrderRequest memberOrder) {
+ 		memberOrderService.addEvaluate(orderid, memberOrder);
+ 	    return "evaluate"; // 假設返回一個評分頁面的模板或數據
+ 	}
+   
+    
+ // 新增評價(order)
+ 	@PostMapping("/addEvaluate/{orderid}")
+ 	public String addEvaluate(@PathVariable Long orderid, @RequestBody AddMemberOrderRequest memberOrder) {
+ 		memberOrderService.addEvaluate(orderid, memberOrder);
+ 		
+ 	    return "evaluate"; // 假設返回一個評分頁面的模板或數據
+ 	}
+
+ 	// 查詢某個會員相關的所有專案評分總和(order)
+ 	@GetMapping("/getRank/{memberid}")
+ 	public Double getAverageRank(@PathVariable Long memberid) {
+ 		return memberOrderService.getAverageRankByMemberId(memberid);
+ 	}
     
 }
