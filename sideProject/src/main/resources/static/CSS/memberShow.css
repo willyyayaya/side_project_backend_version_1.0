@@ -1,6 +1,7 @@
-*{
+* {
     background-color: #bbc8d8;
 }
+
 main {
     padding: 130px 10%;
 }
@@ -19,7 +20,8 @@ main {
     color: #c59650;
     padding: 2px;
 }
-.viewText a:hover{
+
+.viewText a:hover {
     border-width: 0 0 1px 0;
     border-style: solid;
     border-color: #c59650;
@@ -27,11 +29,17 @@ main {
 
 .viewText {
     line-height: 38px;
-    white-space: normal;
+    padding: 0 20px;
     word-wrap: break-word;
     word-break: break-all;
-    overflow-wrap: break-word;
-    padding: 0 20px;
+    white-space: normal;
+}
+
+.textCSS {
+    display: inline-block;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
 }
 
 .caseShowMember {
@@ -49,6 +57,7 @@ main {
     word-wrap: break-word;
     overflow-wrap: break-word;
 }
+
 .caseShowMemberView {
     display: flexbox;
     width: 40%;
@@ -80,7 +89,7 @@ main {
 }
 
 /* 會員公開資訊頁專屬CSS */
-.memberShowFooter{
+.memberShowFooter {
     position: fixed;
     bottom: 0;
     width: 100%;

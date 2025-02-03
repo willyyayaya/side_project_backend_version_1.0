@@ -31,11 +31,11 @@
 						<a class="row" th:href="@{/orderShow(orderid=${keywordCase.orderid})}">
 							<div class="col-8">
 								<h3 th:text=${keywordCase.name}>案件名稱案件名稱</h3>
-								<p th:utext="${keywordCase.tagNames}">案件tag</p>
 							</div>
 							<div class="col-4">
 								<p>申請人數 : <span th:text=${wantCounts[iter.index]}></span></p>
 							</div>
+							<p th:utext="${keywordCase.tagNames}">案件tag</p>
 						</a>
 					</div>
 				</div>
@@ -122,7 +122,7 @@
 		</section>
 		<!-- 隨機會員區 -->
 		<section id="memberCards" class="row">
-			<h1>熱門會員</h1>
+			<h1>熱&nbsp;&nbsp;門&nbsp;&nbsp;會&nbsp;&nbsp;員</h1>
 			<div class="col-3 memberCards" th:each="RanMember : ${ranMembers}">
 				<div class="boxBorder">
 					<a href="#" class="memberLink" th:data-memberid="${RanMember.memberid}">

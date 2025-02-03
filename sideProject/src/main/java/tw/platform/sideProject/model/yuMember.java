@@ -114,7 +114,7 @@ public class yuMember {
 	public String getTagNames() {
 		return tags.stream().map(tag -> {
 			String cssClass = getTagCssClass(tag.getTagname());
-			return "<span class=\"" + cssClass + "\">" + "#"+tag.getTagname() + "</span>";
+			return "<span class=\"" + cssClass +" textCSS\">" + "#"+tag.getTagname() + "</span>";
 		}).collect(Collectors.joining());
 	}
 
