@@ -29,14 +29,13 @@
 	<main>
 		<!-- 隨機會員區，測試彈窗 -->
 		<section>
-			<button class="showMemberBtn" data-memberid="">詳細資料</button>
+			<button class="sendBtnMemberid" data-memberid="">詳細資料</button>
 		</section>
 		<!-- 彈窗HTML -->
-		<div id="memberModel">
-			<div class="modelContent">
-				<span class="close">&times;</span>
-				<div class="caseShowMember">
-					<input type="submit" value="寄信" class="submit sendBtn">
+		<div id="sendModel">
+			<div class="sendModelContent">
+				<span class="sendClose">&times;</span>
+				<div class="sendModelBox">
 					<div id="mesgDown">
 						<div class="sendemail">
 							<label for="receiverEmail" class="mystyle">
@@ -55,7 +54,8 @@
 								內&emsp;文&emsp;<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
 									style="color:red; background-color: #eaeff3; width: 100px;">內文錯誤</span>
 								<textarea th:field="*{content}" id="content"></textarea></label>
-						</div>
+							</div>
+							<input type="submit" value="寄信" class="submit sendBtn">
 					</div>
 				</div>
 			</div>
@@ -68,14 +68,14 @@
 	<script>
 		// 彈窗js
 		$(document).ready(function () {
-			var model = $('#memberModel');
+			var model = $('#sendModel');
 			var span = $('.close');
-			$('.showMemberBtn').click(function () {
+			$('.sendBtnMemberid').click(function () {
 				console.log('案件被點擊');
 				var memberid = $(this).data('memberid');
 				console.log('會員ID: ' + memberid);
 				$.ajax({
-					url: '/caseMember',
+					url: '/',//放你處理後端的URL
 					type: 'post',
 					data: { memberid: memberid },
 					success: function (data) {
