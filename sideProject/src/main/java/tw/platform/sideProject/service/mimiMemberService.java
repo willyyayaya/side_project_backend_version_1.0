@@ -12,29 +12,37 @@ import tw.platform.sideProject.util.BCrypt;
 
 @Service
 public class mimiMemberService {
-	
+
 	@Autowired
 	private mimiMemberRepository memberRepository;
+
 	public void addMember(mimiMember member) {
 		member.setPassword(BCrypt.hashpw(member.getPassword(), BCrypt.gensalt()));
-		mimiMember saveMember = memberRepository.save(member);//表單資料
+		mimiMember saveMember = memberRepository.save(member);// 表單資料
 	}
-	
+
 	public mimiMember loginMember(mimiMember loginmember) {
 		Optional<mimiMember> opt = memberRepository.findByEmail(loginmember.getEmail());
 		try {
-		mimiMember member = opt.get();
-		if(member != null) {
-			System.out.println("debug3");
-			if(!BCrypt.checkpw(loginmember.getPassword(), member.getPassword())) {
-				member = null;
-				System.out.println("debug4");				
-			}else {
-			}//iconbyte[]陣列轉base64
-		}
-		return member;
-		}catch(Exception e) {
+			mimiMember member = opt.get();
+			if (member != null) {
+				System.out.println("debug3");
+				if (!BCrypt.checkpw(loginmember.getPassword(), member.getPassword())) {
+					member = null;
+					System.out.println("debug4");
+				} else {
+				} // iconbyte[]陣列轉base64
+			}
+			return member;
+		} catch (Exception e) {
 			return null;
 		}
+	}
+
+	// 拿到memberid
+	public Long getMemberid(Long memberid) {
+		mimiMember member = memberRepository.findById(memberid)
+				.orElseThrow(() -> new RuntimeException("Member not found"));
+		return member.getMemberid();
 	}
 }
