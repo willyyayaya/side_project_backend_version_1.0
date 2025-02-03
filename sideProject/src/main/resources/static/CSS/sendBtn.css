@@ -97,7 +97,7 @@ main {
 
 .caseShowMember {
     /* margin-bottom: 20px; */
-    display: flex;
+    /* display: flex; */
     /* justify-content: space-between; */
     align-items: center;
     width: 100%;
@@ -216,11 +216,6 @@ textarea{
 
 /* //---------------------------- */
 
-a>span{
-    margin-left: 16px;
-    font-size: 1.2rem;
-}
-
 #mesgTop{
     background-color: #eaeff3;
     height: 680px;
@@ -239,9 +234,6 @@ label{
     width: 100%;
     margin-right: 30px;
     background-color: #eaeff3;
-}
-hr{
-  margin-top: 50px;
 }
 
 

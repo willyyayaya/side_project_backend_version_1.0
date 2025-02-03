@@ -36,7 +36,7 @@
 			<div class="modelContent">
 				<span class="close">&times;</span>
 				<div class="caseShowMember">
-					<input type="submit" value="寄信" class="submit">
+					<input type="submit" value="寄信" class="submit sendBtn">
 					<div id="mesgDown">
 						<div class="sendemail">
 							<label for="receiverEmail" class="mystyle">
@@ -54,7 +54,7 @@
 							<label for="content" class="mystyle">
 								內&emsp;文&emsp;<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"
 									style="color:red; background-color: #eaeff3; width: 100px;">內文錯誤</span>
-								<textarea th:field="*{content}" id="content"></label>
+								<textarea th:field="*{content}" id="content"></textarea></label>
 						</div>
 					</div>
 				</div>
