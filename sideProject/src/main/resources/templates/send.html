@@ -18,7 +18,6 @@
         crossorigin="anonymous"></script>
     <script src="js/jquery-3.6.0.js"></script>
     <link rel="stylesheet" href="CSS/fragment.css">
-    <link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/register.css">
 </head>
 
 <body>
@@ -53,7 +52,7 @@
               <div class="sendemail">
                   <label for="content" class="mystyle">
                   內&emsp;文&emsp;<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}" style="color:red; background-color: #eaeff3; width: 100px;">內文錯誤</span>
-                  <textarea th:field="*{content}" id="content"/></label>
+                  <textarea th:field="*{content}" id="content"></label>
               </div>
           </div>
 
