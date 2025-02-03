@@ -5,10 +5,15 @@ import java.util.List;
 public class AddOrderRequest {
 	private String name;
     private String deadline;
+    private String budget;
+    private String upload;
+    private String newdate;
     private String intro;
+    private String category;
     private String detail;
     private String picurl;
     private String location;
+    private Integer rank;
     private int people;
     private List<Integer> tagIds; // 傳入的 Tag IDs
 
@@ -76,4 +81,43 @@ public class AddOrderRequest {
     public void setTagIds(List<Integer> tagIds) {
         this.tagIds = tagIds;
     }
+    public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public String getBudget() {
+		return budget;
+	}
+
+	public void setBudget(String budget) {
+		this.budget = budget;
+	}
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
+	}
+
+	public String getNewdate() {
+		return newdate;
+	}
+
+	public void setNewdate(String newdate) {
+		this.newdate = newdate;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
 }
