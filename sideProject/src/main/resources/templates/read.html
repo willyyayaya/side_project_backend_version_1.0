@@ -25,73 +25,92 @@
 
 
 
-  <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
-  <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
+    <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
+    <div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div>
 
-<form th:action="@{/message/read/{messageid}(messageid=${message.messageid})}" th:object="${message}"method="post"
-    enctype="multipart/form-data">
-  <div id="message">
-      <div id="mesgTop">
-        <div id="alld">
-              
-              <a th:href="@{/message/{receiverId}(receiverId=${message.receiverid.memberid})}" id="home">站內信</a>
-              <a href="/send" id="tegami">寫信</a>
-          </div>
-          <br>
-          <br> 
-          <hr>
-          <div id="mesgDown">
-              <div class="sendemail">
-                  <label for="senderEmail" class="mystyle">
-                  寄件人
-                  <input type="text" th:field="*{senderid.email}" id="senderEmail" readonly="readonly"/></label>
-              </div>
-              <div class="sendemail">
-                  <label for="title" class="mystyle">
-                  標&emsp;題
-                  <input type="text" th:field="*{title}" id="title" readonly="readonly"/></label>
-              </div>
-              <div class="sendemail">
-                  <label for="content" class="mystyle">
-                  內&emsp;文
-                  <textarea th:field="*{content}" id="content" readonly="readonly"/></label>
-              </div>
-			</div>
-			 	<form th:action="@{/deleteMessage/{messageId}(messageId=${message.messageid})}" method="post">
-          		    <button id="del" th:data-messageid="${message.messageid}">刪除</button>
-        		</form>
-					<a th:href="@{/message/reply/{messageId}(messageId=${message.messageid})}" id="back">回信</a>
-			</div>
-          </div>
+    <form th:action="@{/message/read/{messageid}(messageid=${message.messageid})}" th:object="${message}" method="post"
+        enctype="multipart/form-data">
 
-</form>
+        <div id="outSide">
+            <div id="User">
+                <!-- 預覽圖片，目前沒圖片會只有框 -->
+                <img name="picurl" id="icon" alt="" th:src="${receiverid?.picurl}" />
+                <!-- 功能列 -->
+                <div id="UserUse">
+                    <b>功能列</b>
+                    <dl>
+                        <dt>專案管理</dt>
+                        <dd>我接的專案</dd>
+                        <dd>我發的專案</dd>
+                        <dt>專案收藏</dt>
+                        <a href="memberlike.html">資料夾管理</a>
+                        <dt>站內信件</dt>
+                        <a th:href="@{/message/{receiverId}(receiverId=${message.receiverid.memberid})}">收件匣</a>
+                    </dl>
+                </div>
+            </div>
+
+            <!-- 左側操作區域 -->
+
+            <div id="message">
+                <div id="mesgTop">
+                    <div id="alld">
+                        <a th:href="@{/message/{receiverId}(receiverId=${message.receiverid.memberid})}"
+                            id="home">站內信</a>
+                        <a href="/send" id="tegami">寫信</a>
+                    </div>
+                    <br> <br>
+                    <hr>
+                    <div id="mesgDown">
+                        <div class="sendemail">
+                            <label for="senderEmail" class="mystyle"> 寄件人 <input type="text"
+                                    th:field="*{senderid.email}" id="senderEmail" readonly="readonly" /></label>
+                        </div>
+                        <div class="sendemail">
+                            <label for="title" class="mystyle"> 標&emsp;題 <input type="text" th:field="*{title}"
+                                    id="title" readonly="readonly" /></label>
+                        </div>
+                        <div class="sendemail">
+                            <label for="content" class="mystyle"> 內&emsp;文 <textarea th:field="*{content}" id="content"
+                                    readonly="readonly" /></label>
+                        </div>
+                    </div>
+                    <form th:action="@{/deleteMessage/{messageId}(messageId=${message.messageid})}" method="post">
+                        <button id="del" th:data-messageid="${message.messageid}">刪除</button>
+                    </form>
+                    <a th:href="@{/message/reply/{messageId}(messageId=${message.messageid})}" id="back">回信</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <div th:replace="fragments::footer"></div>
-	<script>
-//刪除信件	
-	document.getElementById("del").addEventListener("click", function(e) {
-	    e.preventDefault(); // 防止表單提交
-	    const messageId = this.getAttribute('data-messageid');
-	    
-	    fetch(`/deleteMessage/${messageId}`, {
-	        method: 'DELETE',
-	    })
-	    .then(response => response.json())  // 解析為 JSON 格式
-	    .then(data => {
-	        alert(data.message);  // 顯示後端返回的訊息
-	        // 設置標記，告訴上一頁需要刷新
-	        sessionStorage.setItem('shouldRefresh', 'true');
-	        
-	        // 跳轉回上一頁
-	        setTimeout(() => {
-	            window.history.back();  // 或者使用 window.location.href
-	        }, 200);
-	    })
-	    .catch(error => {
-	        console.error('刪除失敗:', error);
-	    });
-	});
+    <script>
+        //刪除信件	
+        document.getElementById("del").addEventListener("click", function (e) {
+            e.preventDefault(); // 防止表單提交
+            const messageId = this.getAttribute('data-messageid');
 
-	</script>
+            fetch(`/deleteMessage/${messageId}`, {
+                method: 'DELETE',
+            })
+                .then(response => response.json())  // 解析為 JSON 格式
+                .then(data => {
+                    alert(data.message);  // 顯示後端返回的訊息
+                    // 設置標記，告訴上一頁需要刷新
+                    sessionStorage.setItem('shouldRefresh', 'true');
+
+                    // 跳轉回上一頁
+                    setTimeout(() => {
+                        window.history.back();  // 或者使用 window.location.href
+                    }, 200);
+                })
+                .catch(error => {
+                    console.error('刪除失敗:', error);
+                });
+        });
+
+    </script>
 
 </body>
 

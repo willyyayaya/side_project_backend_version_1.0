@@ -7,7 +7,71 @@ body {
     height: 750px;    
 }
 
+/**-----------------*/
+#outSide{
+    /* background-color: #14518e; */
+    width: 80%;
+    margin-left: 12%;
+    margin-top: 80px;
+    display: flex;
+    margin-bottom: 5%;
+}
+#User{
+    /* margin-left: 10%; */
+    /* margin-top: 80px; */
+    width: 220px;
+    height: 500px;
+    background-color: #eaeff3;
+    border-radius: 5px;
+    display: inline-block;
+}
 
+#icon{
+	background-color: #14518e;
+    width: 150px;
+    height: 150px;
+    margin-left: 35px;
+    margin-top: 35px;
+    border-radius: 5px;
+}
+#UserUse{
+    width: 150px;
+    height: auto;
+    margin-left: 50px;
+    margin-top: 30px;
+    background-color:#eaeff3;
+}
+b{
+    background-color: #eaeff3;
+    font-size: 1.2rem;
+}
+h2{
+    background-color: #eaeff3;
+    color: #14518e;
+    margin-bottom: 20px;
+}
+dl{
+    margin-top: 10px;
+    background-color: #eaeff3;
+}
+dt{
+    background-color: #eaeff3;   
+}
+dd,a{
+    background-color: #eaeff3;
+    margin-left: 20px;
+    text-decoration: none;
+}
+#leftArea{
+    background-color: #eaeff3;
+    margin-left: 40px;
+    display: inline-block;
+    width: 900px;
+    padding: 80px;
+    height: auto;
+    border-radius: 5px;
+}
+/**-----------------*/
 .sendemail{
     margin: 15px;
     color: #303030;
@@ -84,13 +148,13 @@ textarea{
 
 /* //---------------------------- */
 #message{
-    background-color: #bbc8d8;
-    width: 80%;
-    height: 600px;
-    margin:0 auto; 
-    /* margin-top: 150px; */
-    margin-bottom: 200px;
-    padding-top: 60px;
+    background-color: #eaeff3;
+    margin-left: 40px;
+    display: inline-block;
+    width: 900px;
+    padding: 20px;
+    height: auto;
+    border-radius: 5px;
 }
 
 #send{
