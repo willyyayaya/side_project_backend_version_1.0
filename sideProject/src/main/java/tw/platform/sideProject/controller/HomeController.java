@@ -170,52 +170,13 @@ public class HomeController {
 		return "memberShow";
 	}
 
-	// --------測試項目-----------
+	// --------彈窗測試項目-----------
 	@GetMapping("/indexText")
 	public String indexText(Model model, HttpSession session) {
-		System.out.println("---home---");
-		if (session.getAttribute("member") != null) {
-			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("index目前登入狀態:" + member.getName());
-			model.addAttribute("member", member);
-		} else {
-			System.out.println("index訪客模式");
-		}
-		// 抓取隨機會員資料
-		List<yuMember> ranMembers = memberService.getRandomYuMembers();
-		for (yuMember member : ranMembers) {
-			if (member.getPicurl() == null || member.getPicurl() == "") {
-				member.setPicurl("../img/memberImg.jpg");
-				System.out.println(member.getMemberid());
-			}
-		}
-		model.addAttribute("ranMembers", ranMembers);
-		// 抓取熱門申請專案
-		List<Object[]> owentLise = orderService.getWantedCountByOrderId();
-		List<yuOrder> wentOrders = new ArrayList<>();
-		List<Long> wantCounts = new ArrayList<>();
-		int caseCouunt = 0;
-		for (Object[] lists : owentLise) {
-			if (caseCouunt >= 6) {
-				break;
-			}
-			yuOrder order = (yuOrder) lists[0];
-			Long want = (Long) lists[1];
-			System.out.println("訂單: " + order.getName() + ", 申請人數: " + lists[1] + ",截止日期:" + order.getDeadline());
-			wentOrders.add(order);
-			wantCounts.add(want);
-			caseCouunt++;
-		}
-		model.addAttribute("keywordCase", wentOrders);
-		model.addAttribute("wantCounts", wantCounts);
-		// 抓取隨機關鍵字
-		List<Keywords> list = keywordService.getKeywordDesc();
-		model.addAttribute("kw", list);
-
-		return "indexText";
+		return "memberShowBtn";
 	}
 
-	//可顯示彈窗，將資料轉成JSON輸出，不要用thymeleaf模板
+	// 彈窗後端
 	@GetMapping("/caseMember")
 	@ResponseBody
 	public yuMember caseMember(@RequestParam("memberid") Long memberid) {
