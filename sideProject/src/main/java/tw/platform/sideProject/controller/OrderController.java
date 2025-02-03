@@ -1,6 +1,7 @@
 package tw.platform.sideProject.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class OrderController {
 
 	// 新增專案
     @PostMapping("/addOrder")
-    public String addOrder(@RequestBody AddOrderRequest request) {
+    public Map<String, Object> addOrder(@RequestBody AddOrderRequest request) {
         return orderService.addOrder(request);
     }
 
@@ -46,8 +47,8 @@ public class OrderController {
 
     // 根據 ID 更新專案資料
     @PutMapping("/updateOrder/{orderId}")
-    public Order updateOrder(@PathVariable Long orderId, @RequestBody Order orderDetails) {
-        return orderService.updateOrder(orderId, orderDetails);
+    public Order updateOrder(@PathVariable Long orderId, @RequestBody AddOrderRequest request) {
+        return orderService.updateOrder(orderId, request);
     }
 
     // 根據 ID 刪除專案
@@ -55,6 +56,12 @@ public class OrderController {
     public String deleteOrder(@PathVariable Long orderId) {
         orderService.deleteOrder(orderId);
         return "專案已成功刪除";
+    }
+    
+ // 新增分數(order)
+    @PostMapping("/addRank/{orderId}")
+    public Integer addRank(@PathVariable Long orderId, @RequestBody AddOrderRequest rank) {
+        return orderService.addRank(orderId, rank);
     }
 
 }

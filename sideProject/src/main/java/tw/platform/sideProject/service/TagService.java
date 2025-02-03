@@ -12,15 +12,15 @@ import java.util.List;
 @Service
 public class TagService {
 
-    @Autowired
+	@Autowired
     private TagRepository tagRepository;
 
     public String addTags(List<Tag> tags) {
     	
     	// 新增技能 (Tag)
         Tag javaTag = new Tag();
-        // javaTag.setTagidm(5);
-        javaTag.setTagido(5);
+//        javaTag.setTagidm(5);
+//        javaTag.setTagido(5);
         javaTag.setTagname("JavaScript");
         tagRepository.save(javaTag);
 
@@ -38,7 +38,8 @@ public class TagService {
     public Tag updateTag(int tagId, Tag tagDetails) {
         return tagRepository.findById(tagId).map(tag -> {
             tag.setTagname(tagDetails.getTagname());
-            tag.setTagido(tagDetails.getTagido());
+            tag.setTagid(tagDetails.getTagid());
+//            tag.setTagido(tagDetails.getTagido());
             return tagRepository.save(tag);
         }).orElseThrow(() -> new RuntimeException("標籤ID不存在 (ID: " + tagId + ")"));
     }
@@ -51,5 +52,17 @@ public class TagService {
         } else {
             throw new RuntimeException("標籤ID不存在 (ID: " + tagId + ")");
         }
+    }
+    
+    //取得標籤名字(order)
+    @Transactional
+    public List<String> getTagNames() {
+      return tagRepository.findAllTagname();
+    }
+    
+    //根據orderid取得標籤名字(order)
+    @Transactional
+    public List<String> getTagByOrderId(Long orderId) {
+        return tagRepository.findTagNamesByOrderId(orderId);
     }
 }

@@ -23,175 +23,167 @@ import tw.platform.sideProject.repository.TagRepository;
 public class MemberService {
 
 	@Autowired
-	private MemberRepository memberRepository;
+    private MemberRepository memberRepository;
+    
+    @Autowired
+    private TagRepository tagRepository;
+    
+    @Autowired
+    private MemberTagRepository memberTagRepository;
 
-	@Autowired
-	private TagRepository tagRepository;
+    // 新增會員
+    public String addMember(@RequestBody AddMemberRequest request) {
+    	// 建立並儲存會員
+        Member member = new Member();
+        member.setAccount(request.getAccount());
+        member.setPassword(request.getPassword());
+        member.setEmail(request.getEmail());
+        member.setName(request.getName());
+        member.setBirthday(request.getBirthday());
+        member.setTel(request.getTel());
+        member.setPicurl(request.getPicurl());
+        member.setIsblocked(false);
+        memberRepository.save(member);
 
-	@Autowired
-	private MemberTagRepository memberTagRepository;
+        // 處理傳入的 tagIds，建立 MemberTag 資料
+        List<MemberTag> memberTags = new ArrayList<>();
+        for (Integer tagId : request.getTagIds()) {
+            // 查找對應的 Tag
+            Tag tag = tagRepository.findById(tagId)
+                    .orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-	// 新增會員
-	public String addMember(@RequestBody AddMemberRequest request) {
-		// 建立並儲存會員
-		Member member = new Member();
-		member.setAccount(request.getAccount());
-		member.setPassword(request.getPassword());
-		member.setEmail(request.getEmail());
-		member.setName(request.getName());
-		member.setBirthday(request.getBirthday());
-		member.setTel(request.getTel());
-		member.setPicurl(request.getPicurl());
-		member.setIsblocked(false);
-		memberRepository.save(member);
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(member.getMemberid());
             // memberTagKey.setTagId(tag.getTagidm());
 
-		// 處理傳入的 tagIds，建立 MemberTag 資料
-		List<MemberTag> memberTags = new ArrayList<>();
-		for (Integer tagId : request.getTagIds()) {
-			// 查找對應的 Tag
-			Tag tag = tagRepository.findById(tagId)
-					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
-
-			// 建立 MemberTagKey 作為複合主鍵
-			// MemberTagKey memberTagKey = new MemberTagKey();
-			// memberTagKey.setMemberId(member.getMemberid());
-			// memberTagKey.setTagId(tag.getTagido());
-
-			// 建立 MemberTag 並設置關聯
-			MemberTag memberTag = new MemberTag();
-			memberTag.setId(memberTagKey);
+            // 建立 MemberTag 並設置關聯
+            MemberTag memberTag = new MemberTag();
+            memberTag.setId(memberTagKey);
 //            memberTag.setMember(member);
-			memberTag.setTag(tag);
+            memberTag.setTag(tag);
 
-			memberTags.add(memberTag);
-		}
+            memberTags.add(memberTag);
+        }
 
-		// 儲存所有的 MemberTag
-		memberTagRepository.saveAll(memberTags);
+        // 儲存所有的 MemberTag
+        memberTagRepository.saveAll(memberTags);
 
-		return "會員新增成功，並建立對應的標籤關聯";
+        return "會員新增成功，並建立對應的標籤關聯";
 
-	}
+    }
 
-	/**
-	 * 查詢所有會員
-	 * 
-	 * @return List<Member> 會員列表
-	 */
-	public List<Member> getAllMembers() {
-		return memberRepository.findAll();
-	}
+    /**
+     * 查詢所有會員
+     * 
+     * @return List<Member> 會員列表
+     */
+    public List<Member> getAllMembers() {
+        return memberRepository.findAll();
+    }
 
-	/**
-	 * 根據 Email 查詢會員
-	 * 
-	 * @param email 會員 Email
-	 * @return Optional<Member> 匹配的會員
-	 */
-	public Optional<Member> getMemberByEmail(String email) {
-		return memberRepository.findByEmail(email);
-	}
+    /**
+     * 根據 Email 查詢會員
+     * 
+     * @param email 會員 Email
+     * @return Optional<Member> 匹配的會員
+     */
+    public Optional<Member> getMemberByEmail(String email) {
+        return memberRepository.findByEmail(email);
+    }
 
-	/**
-	 * 根據 ID 更新會員資料
-	 * 
-	 * @param memberId      會員 ID
-	 * @param memberDetails 包含更新內容的 Member 物件
-	 * @return 更新後的 Member 物件
-	 */
-	public Member updateMember(Long memberId, Member memberDetails) {
-		return memberRepository.findById(memberId).map(existingMember -> {
-			// 僅更新非空欄位
-			if (memberDetails.getAccount() != null) {
-				existingMember.setAccount(memberDetails.getAccount());
-			}
-			if (memberDetails.getPassword() != null) {
-				existingMember.setPassword(memberDetails.getPassword());
-			}
-			if (memberDetails.getEmail() != null) {
-				existingMember.setEmail(memberDetails.getEmail());
-			}
-			if (memberDetails.getPicurl() != null) {
-				existingMember.setPicurl(memberDetails.getPicurl());
-			}
-			if (memberDetails.getName() != null) {
-				existingMember.setName(memberDetails.getName());
-			}
-			if (memberDetails.getBirthday() != null) {
-				existingMember.setBirthday(memberDetails.getBirthday());
-			}
-			if (memberDetails.getTel() != null) {
-				existingMember.setTel(memberDetails.getTel());
-			}
-			if (memberDetails.getIsblocked() != null) {
-				existingMember.setIsblocked(memberDetails.getIsblocked());
-			}
-			// 儲存更新後的資料
-			return memberRepository.save(existingMember);
-		}).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
-	}
+    /**
+     * 根據 ID 更新會員資料
+     * 
+     * @param memberId      會員 ID
+     * @param memberDetails 包含更新內容的 Member 物件
+     * @return 更新後的 Member 物件
+     */
+    public Member updateMember(Long memberId, Member memberDetails) {
+    	return memberRepository.findById(memberId).map(existingMember -> {
+            // 僅更新非空欄位
+            if (memberDetails.getAccount() != null) {
+                existingMember.setAccount(memberDetails.getAccount());
+            }
+            if (memberDetails.getPassword() != null) {
+                existingMember.setPassword(memberDetails.getPassword());
+            }
+            if (memberDetails.getEmail() != null) {
+                existingMember.setEmail(memberDetails.getEmail());
+            }
+            if (memberDetails.getPicurl() != null) {
+                existingMember.setPicurl(memberDetails.getPicurl());
+            }
+            if (memberDetails.getName() != null) {
+                existingMember.setName(memberDetails.getName());
+            }
+            if (memberDetails.getBirthday() != null) {
+                existingMember.setBirthday(memberDetails.getBirthday());
+            }
+            if (memberDetails.getTel() != null) {
+                existingMember.setTel(memberDetails.getTel());
+            }
+            if (memberDetails.getIsblocked() != null) {
+                existingMember.setIsblocked(memberDetails.getIsblocked());
+            }
+            // 儲存更新後的資料
+            return memberRepository.save(existingMember);
+        }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
+    }
+    
+    /**
+     * 根據會員 ID 更新標籤
+     *
+     * @param memberId 會員 ID
+     * @param tagIds   要更新的標籤 ID 列表
+     * @return 更新結果的訊息
+     */
+    public String updateMemberTags(Long memberId, List<Integer> tagIds) {
+        // 查找會員是否存在
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
 
-	/**
-	 * 根據會員 ID 更新標籤
-	 *
-	 * @param memberId 會員 ID
-	 * @param tagIds   要更新的標籤 ID 列表
-	 * @return 更新結果的訊息
-	 */
-	public String updateMemberTags(Long memberId, List<Integer> tagIds) {
-		// 查找會員是否存在
-		Member member = memberRepository.findById(memberId)
-				.orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
+        // 刪除該會員現有的所有 MemberTag
+        memberTagRepository.deleteByMemberId(memberId);
 
-		// 刪除該會員現有的所有 MemberTag
-		memberTagRepository.deleteByMemberId(memberId);
+        // 新增新的標籤關聯
+        List<MemberTag> memberTags = new ArrayList<>();
+        for (Integer tagId : tagIds) {
+            // 查找對應的 Tag
+            Tag tag = tagRepository.findById(tagId)
+                    .orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
 
-		// 新增新的標籤關聯
-		List<MemberTag> memberTags = new ArrayList<>();
-		for (Integer tagId : tagIds) {
-			// 查找對應的 Tag
-			Tag tag = tagRepository.findById(tagId)
-					.orElseThrow(() -> new RuntimeException("Tag not found for ID: " + tagId));
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(memberId);
             // memberTagKey.setTagId(tag.getTagidm());
 
-			// 建立 MemberTagKey 作為複合主鍵
-			// MemberTagKey memberTagKey = new MemberTagKey();
-			// memberTagKey.setMemberId(memberId);
-			// memberTagKey.setTagId(tag.getTagid());
+            // 建立 MemberTag 並設置關聯
+            MemberTag memberTag = new MemberTag();
+            memberTag.setId(memberTagKey);
+            memberTag.setMember(member);
+            memberTag.setTag(tag);
 
-			// 建立 MemberTag 並設置關聯
-			MemberTag memberTag = new MemberTag();
-			memberTag.setId(memberTagKey);
-			memberTag.setMember(member);
-			memberTag.setTag(tag);
+            memberTags.add(memberTag);
+        }
 
-			memberTags.add(memberTag);
-		}
+        // 儲存所有的 MemberTag
+        memberTagRepository.saveAll(memberTags);
 
-		// 儲存所有的 MemberTag
-		memberTagRepository.saveAll(memberTags);
+        return "會員的標籤已成功更新";
+    }
 
-		return "會員的標籤已成功更新";
-	}
-
-	/**
-	 * 根據 ID 刪除會員
-	 * 
-	 * @param memberId 會員 ID
-	 */
-	public void deleteMember(Long memberId) {
-		if (!memberRepository.existsById(memberId)) {
-			throw new RuntimeException("會員 ID 不存在: " + memberId);
-		}
-		memberRepository.deleteById(memberId);
-	}
+    /**
+     * 根據 ID 刪除會員
+     * 
+     * @param memberId 會員 ID
+     */
+    public void deleteMember(Long memberId) {
+        if (!memberRepository.existsById(memberId)) {
+            throw new RuntimeException("會員 ID 不存在: " + memberId);
+        }
+        memberRepository.deleteById(memberId);
+    }
 
 //	YU新增
 //	首頁隨抓取會員資料

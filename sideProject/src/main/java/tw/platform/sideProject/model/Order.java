@@ -28,7 +28,11 @@ public class Order {
 
     private String name;
     private String deadline;
+    private String budget;
+    private String upload;
+    private String newdate;
     private String intro;
+    private String category;
     private String detail;
     private String picurl;
     private String location;
@@ -149,4 +153,38 @@ public class Order {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
+
+	public String getBudget() {
+		return budget;
+	}
+
+	public void setBudget(String budget) {
+		this.budget = budget;
+	}
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
+	}
+
+	public String getNewdate() {
+		return newdate;
+	}
+
+	public void setNewdate(String newdate) {
+		this.newdate = newdate;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+    
+    
 }

@@ -21,7 +21,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 //    List<Order> findByTagido(int tagido);
 
 	// 查詢擁有特定 tagido 的所有訂單
-	List<Order> findByTags_Tagido(int tagido);
+//	List<Order> findByTags_Tagido(int tagido);
 
 //	YU新增
 	// 模糊查詢 name 或 intro 符合 keyword
