@@ -96,7 +96,7 @@ public class MessageController {
 		return "redirect:/message/" + sender.getMemberid();
 	}
 
-	// 可以順利抓到資料
+	// 可以順利抓到資料，收件夾
 	@GetMapping("/message/{receiverid}")
 	public String getMessages(@PathVariable Long receiverid, Model model) {
 		List<Message> messages = messageService.getMessagesByReceiverid(receiverid);
@@ -238,5 +238,11 @@ public class MessageController {
 	}
 
 //申請成功自動寄出站內信
+	
+	@GetMapping("/sendBtn")
+	public String sendBtn(Model model) {
+		model.addAttribute("message", new Message()); // 添加空的Message對象到模型
+		return "sendBtn"; // 返回表單模板名稱
+	}
 
 }
