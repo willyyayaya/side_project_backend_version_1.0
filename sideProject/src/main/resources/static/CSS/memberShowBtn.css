@@ -7,8 +7,8 @@ main {
 }
 
 /* 共用CSS */
-.viewText span,
-.viewText b {
+.viewText>span,
+.viewText>b {
     background-color: transparent;
     font-size: 1.2rem;
 }
@@ -61,7 +61,7 @@ main {
 }
 
 #memberModel {
-    /* display: none; */
+    display: none;
     position: fixed;
     z-index: 1;
     left: 0;
@@ -110,13 +110,6 @@ main {
     align-items: center;
     justify-content: center;
 }
-
-.caseMemberBtn {
-    margin: 5px;
-    padding: 3px;
-    border-radius: 5px;
-}
-
 
 #caseMemberIcon {
     width: 200px;

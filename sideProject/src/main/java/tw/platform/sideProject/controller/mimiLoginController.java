@@ -123,7 +123,7 @@ public class mimiLoginController {
 		session.setAttribute("message", message);
 //		return "memberCenter"; //思宇的會員中心
 //		return "redirect:/main/home";
-		return "sendButton";
+		return "memberShowBtn";
 	}
 
 	@PostMapping("/logout")
