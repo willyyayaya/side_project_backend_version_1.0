@@ -21,6 +21,7 @@ import tw.platform.sideProject.model.yuOrder;
 import tw.platform.sideProject.service.KeywordService;
 import tw.platform.sideProject.service.MemberService;
 import tw.platform.sideProject.service.OrderService;
+import tw.platform.sideProject.service.mimiMemberService;
 
 @Controller
 public class HomeController {
@@ -33,6 +34,9 @@ public class HomeController {
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private mimiMemberService mimiMemberService;
 
 	@GetMapping("/index")
 	public String index(Model model, HttpSession session) {
@@ -207,15 +211,28 @@ public class HomeController {
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {
 			System.out.println(memberCheck.getName());
+			System.out.println(memberCheck.getEmail());
+
 			// 如果訂單沒圖片，加入圖片
 			if (memberCheck.getPicurl() == null) {
 				memberCheck.setPicurl("../img/caseImg.jpg");
 			}
+
+			// 假設這裡的 receiverid 是 mimiMember 類型
+			mimiMember receiverMember = mimiMemberService.getMemberById(memberid); // 通過 memberid 查詢 mimiMember
+			String receiverEmail = memberCheck.getEmail(); // 取得該會員的 Email
+
+			// 創建 Message 物件並設置 receiverid
+			Message message = new Message();
+			message.setReceiverid(receiverMember); // 設置 receiverid 為 mimiMember 物件
+
+			// 設置收件人 Email
+			message.setReceiverEmail(receiverEmail); // 設置收件人的 Email
+
+			model.addAttribute("message", message); // 添加 Message 物件到模型
 		}
-		Message message = new Message();
-		model.addAttribute("message", message); // 添加空的Message對象到模型
 		model.addAttribute("memberShow", memberShow);
-		session.setAttribute("message", message);
+		session.setAttribute("message", new Message()); // 把空的 Message 存到 Session
 		return "memberShow";
 	}
 
