@@ -40,11 +40,26 @@ main {
     word-wrap: break-word;
     word-break: break-all;
     white-space: normal;
+    align-items: center;
 }
 
+.memberShowViewImg {
+    display: flex;
+    width: 20%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.memberShowBtn {
+    margin: 5px;
+    padding: 3px;
+    border-radius: 5px;
+}
 
-#caseMemberIcon {
+.memberShowIcon {
     width: 200px;
     height: 200px;
     background-color: #eaeff3;
@@ -71,12 +86,7 @@ main {
     width: 100%;
     height: auto;
 }
-.memberShowViewImg {
-    display: flexbox;
-    width: 20%;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
+
 
 .memberShowView {
     display: flexbox;

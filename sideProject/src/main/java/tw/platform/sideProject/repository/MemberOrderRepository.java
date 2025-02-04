@@ -121,4 +121,7 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 			+ "WHERE yo.deadline > CURRENT_DATE AND yo.orderid = :orderId " + "GROUP BY yo")
 	List<Object[]> findCollectedCountByOrderId(Long orderId);
 
+	// 站內信專用
+	List<MemberOrder> findByGetprojectTrue(); // 查找 getproject = true 的所有記錄
+
 }

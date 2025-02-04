@@ -28,7 +28,8 @@
     <main>
         <div class="memberShow" th:each="memberShow:${memberShow}">
             <div class="memberShowViewImg">
-                <img name="picurl" id="caseMemberIcon" th:src="${memberShow.picurl}" alt="" />
+                <img name="picurl" class="memberShowIcon" th:src="${memberShow.picurl}" alt="" />
+                <button class="memberShowBtn">我是一個按鈕</button>
             </div>
             <div class="viewText memberShowView">
                 <b>姓&nbsp;&nbsp;名：</b>
