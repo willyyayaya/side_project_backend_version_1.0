@@ -60,8 +60,8 @@ public class HomeController {
 //		return "index";
 //	}
 
-	@GetMapping("/order_main/{orderId}")
-	public String order_main(@PathVariable Long orderId, Model model, HttpSession session) {
+	@GetMapping("/order_main/{orderid}")
+	public String order_main(@PathVariable Long orderid, Model model, HttpSession session) {
 		if (session.getAttribute("member") != null) {
 			Member member = (Member) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName() + "%n");
@@ -71,7 +71,7 @@ public class HomeController {
 			System.out.println("目前無登入紀錄");
 		}
 
-		model.addAttribute("orderId", orderId);
+		model.addAttribute("orderId", orderid);
 		return "order_main";
 	}
 
