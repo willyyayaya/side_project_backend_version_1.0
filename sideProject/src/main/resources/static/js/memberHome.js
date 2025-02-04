@@ -56,12 +56,12 @@ function submitImage(picurl) {
 const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
 
-// 確保 memberid 是有效的
-if (!memberid || isNaN(memberid)) {
-    console.error("Invalid memberid:", memberid);
-    alert("Invalid member ID");
-} else {
-    // 設置連結的 href 屬性
+// // 確保 memberid 是有效的
+// if (!memberid || isNaN(memberid)) {
+//     console.error("Invalid memberid:", memberid);
+//     alert("Invalid member ID");
+// } else {
+//     // 設置連結的 href 屬性
     const link1 = document.getElementById("link1");
     const link2 = document.getElementById("link2");
     const link3 = document.getElementById("link3");
@@ -72,20 +72,20 @@ if (!memberid || isNaN(memberid)) {
     // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
     // link3.href = `/memberProjectP1/${memberid}`;
     link4.href = `/OrderProjectP1/${memberid}`;
-}
+// }
 
 
 
 //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
-const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
-memberpicDiv.innerHTML = `
-	<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
-	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
-	<div style="background-color: #bbc8d8;width: 90%;height: 15%;" id=icon_test>
-	<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-`;
+// const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
+// memberpicDiv.innerHTML = `
+// 	<div style="background-color: #bbc8d8;width: 90%;height: 75%;">
+// 	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+// 	<div style="background-color: #bbc8d8;width: 90%;height: 15%;" id=icon_test>
+// 	<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+// 	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+// `;
 
 
 // 提交其他字段的更新表单

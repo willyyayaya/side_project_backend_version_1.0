@@ -1,8 +1,8 @@
 $(document).ready(async function() {
 
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
-	//let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
-	let memberId = 1;
+	let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
+	//let memberId = 1;
 	console.log('memberId: ' + memberId);
 	console.log('orderId:' + orderId);
 

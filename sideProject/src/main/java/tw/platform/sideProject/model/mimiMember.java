@@ -28,10 +28,39 @@ public class mimiMember {
 	private String name;
 	private String tel;
 	private String email;
+	private String picurl;
 	private String birthday;
+	private String intro;
+	private String github;
 	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
     private boolean isblocked = false;
 	
+	
+	
+	public String getIntro() {
+		return intro;
+	}
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
+	public String getGithub() {
+		return github;
+	}
+	public void setGithub(String github) {
+		this.github = github;
+	}
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+	public boolean isIsblocked() {
+		return isblocked;
+	}
+	public void setIsblocked(boolean isblocked) {
+		this.isblocked = isblocked;
+	}
 	public boolean isBlocked() {
 		return isblocked;
 	}

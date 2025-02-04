@@ -71,6 +71,9 @@ public class MemberController {
 		Optional<Member> memberOpt = memberRepository.findById(memberid);
 		if (memberOpt.isPresent()) {
 			Member member = memberOpt.get();
+			if(member.getPicurl()==null) {
+				member.setPicurl("../img/memberImg.jpg");
+			}
 			model.addAttribute("member", member);
 		} else {
 			model.addAttribute("error", "Member not found");
