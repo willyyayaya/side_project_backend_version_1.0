@@ -1,64 +1,61 @@
 
+
 body {
-    background-color: #bbc8d8;
-    color: #303030;
+	background-color: #bbc8d8;
+	color: #303030;
 }
 
-#thumbnail,
-#input,
-#needEtc,
-[id^=another] {
-    border: 1px solid #c59650;
-    padding: 10px;
-    background-color: #eaeff3;
-    font-size: 18px;
-
+#thumbnail, #input, #needEtc, [id^=another] {
+	border: 1px solid #c59650;
+	padding: 10px;
+	font-size: 18px;
+	background-color: #eaeff3;
 }
 
 #simpleInfo {
-    width: 90%;
-    height: 90px;
+	width: 90%;
+	height: 90px;
 }
 
 input {
-    padding: 5px;
-    margin: 2px;
+	padding: 5px;
+	margin: 2px;
 }
 
-#casutamu{
-    width: 100px;
+#casutamu {
+	width: 100px;
 }
 
 #people {
-    width: 60px;
+	width: 60px;
 }
 
-#editor{
-    height: 500px;
-    overflow: auto;
+#editor {
+	height: 500px;
+	overflow: auto;
 }
 
 .ql-editor img {
-    max-width: 900px; /* 設置圖片的最大寬度 */
-    height: auto;   /* 高度自動調整 */
+	max-width: 900px; /* 設置圖片的最大寬度 */
+	height: auto; /* 高度自動調整 */
 }
 
 #insert {
-    background-color: #eaeff3;
-    font-size: 30px;
-    font-weight: bold;
-    border: 1px solid #c59650;
+	background-color: #eaeff3;
+	font-size: 30px;
+	font-weight: bold;
+	border: 1px solid #c59650;
 }
 
 #preview {
-    display: none;
-    height: 100px;
+	display: none;
+	height: 100px;
 }
 
 #thumbnail>div {
-    min-height: 260px;
+	min-height: 260px;
 }
 
 .col-8>div {
-    margin: 5px;
+	margin: 5px;
 }
