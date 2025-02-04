@@ -76,12 +76,6 @@ public class MemberOrderController {
     @Autowired
     private MemberOrderRepository memberOrderRepository;
     
- // 根據 memberId 獲取該會員所有收藏的專案
-    @GetMapping("/like/{memberid}")
-    public List<MemberOrder> getcollected(@PathVariable Long memberid,Long orderid) {
-        return memberOrderService.getcollectedByMemberId(memberid);
-    }
-    
  // 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
     @GetMapping("/memberlike/{memberid}")
     public boolean getMemberCollected(@PathVariable Long memberid, @RequestParam Long orderid) {

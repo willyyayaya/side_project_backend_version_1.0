@@ -1,5 +1,5 @@
 /* 設定網頁內外距為0，加入底色 */
-* {
+header button{
     margin: 0;
     padding: 0;
     background-color: #bbc8d8;

@@ -59,5 +59,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
      * @return 會員清單
      */
     List<Member> findByNameAndIsblocked(String name, Boolean isBlocked);
+
     
 }
