@@ -1,12 +1,12 @@
 $(document).ready(async function() {
 
-	let orderid = document.querySelector('meta[name="orderid"]').getAttribute('content');
+	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
 	let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
 	//let memberId = 1;
 	console.log('memberId: ' + memberId);
-	console.log('orderid:' + orderid);
+	console.log('orderId:' + orderId);
 
-	let orderUrl = `http://localhost:8080/api/orders/getOrderByid/${orderid}`;
+	let orderUrl = `http://localhost:8080/api/orders/getOrderById/${orderId}`;
 	let responseOrder = await fetch(orderUrl);
 	let responseOrderToJSON = await responseOrder.json();
 
@@ -109,7 +109,7 @@ $(document).ready(async function() {
 	head.innerText = '建議人數 : ' + responseOrderToJSON.people + '人';
 	deadline.innerText = '申請截止日 : ' + responseOrderToJSON.deadline;
 	//需要技能
-	let skillsUrl = `http://localhost:8080/api/tags/getTag/${orderid}`;
+	let skillsUrl = `http://localhost:8080/api/tags/getTag/${orderId}`;
 	let responseSkill = await fetch(skillsUrl);
 	let responseSkillToJSON = await responseSkill.json();
 	console.log(responseSkillToJSON);
@@ -118,7 +118,7 @@ $(document).ready(async function() {
 	//會員資料
 	//顯示發案者頭像和名字
 	//1.抓取會員資料
-	let memberUrl = `http://localhost:8080/api/memberOrders/getMemberIdByorderid/${orderid}`;
+	let memberUrl = `http://localhost:8080/api/memberOrders/getMemberIdByOrderId/${orderId}`;
 	let responseMember = await fetch(memberUrl);
 	let responseMemberToJSON = await responseMember.json();
 	console.log(responseMemberToJSON);
@@ -144,7 +144,7 @@ $(document).ready(async function() {
 	if (responseMemberToJSON[0].memberid == `${memberId}`) {
 		$('#another').css('display', 'none');
 		//列出已決定的申請案件人
-		let getedUrl = `http://localhost:8080/api/memberOrders/allMemberGeted/${orderid}`;
+		let getedUrl = `http://localhost:8080/api/memberOrders/allMemberGeted/${orderId}`;
 		let responseGeted = await fetch(getedUrl);
 		let responseGetedToJSON = await responseGeted.json();
 		console.log(responseGetedToJSON);
@@ -191,7 +191,7 @@ $(document).ready(async function() {
 			$('#getProject').append(anotherpro2);
 		});
 		//列出來還未決定但來申請案件的人
-		let getUrl = `http://localhost:8080/api/memberOrders/allMemberWanted/${orderid}`;
+		let getUrl = `http://localhost:8080/api/memberOrders/allMemberWanted/${orderId}`;
 		let responseGet = await fetch(getUrl);
 		let responseGetToJSON = await responseGet.json();
 		console.log(responseGetToJSON);
@@ -246,7 +246,7 @@ $(document).ready(async function() {
 					},
 					body: JSON.stringify({
 						memberId: item.memberid,
-						orderid: orderid,
+						orderId: orderId,
 						"getproject": 1
 					})
 				})
@@ -304,7 +304,7 @@ $(document).ready(async function() {
 		$('#edit').css('display', 'block');
 	} else {
 		$('#apply').css('display', 'block');
-		let memberWantUrl = `http://localhost:8080/api/memberOrders/memberWanted/${orderid}/${memberId}`
+		let memberWantUrl = `http://localhost:8080/api/memberOrders/memberWanted/${orderId}/${memberId}`
 		let responseWant = await fetch(memberWantUrl);
 		let responseWantToJSON = await responseWant.json();
 		console.log(responseWantToJSON);
@@ -314,7 +314,7 @@ $(document).ready(async function() {
 	}
 
 	edit.onclick = function() {
-		window.location.href = `/order_update/${orderid}`;
+		window.location.href = `/order_update/${orderId}`;
 	}
 
 	apply.onclick = function() {
@@ -326,7 +326,7 @@ $(document).ready(async function() {
 			},
 			body: JSON.stringify({
 				memberId: memberId,
-				orderid: orderid,
+				orderId: orderId,
 				"wanted": 1,
 			})
 		})
@@ -340,7 +340,7 @@ $(document).ready(async function() {
 	}
 
 	//顯示申請人數
-	let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderid}`;
+	let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderId}`;
 	let responsePreople = await fetch(applypeopleUrl);
 	let responsePeopleToJSON = await responsePreople.json();
 	console.log(responsePeopleToJSON);
@@ -352,7 +352,7 @@ $(document).ready(async function() {
 	//收藏按鈕
 
 	//先看是不是本人發的
-	let collectUrl = `http://localhost:8080/api/memberOrders/getMemberIdByorderid/${orderid}`;
+	let collectUrl = `http://localhost:8080/api/memberOrders/getMemberIdByOrderId/${orderId}`;
 	let responseCollect = await fetch(collectUrl);
 	let responseCollectToJSON = await responseCollect.json();
 	console.log('收藏者:' + responseCollectToJSON[0].memberid);
@@ -362,7 +362,7 @@ $(document).ready(async function() {
 	}
 
 	//查會員是否已收藏
-	let collectedUrl = `http://localhost:8080/api/memberOrders/collected/${orderid}/${memberId}`;
+	let collectedUrl = `http://localhost:8080/api/memberOrders/collected/${orderId}/${memberId}`;
 	let responseCollected = await fetch(collectedUrl);
 	let responseCollectedToJson = await responseCollected.json();
 	console.log('有沒有收藏:' + responseCollectedToJson);
@@ -393,8 +393,8 @@ $(document).ready(async function() {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				memberId: memberid,
-				orderid: orderid,
+				memberId: memberId,
+				orderId: orderId,
 				collected: collectedStatus
 			})
 		}).then(response => response.json())

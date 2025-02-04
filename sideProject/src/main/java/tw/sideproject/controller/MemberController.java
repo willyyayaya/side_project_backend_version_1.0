@@ -1,14 +1,27 @@
 package tw.sideproject.controller;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import jakarta.servlet.http.HttpSession;
 import tw.sideproject.model.AddMemberRequest;
 import tw.sideproject.model.Member;
 import tw.sideproject.repository.MemberRepository;
@@ -66,31 +79,47 @@ public class MemberController {
 
     // --------------抓取會員資料部分--------------------
 
-    // 从数据库获取数据并将其传递给模板
-    @GetMapping("/memberHome/{memberid}")
-    public String getMember(@PathVariable("memberid") Long memberid, Model model) {
+    @GetMapping("/memberHome")
+    public String getMember(HttpSession session, Model model) {
+        Long memberid = 103L;  // 这里可以直接设置为 103 或其他有效的 ID
+
+        // 将模拟的 memberid 存入 session 中
+        session.setAttribute("memberid", memberid);
+
+        // 从数据库获取该会员的资料
         Optional<Member> memberOpt = memberRepository.findById(memberid);
         if (memberOpt.isPresent()) {
             Member member = memberOpt.get();
-            model.addAttribute("member", member);
+            if (member.getPicurl() == null) {
+                member.setPicurl("/LOGO.png");  // 如果没有头像，则设置默认头像
+            }
+            model.addAttribute("member", member);  // 将会员信息传递给前端
         } else {
             model.addAttribute("error", "Member not found");
+            return "login";  // 如果会员不存在，则返回登录页
         }
-        return "memberHome";  // 返回视图模板
+        return "memberHome";  // 返回会员首页页面
     }
 
-    @PostMapping("/memberHome/{memberid}/update")
-    public String updateMember(@PathVariable("memberid") Long memberid,
-                               @ModelAttribute Member member,  
-                               @RequestParam(value = "picurl", required = false) String picurl, 
-                               Model model) throws IOException {
+    @PostMapping("/memberHome/update")
+    public ResponseEntity<?> updateMember(HttpSession session,
+                                          @ModelAttribute Member member,
+                                          @RequestParam(value = "picurl", required = false) String picurl) throws IOException {
 
-        // 查找数据库中的会员数据
+        Long memberid = (Long) session.getAttribute("memberid");
+
+        // 检查是否已经登录
+        if (memberid == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Collections.singletonMap("error", "用户未登录或 session 过期"));
+        }
+
+        // 获取该会员的数据
         Optional<Member> memberOpt = memberRepository.findById(memberid);
         if (memberOpt.isPresent()) {
             Member existMember = memberOpt.get();
 
-            // 更新其他字段（检查是否为空，如果不为空才进行更新）
+            // 更新会员的其他字段
             if (member.getAccount() != null && !member.getAccount().isEmpty()) {
                 existMember.setAccount(member.getAccount());
             }
@@ -103,11 +132,9 @@ public class MemberController {
             if (member.getTel() != null && !member.getTel().isEmpty()) {
                 existMember.setTel(member.getTel());
             }
-            
             if (member.getGithub() != null && !member.getGithub().isEmpty()) {
                 existMember.setGithub(member.getGithub());
             }
-            
             if (member.getBirthday() != null) {
                 existMember.setBirthday(member.getBirthday());
             }
@@ -115,30 +142,18 @@ public class MemberController {
                 existMember.setIntro(member.getIntro());
             }
 
-            // 处理图片上传（已直接传递 Base64 字符串）
+            // 如果有上传头像（picurl），更新头像
             if (picurl != null && !picurl.isEmpty()) {
-                // 直接将 Base64 字符串赋值给 picurl 字段
                 existMember.setPicurl(picurl);
             }
 
-            // 更新数据库中的会员数据
+            // 保存更新后的会员数据到数据库
             memberRepository.save(existMember);
-
-            // 将更新后的数据添加到 model 中，以便返回到前端
-            model.addAttribute("member", existMember);
-
-            // 返回更新后的页面
-            return "memberHome";  // 返回更新后的页面
+            return ResponseEntity.ok(Collections.singletonMap("message", "会员资料更新成功"));
         } else {
-            // 如果找不到该会员，则返回错误信息
-            model.addAttribute("error", "会员资料更新失败");
-            return "memberHome";  // 返回错误页面
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("error", "会员资料更新失败"));
         }
     }
-    
-    
-    
-    
-    
-    
+
 }

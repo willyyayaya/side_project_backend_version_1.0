@@ -228,8 +228,7 @@ $(document).ready(async function() {
 				const setMemberOrderUrl = `http://localhost:8080/api/memberOrders/addOwnedOrder`;
 				var memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
 				//var memberId = 1;
-				//console.log('memberId: ' + memberId);
-				//const memberId = document.getElementById('memberId').content;
+				console.log('memberId: ' + memberId);
 				fetch(setMemberOrderUrl, {
 					method: 'POST',
 					headers: {
