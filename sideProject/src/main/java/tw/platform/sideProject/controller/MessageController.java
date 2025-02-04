@@ -1,6 +1,5 @@
 package tw.platform.sideProject.controller;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,17 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import tw.platform.sideProject.model.MemberOrder;
 import tw.platform.sideProject.model.Message;
-import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.repository.MemberOrderRepository;
 import tw.platform.sideProject.repository.mimiMemberRepository;
@@ -36,7 +29,7 @@ import tw.platform.sideProject.service.MessageService;
 import tw.platform.sideProject.service.mimiMemberService;
 
 @Controller
-
+@SessionAttributes("message")
 public class MessageController {
 
 	@Autowired
@@ -49,7 +42,14 @@ public class MessageController {
 	private MemberOrderRepository memberOrderRepository;
 
 	@GetMapping("/send")
-	public String showSendMessage(Model model) {
+	public String showSendMessage(Model model,HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
 		model.addAttribute("message", new Message()); // 添加空的Message對象到模型
 		return "send"; // 返回表單模板名稱
 	}
@@ -58,6 +58,13 @@ public class MessageController {
 	@PostMapping("/send_submit")
 	public String sendMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model,
 			HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
 		// 檢查是否有驗證錯誤
 		if (result.hasErrors()) {
 			// 返回錯誤頁面，並將錯誤訊息顯示在前端
@@ -96,9 +103,16 @@ public class MessageController {
 		return "redirect:/message/" + sender.getMemberid();
 	}
 
-	// 可以順利抓到資料，收件夾
+	// 可以順利抓到資料
 	@GetMapping("/message/{receiverid}")
-	public String getMessages(@PathVariable Long receiverid, Model model) {
+	public String getMessages(@PathVariable Long receiverid, Model model,HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
 		List<Message> messages = messageService.getMessagesByReceiverid(receiverid);
 		Long memberid = memberService.getMemberid(receiverid);// 將 memberid 傳遞給模板（這裡是傳遞成員資料，而不是訊息列表）
 
@@ -119,7 +133,14 @@ public class MessageController {
 
 //讀取信件   
 	@GetMapping("/message/read/{messageId}")
-	public String getMessageDetail(@PathVariable Long messageId, Model model) {
+	public String getMessageDetail(@PathVariable Long messageId, Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
 		Message message = messageService.getMessageById(messageId);
 		if (message != null) {
 			System.out.println("Receiver ID: " + message.getReceiverid()); // 確認這裡是否獲得正確的 receiverId
@@ -134,7 +155,14 @@ public class MessageController {
 
 	// 更新已讀狀態
 	@PostMapping("/message/read/{messageId}")
-	public String markAsRead(@PathVariable Long messageId, Model model) {
+	public String markAsRead(@PathVariable Long messageId, Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
 		Message message = messageService.getMessageById(messageId);
 
 		if (message != null) {
@@ -164,6 +192,14 @@ public class MessageController {
 //回信功能    
 	@GetMapping("/message/reply/{messageId}")
 	public String replyMessage(@PathVariable("messageId") Long messageId, Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
+		
 		mimiMember sender = (mimiMember) session.getAttribute("member");
 		if (sender == null) {
 			return "redirect:/login"; // 如果發件人未登入，重定向到登入頁面
@@ -202,6 +238,14 @@ public class MessageController {
 	@PostMapping("/reply_submit")
 	public String replyMesg(@ModelAttribute("message") Message message, BindingResult result, Model model,
 			HttpSession session) {
+		if(session.getAttribute("member")!=null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member",member);
+			}else {
+				System.out.println("未登入");
+			}
+		
 		if (result.hasErrors()) {
 			return "reply"; // 返回表單頁面或錯誤頁面
 		}
@@ -237,12 +281,70 @@ public class MessageController {
 		return "redirect:/message/" + sender.getMemberid();
 	}
 
-//申請成功自動寄出站內信
-	
-	@GetMapping("/sendBtn")
-	public String sendBtn(Model model) {
-		model.addAttribute("message", new Message()); // 添加空的Message對象到模型
-		return "sendBtn"; // 返回表單模板名稱
+//點選button開啟站內信
+
+	@GetMapping("/sendButton")
+	public String sendBtn(Model model, HttpSession session) {
+	    if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        System.out.println("index目前登入狀態:" + member.getName());
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
+	    
+	    // 初始化 message，並確保 receiverid 不為 null
+	    Message message = new Message();
+	    message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+	    model.addAttribute("message", message);
+
+	    return "sendButton"; 
 	}
+
+
+	@PostMapping("/sendButton_submit")
+	public String sendBtnMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model, HttpSession session) {
+	    if (session.getAttribute("member") != null) {
+	        mimiMember member = (mimiMember) session.getAttribute("member");
+	        model.addAttribute("member", member);
+	    } else {
+	        System.out.println("未登入");
+	    }
+
+	    // 確保 message 存在於 Model
+	    if (result.hasErrors()) {
+	        model.addAttribute("message", message); // 重新放入 Model
+	        return "sendButton";
+	    }
+
+	    mimiMember sender = (mimiMember) session.getAttribute("member");
+	    if (sender == null) {
+	        return "redirect:/login";
+	    }
+
+	    if (message.getReceiverid() == null) {
+	        message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+	    }
+
+	    String receiverEmail = message.getReceiverid().getEmail();
+	    mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
+	    if (receiver == null) {
+	        model.addAttribute("errorMessage", "此信箱不存在");
+	        model.addAttribute("message", message); // 確保表單回傳時有 message
+	        return "sendButton";
+	    }
+
+	    message.setSenderid(sender);
+	    message.setReceiverid(receiver);
+
+	    // 儲存訊息
+	    messageService.addMesg(message);
+	    model.addAttribute("success", "Message sent successfully!");
+	    model.addAttribute("message", new Message()); // 重置表單
+
+	    return "sendButton"; // 確保成功後仍然返回 sendButton
+	}
+
+
 
 }
