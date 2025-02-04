@@ -27,6 +27,8 @@ public class Member {
     private String birthday;
     private String tel;
     private String picurl;
+    private String github;
+    private String intro;
     @Column(nullable = false)
     private Boolean isblocked = false; // 預設值
 
@@ -114,4 +116,20 @@ public class Member {
     public void setMemberTags(List<MemberTag> memberTags) {
         this.memberTags = memberTags;
     }
+
+	public String getGithub() {
+		return github;
+	}
+
+	public void setGithub(String github) {
+		this.github = github;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
 }

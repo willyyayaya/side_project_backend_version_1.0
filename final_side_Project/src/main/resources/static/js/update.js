@@ -1,6 +1,6 @@
 $(document).ready(async function () {
-    var urlParams = new URLSearchParams(window.location.search);
-    var orderId = urlParams.get('orderId'); // 取得 orderId 參數
+    
+	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
 
     //文字編輯器    
     var quill = new Quill("#editor", {
@@ -86,7 +86,7 @@ $(document).ready(async function () {
     $('#simpleInfo').val(responseOrderToJSON.intro)
     quill.root.innerHTML = responseOrderToJSON.detail;
 
-console.log(responseOrderToJSON.category);
+    console.log(responseOrderToJSON.category);
 
     switch (responseOrderToJSON.category) {
         case 'web':
@@ -259,7 +259,7 @@ console.log(responseOrderToJSON.category);
         console.log(selectedSkills);
         console.log($('#people').val());
         console.log($('#deadline').val());
-        console.log($('img').prop("src"));
+        console.log($('#preview').prop("src"));
         var htmlContent = quill.root.innerHTML; // 獲取 HTML 內容
         console.log(htmlContent);
 
@@ -280,13 +280,13 @@ console.log(responseOrderToJSON.category);
                 people: $('#people').val(),
                 deadline: $('#deadline').val(),
                 detail: htmlContent,
-                picurl: $('img').prop("src"),
+                picurl: $('#preview').prop("src"),
                 // upload: new Date().toISOString().split('T')[0],
                 newdate: new Date().toISOString().split('T')[0],
             })
         }).then(response => response.json()
         ).then(data => {
-            const redirectUrl = `file:///C:/Users/User/git/side_project_backend_version_1.0/final_side_Project/src/main/resources/templates/order_main.html?orderId=${orderId}`;
+            const redirectUrl = `/order_main/${orderId}`;
             window.location.href = redirectUrl;
         }).catch(error => {
             console.error("發生錯誤：", error);

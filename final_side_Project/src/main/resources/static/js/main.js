@@ -1,9 +1,9 @@
 $(document).ready(async function() {
 
-	let urlParams = new URLSearchParams(window.location.search);
-	let orderId = urlParams.get('orderId'); // 取得 orderId 參數
-	let memberId = 2;
-	console.log('memberId:' + memberId);
+	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
+	//let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
+	let memberId = 1;
+	console.log('memberId: ' + memberId);
 	console.log('orderId:' + orderId);
 
 	let orderUrl = `http://localhost:8080/api/orders/getOrderById/${orderId}`;
@@ -177,7 +177,7 @@ $(document).ready(async function() {
 				id: 'anotherButton',
 				text: "已決定",
 				class: "btn btn-outline-primary",
-				disabled:'true'
+				disabled: 'true'
 			});
 			//console.log(anotherButton);
 			anotherButtonArea.append(anotherButton);
@@ -314,7 +314,7 @@ $(document).ready(async function() {
 	}
 
 	edit.onclick = function() {
-		window.location.href = `file:///C:/Users/User/git/side_project_backend_version_1.0/final_side_Project/src/main/resources/templates/order_update.html?orderId=${orderId}`;
+		window.location.href = `/order_update/${orderId}`;
 	}
 
 	apply.onclick = function() {
