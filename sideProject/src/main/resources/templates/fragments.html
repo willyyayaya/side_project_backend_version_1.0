@@ -42,7 +42,7 @@
 				<button id="varLogout" class="varBtn" type="submit">Logout</button>
 			</form>
 			<!-- 跳轉到會員中心@{會員中心的GetMapping} -->
-			<button id="varUser" class="varBtn" th:onclick="'window.location.href=\'' + @{/membercenter} + '\''"
+			<button id="varUser" class="varBtn" th:onclick="'window.location.href=\'' + @{/api/members/memberHome/{memberid}(memberid=${member.memberid})} + '\''"
 				th:if="${member != null}" th:text="${member.name}"></button>
 		</div>
 	</header>

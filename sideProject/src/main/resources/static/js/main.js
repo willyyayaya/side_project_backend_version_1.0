@@ -1,4 +1,4 @@
-$(document).ready(async function() {
+$(document).ready(async function () {
 
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
 	let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
@@ -124,7 +124,11 @@ $(document).ready(async function() {
 	console.log(responseMemberToJSON);
 	console.log(responseMemberToJSON[0].memberid);
 	//2.以會員id去拿個人資料
-	imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
+	if (!responseMemberToJSON[0].picurl) {
+		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="/img/icon.jpg">`;
+	} else {
+		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
+	}
 	memberName.innerText = `${responseMemberToJSON[0].name}`;
 
 	let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
@@ -237,7 +241,7 @@ $(document).ready(async function() {
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
 
-			anotherButton[0].onclick = function() {
+			anotherButton[0].onclick = function () {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
 				fetch(ButtonUrl, {
 					method: 'PUT',
@@ -267,7 +271,7 @@ $(document).ready(async function() {
 
 			const index = Math.floor(Math.random() * availableItems.length);
 			const element = availableItems[index];
-
+			console.log(element);
 			// 從可用的資料中移除選中的元素，避免重複
 			availableItems.splice(index, 1);
 
@@ -290,7 +294,7 @@ $(document).ready(async function() {
 			another1.append(anotherTitle, anotherImg)
 			let anotherpro = $('<a>', {
 				class: 'd-inline col-md-3 mt-1',
-				href: '',
+				href: `http://localhost:8080/order_main/${element.orderid}`,
 			});
 			anotherpro.append(another1);
 			$('#another').append(anotherpro);
@@ -313,11 +317,11 @@ $(document).ready(async function() {
 		};
 	}
 
-	edit.onclick = function() {
+	edit.onclick = function () {
 		window.location.href = `/order_update/${orderId}`;
 	}
 
-	apply.onclick = function() {
+	apply.onclick = function () {
 		let applyUrl = 'http://localhost:8080/api/memberOrders/addWantedOrder';
 		fetch(applyUrl, {
 			method: 'POST',
@@ -333,6 +337,8 @@ $(document).ready(async function() {
 		//window.location.reload();
 		$('#apply').text('已申請');
 		$('#apply').prop('disabled', true);
+		alert('已提出申請');
+		window.location.reload();
 	}
 
 	if ($('#apply').text() === '已申請') {
@@ -372,7 +378,7 @@ $(document).ready(async function() {
 		collect.innerText = "收藏";  // 初始顯示為「收藏」
 	}
 
-	collect.onclick = function() {
+	collect.onclick = function () {
 		let url;
 		let collectedStatus;
 
