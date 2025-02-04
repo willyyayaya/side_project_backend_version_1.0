@@ -29,6 +29,8 @@ public class MemberOrder {
     private boolean collected;
     private String evaluate;
     private boolean getproject;
+    private String picurl;   // 確保有這個屬性
+    private String name;
 
 
     // Getters and Setters
@@ -95,4 +97,15 @@ public class MemberOrder {
 	public void setGetproject(boolean getproject) {
 		this.getproject = getproject;
 	}
+	
+	@Override
+	public String toString() {
+	    return "MemberOrder{" +
+	            "orderid=" + getOrder() +
+	            ", name='" + name + '\'' +
+	            ", picurl='" + picurl + '\'' +
+	            ", collected=" + collected +
+	            '}';
+	}
+	
 }

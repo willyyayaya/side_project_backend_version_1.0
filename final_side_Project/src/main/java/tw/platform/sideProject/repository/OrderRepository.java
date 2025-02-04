@@ -12,19 +12,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, Long>{
-	
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
 	Optional<Order> findByName(String name);
-    
-    List<Order> findByRankGreaterThanEqual(int rank);
- // 查詢所有 tagido 等於特定值的訂單
+
+	List<Order> findByRankGreaterThanEqual(int rank);
+	// 查詢所有 tagido 等於特定值的訂單
 //    List<Order> findByTagido(int tagido);
-    
- // 查詢擁有特定 tagido 的所有訂單
+
+	// 查詢擁有特定 tagido 的所有訂單
 //    List<Order> findByTags_Tagido(int tagido);
-    
+
 //	YU新增(home)
 	// 模糊查詢 名稱 或 intro 符合 keyword
 	@Query("SELECT o FROM yuOrder o WHERE o.name LIKE %:keyword% OR o.intro LIKE %:keyword%")
 	List<yuOrder> searchByKeyword(@Param("keyword") String keyword);
+
+	// 抓取隨機專案
+	@Query("SELECT o FROM yuOrder o ORDER BY FUNCTION('RAND')")
+	List<yuOrder> findRandomYuOrders();
+
+	// 抓取指定id的專案資料
+	@Query("SELECT o FROM yuOrder o WHERE o.orderid = :orderid")
+	List<yuOrder> findYuOrdersById(@Param("orderid") Long orderid);
 }

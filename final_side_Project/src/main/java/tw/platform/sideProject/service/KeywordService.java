@@ -1,6 +1,7 @@
 
 package tw.platform.sideProject.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,6 +72,31 @@ public class KeywordService {
 			e.printStackTrace();
 		}
 		return jsonResult;
+	}
+
+	// 將搜尋結果按時間排序
+	public void timeSortASC(List<yuOrder> keyOrder) {
+		if (keyOrder != null) {
+			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline).reversed());
+		} else {
+			System.out.println("訂單注入失敗");
+		}
+	}
+
+	public void timeSortDSC(List<yuOrder> keyOrder) {
+		if (keyOrder != null) {
+			keyOrder.sort(Comparator.comparing(yuOrder::getDeadline));
+		} else {
+			System.out.println("訂單注入失敗");
+		}
+	}
+
+	public void getCollectedSort(List<yuOrder> keyOrder) {
+		if (keyOrder != null && !keyOrder.isEmpty()) {
+			keyOrder.sort(Comparator.comparing(yuOrder::getCollectCount).reversed());
+		} else {
+			System.out.println("訂單注入失敗");
+		}
 	}
 
 }

@@ -3,8 +3,9 @@
 * {
     margin: 0;
     padding: 0;
-    background-color: #bbc8d8;
+    /*background-color: #bbc8d8;*/
 }
+
 
 /* 導覽列容器固定 */
 .sticky {

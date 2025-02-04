@@ -102,4 +102,26 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	// 找member跟order的wanted
 	List<MemberOrder> findWantedByMember_memberidAndOrder_orderid(Long memberid, Long orderid);
 
+	// yu新增
+	// 統計每個專案的申請人數
+	@Query("SELECT yo, COALESCE(COUNT(mo.wanted), 0) AS wanted_count " + "FROM yuOrder yo LEFT JOIN yo.memberOrders mo "
+			+ "ON yo.orderid = mo.id.orderid AND mo.wanted = true " + "WHERE yo.deadline>CURRENT_DATE " + "GROUP BY yo "
+			+ "ORDER BY wanted_count DESC")
+	List<Object[]> findWantedCountByOrderId();
+
+	// 統計每個專案的收藏人數
+	@Query("SELECT yo, COALESCE(COUNT(mo.wanted), 0) AS collected_count "
+			+ "FROM yuOrder yo LEFT JOIN yo.memberOrders mo " + "ON yo.orderid = mo.id.orderid AND mo.collected = true "
+			+ "WHERE yo.deadline>CURRENT_DATE " + "GROUP BY yo " + "ORDER BY collected_count DESC")
+	List<Object[]> findCollectedCountByOrder();
+
+	// 查詢指定專案id的收藏人數
+	@Query("SELECT COALESCE(COUNT(mo.wanted), 0) AS collected_count " + "FROM yuOrder yo LEFT JOIN yo.memberOrders mo "
+			+ "ON yo.orderid = mo.id.orderid AND mo.collected = true "
+			+ "WHERE yo.deadline > CURRENT_DATE AND yo.orderid = :orderId " + "GROUP BY yo")
+	List<Object[]> findCollectedCountByOrderId(Long orderId);
+
+	// 站內信專用
+	List<MemberOrder> findByGetprojectTrue(); // 查找 getproject = true 的所有記錄
+
 }
