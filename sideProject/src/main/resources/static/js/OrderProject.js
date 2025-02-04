@@ -68,7 +68,7 @@ if (!memberid || isNaN(memberid)) {
     link1.href = `/memberProjectP1/${memberid}`;
     link2.href = `/memberlike/${memberid}`;
     // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
-    // link3.href = `/memberProjectP1/${memberid}`;
+    link3.href = `http://localhost:8080/order_edit`;
     link4.href = `/OrderProjectP1/${memberid}`;
 }
 
@@ -146,45 +146,56 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 data.forEach(orderData => {
                     const card = document.createElement("div");
                     card.classList.add("Card");
+                    //console.log("orderData:", orderData);
 
                     const deadline = new Date(orderData.order.deadline);
                     const today = new Date();
                     const status = deadline > today ? '進行中' : '已完成';
+                    const order = orderData.order;
+                    const member = orderData.member;
+                    if (status === '進行中') {
+                        card.innerHTML = `
+			                <div class="card-content"  data-order-id="${order.orderid}">
+			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+			                    <h4>${order.name}</h4>
+			                    <p class="title">${order.detail}</p>
+			                    <button class="Card_btn" id="openPopupBtn">編輯</button>
+			                </div>
+			            `;
+                    } else {
+                        card.innerHTML = `
+			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+			                    <h4>${order.name}</h4>
+			                    <p class="title">${order.detail}</p>
+			                    <button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>
+			                </div>
+			            `;
+                    }
+                    // 將卡片加入對應的容器
+                    if (status === '進行中' && orderData.getproject == true && orderData.owned === true) {
+                        box1.appendChild(card);
+                    } else if (status === '已完成' && orderData.getproject == true && orderData.owned === true) {
+                        box3.appendChild(card);
+                    } else if (status === '進行中' && orderData.getproject == false && orderData.owned === true) {
+                        box2.appendChild(card);
+                    }
+                });
+                // 委託事件處理
+                box2.addEventListener('click', function (event) {
+                    if (event.target.closest('.card-content')) {
+                        const cardContent = event.target.closest('.card-content');
+                        const orderid = cardContent.getAttribute('data-order-id');
 
+                        window.location.href = `http://localhost:8080/order_update/${orderid}`;
+                    }
+                });
+                box1.addEventListener('click', function (event) {
+                    if (event.target.closest('.card-content')) {
+                        const cardContent = event.target.closest('.card-content');
+                        const orderid = cardContent.getAttribute('data-order-id');
 
-
-                    // 使用變數抓取對應的資料
-                    const order = orderData.order;  // order 資料
-                    const member = orderData.member;  // member 資料
-
-					card.innerHTML = `
-					    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
-					    <h4>${order.name}</h4>
-					    <p class="title">${order.detail}</p>
-					    <!-- 只在 box3 中的卡片按鈕才帶有觸發彈窗的功能 -->
-					    ${status === '已完成' ? 
-					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 
-					        : 
-					        `<button class="Card_btn">編輯</button>`
-					    }
-					`;
-
-					// 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
-					if (status === '進行中' && orderData.getproject == true && orderData.owned === true) {
-					    box1.appendChild(card);
-					}
-
-					// 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
-					if (status === '已完成' && orderData.getproject == true && orderData.owned === true) {
-					    box3.appendChild(card);
-					}
-
-					// 如果 order.status 是 '尚未完成'，將 card 加入 box2 (申請)
-					if (status === '進行中' && orderData.getproject == false && orderData.owned === true) {
-					    box2.appendChild(card);
-					}
-
-
+                        window.location.href = `http://localhost:8080/order_update/${orderid}`;
+                    }
                 });
             } else {
                 console.error("Received data is not an array or is empty.");

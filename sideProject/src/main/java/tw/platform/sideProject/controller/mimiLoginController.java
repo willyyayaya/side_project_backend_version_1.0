@@ -121,9 +121,9 @@ public class mimiLoginController {
 		model.addAttribute("message", message); // 添加空的Message對象到模型
 		model.addAttribute("member", member);// 登入成功後帶入的會員資料
 		session.setAttribute("message", message);
-		return "memberHome"; //思宇的會員中心
+//		return "redirect:/api/members/memberHome/"+member.getMemberid(); //思宇的會員中心
 //		return "redirect:/main/home";
-//		return "memberShowBtn";
+		return "index";
 	}
 
 	@PostMapping("/logout")

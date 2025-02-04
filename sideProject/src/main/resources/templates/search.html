@@ -101,14 +101,14 @@
                         </button>
                     </tr>
                 </div>
-                <div id="btn">
+                <div id="sortBtn">
                     <button class="keywordSortBtn" id="caseTimeDSC">截止日(近→遠)預設</button>
                     <button class="keywordSortBtn" id="caseTimeASC">截止日(遠→近)</button>
                     <button class="keywordSortBtn" id="caseCollected">收藏數</button>
                 </div>
                 <div id="keywordsearchBox">
                     <div class="boxBorder caseCards" th:each="keywordCase : ${keywordCase}">
-                        <a class="row" th:href="@{/orderShow(orderid=${keywordCase.orderid})}">
+                        <a class="row" th:href="@{/order_main/{orderId}(orderId=${keywordCase.orderid})}">
                             <div class="col-4 caseImgBox">
                                 <img th:src="@{(${keywordCase.picurl})}" alt="">
                             </div>
