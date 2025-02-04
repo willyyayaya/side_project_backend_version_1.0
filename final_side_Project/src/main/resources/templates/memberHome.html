@@ -1,7 +1,5 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,9 +12,10 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <!-- 只有此頁面可以在VS Code用Live Server開啟，CSS link 如下 -->
-    <link rel="stylesheet" href="/css/fragment.css">
+    <link rel="stylesheet" th:href="@{/css/fragment.css}">
+    <link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/memberHome.css">
     <!-- 各自頁面要用日蝕spring跑才看得到，CSS link 如下，加在自己頁面的head -->
-    <link rel="stylesheet" href="/css/memberHome.css">
+    <link rel="stylesheet" th:href="@{/css/memberHome.css}">
 
 
 
@@ -44,13 +43,11 @@
                 <b>功能列</b>
                 <dl>
                     <dt>專案管理</dt>
-                    <a id="link1" href="#">我接的專案</a>
-                    <br />
-                    <a id="link4" href="#">我發的專案</a>
+                    <dd>我接的專案</dd>
+                    <dd>我發的專案</dd>
                     <dt>專案收藏</dt>
-                    <a id="link2" href="#">資料夾管理</a>
+                    <a href="memberlike.html">資料夾管理</a>
                     <dt>站內信件</dt>
-                    <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
                 </dl>
             </div>
         </div>
@@ -102,13 +99,96 @@
                 <!-- 自我介紹 -->
                 <div class="revise">
                     <b id="my">自我介紹：</b>
-                    <textarea id="input_index_memberinfo" name="Intro"
-                        style="width: 400px; height: 250px; resize: none;" th:text="${member.Intro}"></textarea>
-                    <button type="button" onclick="submitField('Intro')">編輯</button>
+                    <textarea id="input_index_memberinfo" name="memberinfo"
+                        style="width: 400px; height: 250px; resize: none;" th:text="${member.memberinfo}"></textarea>
+                    <button type="button" onclick="submitField('memberinfo')">編輯</button>
                 </div>
             </form>
         </div>
     </div>
+
+<!-- 頭像JS部分 -->
+    <script>
+        // 顯示選擇的圖片預覽
+
+        function previewImage() {
+            const file = document.getElementById('upload').files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                document.getElementById('icon').src = reader.result;
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // 提交圖片新表单
+        function submitImage(picurl) {
+            var form = document.getElementById('updateIcon'); // 获取图片表单
+            var formData = new FormData(form); // 将图片表单数据转为 FormData 对象
+
+            const base64Image = document.getElementById("icon").src;  // 获取 Base64 字符串
+
+            formData.append('picurl', base64Image);  // 添加 base64 图片数据到 FormData 中
+
+            // 假设 URL 为 /memberHome/12345
+            const path = window.location.pathname;
+            const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+            // 动态构建 URL，替换 {memberid} 为实际的 memberid
+            var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+            // 通过 Fetch 请求将 Base64 字符串传递到后端
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert(picurl + ' 更新成功！');
+                    } else {
+                        alert('更新失敗，請稍後再試！');
+                    }
+                })
+                .catch(error => {
+                    console.error("錯誤:", error);
+                    alert('更新失敗，請稍後再試！');
+                });
+        }
+
+
+        // 提交其他字段的更新表单
+        function submitField(fieldName) {
+            var form = document.getElementById('updateForm'); // 获取其他字段表单
+            var formData = new FormData(form); // 将表单数据转为 FormData 对象
+
+            const path = window.location.pathname;
+            const memberid = path.split('/').pop();  // 这会获取到路径中的最后一个部分 103
+
+            // 动态构建 URL，替换 {memberid} 为实际的 memberid
+            var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
+
+            // 通过 Fetch 请求将字符串传递到后端
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert(fieldName + ' 更新成功！');
+                    } else {
+                        alert('更新失敗，請稍後再試！');
+                    }
+                })
+                .catch(error => {
+                    console.error("錯誤:", error);
+                    alert('更新失敗，請稍後再試！');
+                });
+        }
+
+    </script>
 
     <!-- 下方菜單 -->
     <footer th:fragment="footer">
@@ -116,10 +196,6 @@
         <a href="SideProject123@gmail.com">SideProject123@gmail.com</a>
         <p>&copy; 2025 ee91_SideProject. All rights reserved</p>
     </footer>
-    
-    <!-- 引入 JavaScript -->
-    <script th:src="@{/js/memberHome.js}"></script>
-    
 </body>
 
 </html>
