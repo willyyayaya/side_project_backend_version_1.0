@@ -1,4 +1,4 @@
-package tw.platform.sideProject.service;
+package tw.sideproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,23 +7,23 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import tw.platform.sideProject.model.AddMemberRequest;
-import tw.platform.sideProject.model.Member;
-import tw.platform.sideProject.model.MemberTag;
-import tw.platform.sideProject.model.MemberTagKey;
-import tw.platform.sideProject.model.Tag;
-import tw.platform.sideProject.model.yuMember;
-import tw.platform.sideProject.repository.MemberRepository;
-import tw.platform.sideProject.repository.MemberTagRepository;
-import tw.platform.sideProject.repository.TagRepository;
+import tw.sideproject.model.AddMemberRequest;
+import tw.sideproject.model.Member;
+import tw.sideproject.model.MemberOrder;
+import tw.sideproject.model.MemberTag;
+import tw.sideproject.model.MemberTagKey;
+import tw.sideproject.model.Tag;
+import tw.sideproject.repository.MemberOrderRepository;
+import tw.sideproject.repository.MemberRepository;
+import tw.sideproject.repository.MemberTagRepository;
+import tw.sideproject.repository.TagRepository;
 
 @Service
 public class MemberService {
 
-	@Autowired
+    @Autowired
     private MemberRepository memberRepository;
     
     @Autowired
@@ -42,7 +42,7 @@ public class MemberService {
         member.setName(request.getName());
         member.setBirthday(request.getBirthday());
         member.setTel(request.getTel());
-        member.setPicurl(request.getPicurl());
+        member.setPicurl(request.getPic());
         member.setIsblocked(false);
         memberRepository.save(member);
 
@@ -56,7 +56,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(member.getMemberid());
-            // memberTagKey.setTagId(tag.getTagidm());
+            memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();
@@ -83,6 +83,20 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
+//    找特定會員
+    public Member getMemberById(Long id) {
+        // 使用 findById 查找特定 id 的 Member
+        Optional<Member> memberOptional = memberRepository.findById(id);
+
+        // 判斷是否找到該 Member
+        if (memberOptional.isPresent()) {
+            return memberOptional.get();
+        } else {
+            // 如果沒有找到，可以選擇拋出異常或返回 null
+            throw new RuntimeException("Member not found with id: " + id);
+        }
+    }
+    
     /**
      * 根據 Email 查詢會員
      * 
@@ -100,8 +114,8 @@ public class MemberService {
      * @param memberDetails 包含更新內容的 Member 物件
      * @return 更新後的 Member 物件
      */
-    public Member updateMember(Long memberId, Member memberDetails) {
-    	return memberRepository.findById(memberId).map(existingMember -> {
+    public Member updateMember(Long memberid, Member memberDetails) {
+    	return memberRepository.findById(memberid).map(existingMember -> {
             // 僅更新非空欄位
             if (memberDetails.getAccount() != null) {
                 existingMember.setAccount(memberDetails.getAccount());
@@ -129,7 +143,7 @@ public class MemberService {
             }
             // 儲存更新後的資料
             return memberRepository.save(existingMember);
-        }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberId));
+        }).orElseThrow(() -> new RuntimeException("會員 ID 不存在: " + memberid));
     }
     
     /**
@@ -157,7 +171,7 @@ public class MemberService {
             // 建立 MemberTagKey 作為複合主鍵
             MemberTagKey memberTagKey = new MemberTagKey();
             memberTagKey.setMemberId(memberId);
-            // memberTagKey.setTagId(tag.getTagidm());
+            memberTagKey.setTagId(tag.getTagidm());
 
             // 建立 MemberTag 並設置關聯
             MemberTag memberTag = new MemberTag();
@@ -186,16 +200,6 @@ public class MemberService {
         memberRepository.deleteById(memberId);
     }
 
-//	YU新增
-//	首頁隨抓取會員資料
-	public List<yuMember> getRandomYuMembers() {
-		List<yuMember> allMembers = memberRepository.findRandomYuMembers();
-		// 只取前6個
-		return allMembers.stream().limit(4).collect(Collectors.toList());
-	}
-	
-	public List<yuMember> getyuMemberById(Long memberid){
-		return memberRepository.findYuMemberByMemberId(memberid);
-	}
-
-	}
+    
+    
+}
