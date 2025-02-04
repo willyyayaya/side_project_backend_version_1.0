@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import tw.platform.sideProject.model.Message;
+import tw.platform.sideProject.model.mimiMember;
 
 
 
@@ -19,4 +20,5 @@ public interface MessageRepository extends JpaRepository<Message, Long>{
 	List<Message> findByReceiverid(@Param("receiverid") Long receiverid);
 
 	Optional<Message> findByMessageid(Long messageid);
+	boolean existsByReceiveridAndTitle(mimiMember receiverid, String title);
 }
