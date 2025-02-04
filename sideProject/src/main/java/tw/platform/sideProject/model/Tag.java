@@ -30,19 +30,19 @@ public class Tag {
     public Tag() {}
 
 //    public Tag(int tagido, String tagname) {
-//        this.tagido = tagido;
+////        this.tagido = tagido;
 //        this.tagname = tagname;
 //    }
 
-//     Getters and Setters
-//     public int getTagidm() {
-//         return tagidm;
-//     }
+//    // Getters and Setters
+//    public int getTagidm() {
+//        return tagidm;
+//    }
 //
-//     public void setTagidm(int tagidm) {
-//         this.tagidm = tagidm;
-//     }
-//
+//    public void setTagidm(int tagidm) {
+//        this.tagidm = tagidm;
+//    }
+
 //    public int getTagido() {
 //        return tagido;
 //    }
@@ -50,22 +50,12 @@ public class Tag {
 //    public void setTagido(int tagido) {
 //        this.tagido = tagido;
 //    }
-    
-    
 
     public String getTagname() {
         return tagname;
     }
 
-    public int getTagid() {
-		return tagid;
-	}
-
-	public void setTagid(int tagid) {
-		this.tagid = tagid;
-	}
-
-	public void setTagname(String tagname) {
+    public void setTagname(String tagname) {
         this.tagname = tagname;
     }
 
@@ -84,4 +74,12 @@ public class Tag {
     public void setOrderTags(Set<OrderTag> orderTags) {
         this.orderTags = orderTags;
     }
+
+	public int getTagid() {
+		return tagid;
+	}
+
+	public void setTagid(int tagid) {
+		this.tagid = tagid;
+	}
 }

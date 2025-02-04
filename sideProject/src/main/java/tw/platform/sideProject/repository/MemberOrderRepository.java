@@ -17,7 +17,6 @@ import tw.platform.sideProject.model.Order;
 
 @Repository
 public interface MemberOrderRepository extends JpaRepository<MemberOrder, MemberOrderKey> {
-
 	// 使用 member.memberid 和 order.orderid 進行查詢
 	Optional<MemberOrder> findByMember_memberidAndOrder_orderid(Long memberId, Long orderId);
 
@@ -120,7 +119,8 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 			+ "ON yo.orderid = mo.id.orderid AND mo.collected = true "
 			+ "WHERE yo.deadline > CURRENT_DATE AND yo.orderid = :orderId " + "GROUP BY yo")
 	List<Object[]> findCollectedCountByOrderId(Long orderId);
-//---------------------
-	//站內信專用
+
+	// 站內信專用
 	List<MemberOrder> findByGetprojectTrue(); // 查找 getproject = true 的所有記錄
+
 }

@@ -29,6 +29,9 @@ public class MemberOrder {
     private boolean collected;
     private String evaluate;
     private boolean getproject;
+    private String picurl;   // 確保有這個屬性
+    private String name;
+
 
     // Getters and Setters
     public MemberOrderKey getId() {
@@ -71,13 +74,6 @@ public class MemberOrder {
         this.wanted = wanted;
     }
 
-	public Boolean getCollected() {
-		return collected;
-	}
-
-	public void setCollected(Boolean collected) {
-		this.collected = collected;
-	}
 	public String getEvaluate() {
 		return evaluate;
 	}
@@ -85,6 +81,15 @@ public class MemberOrder {
 	public void setEvaluate(String evaluate) {
 		this.evaluate = evaluate;
 	}
+
+	public boolean isCollected() {
+		return collected;
+	}
+
+	public void setCollected(boolean collected) {
+		this.collected = collected;
+	}
+
 	public boolean isGetproject() {
 		return getproject;
 	}
@@ -92,5 +97,15 @@ public class MemberOrder {
 	public void setGetproject(boolean getproject) {
 		this.getproject = getproject;
 	}
-    
+	
+	@Override
+	public String toString() {
+	    return "MemberOrder{" +
+	            "orderid=" + getOrder() +
+	            ", name='" + name + '\'' +
+	            ", picurl='" + picurl + '\'' +
+	            ", collected=" + collected +
+	            '}';
+	}
+	
 }

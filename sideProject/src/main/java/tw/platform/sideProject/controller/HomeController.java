@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -75,6 +76,50 @@ public class HomeController {
 		model.addAttribute("kw", list);
 
 		return "index";
+	}
+
+	@GetMapping("/order_main/{orderId}")
+	public String order_main(@PathVariable Long orderId, Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member", member);
+			model.addAttribute("memberId", member.getMemberid());
+		} else {
+			System.out.println("目前無登入紀錄");
+		}
+
+		model.addAttribute("orderId", orderId);
+		return "order_main";
+	}
+
+	@GetMapping("/order_edit")
+	public String order_edit(Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member", member);
+			model.addAttribute("memberId", member.getMemberid());
+		} else {
+			System.out.println("目前無登入紀錄");
+		}
+
+		return "order_edit";
+	}
+
+	@GetMapping("/order_update/{orderId}")
+	public String order_update(@PathVariable Long orderId, Model model, HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("index目前登入狀態:" + member.getName() + "%n");
+			model.addAttribute("member", member);
+			model.addAttribute("memberId", member.getMemberid());
+		} else {
+			System.out.println("目前無登入紀錄");
+		}
+
+		model.addAttribute("orderId", orderId);
+		return "order_update";
 	}
 
 	// 搜尋鈕
