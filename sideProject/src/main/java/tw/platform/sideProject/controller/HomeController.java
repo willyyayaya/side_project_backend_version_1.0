@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.servlet.http.HttpSession;
 import tw.platform.sideProject.model.Keywords;
+import tw.platform.sideProject.model.Message;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.model.yuMember;
 import tw.platform.sideProject.model.yuOrder;
@@ -156,7 +157,7 @@ public class HomeController {
 	}
 
 	@PostMapping("/memberShow")
-	public String memberShow(@RequestParam Long memberid, Model model) {
+	public String memberShow(@RequestParam Long memberid, Model model, HttpSession session) {
 		System.out.println("前端傳送的會員ID : " + memberid);
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {
@@ -166,7 +167,10 @@ public class HomeController {
 				memberCheck.setPicurl("../img/caseImg.jpg");
 			}
 		}
+		Message message = new Message();
+		model.addAttribute("message", message); // 添加空的Message對象到模型
 		model.addAttribute("memberShow", memberShow);
+		session.setAttribute("message", message);
 		return "memberShow";
 	}
 

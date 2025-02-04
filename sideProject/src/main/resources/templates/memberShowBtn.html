@@ -12,10 +12,9 @@
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous"></script>
 	<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="CSS/fragment.css">
-	<link rel="stylesheet" href="CSS/memberShowBtn.css">
-	<link rel="stylesheet" href="CSS/sendBtn.css">
-	<link rel="stylesheet" th:href="@{/css/sendBtn.css}">
+    <link rel="stylesheet" th:href="@{/CSS/fragment.css}">
+    <link rel="stylesheet" th:href="@{/CSS/memberShowBtn.css}">
+	<link rel="stylesheet" th:href="@{CSS/sendBtn.css}">
 	<link rel="stylesheet" href="../static/CSS/fragment.css">
 	<link rel="stylesheet" href="../static/CSS/memberShowBtn.css">
 	<link rel="stylesheet" href="../static/CSS/sendBtn.css">
@@ -137,6 +136,7 @@
 					}
 				});
 			});
+			// send彈窗
 			// 獲取彈窗和按鈕元素
 			var modal = document.getElementById("sendModel"); // 確保名稱一致
 			var openBtn = document.getElementById("openModalBtn");
