@@ -125,9 +125,9 @@ $(document).ready(async function() {
 	console.log(responseMemberToJSON[0].memberid);
 	//2.以會員id去拿個人資料
 	if (!responseMemberToJSON[0].picurl) {
-	    imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="/img/icon.jpg">`;
+		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="/img/icon.jpg">`;
 	} else {
-	    imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
+		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
 	}
 	memberName.innerText = `${responseMemberToJSON[0].name}`;
 
@@ -154,6 +154,7 @@ $(document).ready(async function() {
 		console.log(responseGetedToJSON);
 
 		responseGetedToJSON.forEach(item => {
+			console.log(item.memberid);
 
 			let another2 = $('<div>', {
 				id: 'another2',
@@ -165,17 +166,20 @@ $(document).ready(async function() {
 				text: item.name,
 			});
 
-			let anotherImg2 = $('<img>', {
-				id: 'anotherImg',
-				src: item.picurl,
-				class: "img-fluid object-fit-contain"
-			});
-
+			//let anotherImg2 = $('<img>', {
+			//id: 'anotherImg',
+			//src: item.picurl,
+			//	class: "img-fluid object-fit-contain"
+			//});
 
 			let anotherButtonArea = $('<div>', {
 				id: 'ButtonArea',
 				class: "mt-2"
 			});
+
+			//let abd = $('<button>', {
+			//	id: 'abd'
+			//});
 
 			let anotherButton = $('<button>', {
 				id: 'anotherButton',
@@ -183,16 +187,24 @@ $(document).ready(async function() {
 				class: "btn btn-outline-primary",
 				disabled: 'true'
 			});
-			//console.log(anotherButton);
-			anotherButtonArea.append(anotherButton);
-			another2.append(anotherTitle2, anotherImg2, anotherButtonArea);
 
-			let anotherpro2 = $('<a>', {
-				class: 'd-inline col-md-3 mt-1',
-				href: '',
+
+			//console.log(anotherButton);
+			//anotherButtonArea.append(abd, anotherButton);
+			another2.append(anotherTitle2, anotherButtonArea);
+
+			let anotherpro2 = $('<div>', {
+				class: 'd-inline col-md-3 mt-1'
 			});
+
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
+
+			$('#ButtonArea').html(`
+			<button id='anotherabd' class="btn btn-outline-primary showMemberBtn" data-memberid="${item.memberid}">詳細資料</button>
+			`);
+			anotherButtonArea.append(anotherButton);
+
 		});
 		//列出來還未決定但來申請案件的人
 		let getUrl = `http://localhost:8080/api/memberOrders/allMemberWanted/${orderId}`;
@@ -201,6 +213,7 @@ $(document).ready(async function() {
 		console.log(responseGetToJSON);
 
 		responseGetToJSON.forEach(item => {
+			console.log(item);
 
 			let another2 = $('<div>', {
 				id: 'another2',
@@ -212,34 +225,31 @@ $(document).ready(async function() {
 				text: item.name,
 			});
 
-			let anotherImg2 = $('<img>', {
-				id: 'anotherImg',
-				src: item.picurl,
-				class: "img-fluid object-fit-contain"
-			});
-
-
 			let anotherButtonArea = $('<div>', {
-				id: 'ButtonArea',
+				id: 'ButtonArea2',
 				class: "mt-2"
 			});
 
 			let anotherButton = $('<button>', {
 				id: 'anotherButton',
-				text: "決定交給他了",
+				text: "交給他",
 				class: "btn btn-outline-primary"
 			});
-			//console.log(anotherButton);
-			anotherButtonArea.append(anotherButton);
-			another2.append(anotherTitle2, anotherImg2, anotherButtonArea);
 
-			let anotherpro2 = $('<a>', {
-				class: 'd-inline col-md-3 mt-1',
-				href: '',
+			another2.append(anotherTitle2, anotherButtonArea);
+
+			let anotherpro2 = $('<div>', {
+				class: 'd-inline col-md-3 mt-1'
 			});
 
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
+
+			$('#ButtonArea2').html(`
+						<button id='anotherabd' class="btn btn-outline-primary showMemberBtn" data-memberid="${item.memberid}">詳細資料</button>
+						`);
+
+			anotherButtonArea.append(anotherButton);
 
 			anotherButton[0].onclick = function() {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';

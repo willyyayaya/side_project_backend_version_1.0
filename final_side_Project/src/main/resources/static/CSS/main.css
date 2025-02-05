@@ -1,4 +1,3 @@
-
 body {
 	background-color: #bbc8d8;
 	color: #303030;
@@ -105,6 +104,7 @@ a[class="d-inline col-md-3 mt-1"] {
 #anotherTitle {
 	font-size: 20px;
 	font-weight: bold;
+	text-align: center;
 }
 
 #another>p, #getProject>p {
@@ -119,4 +119,8 @@ a[class="d-inline col-md-3 mt-1"] {
 
 #ButtonArea {
 	text-align: center;
+}
+
+#anotherButton {
+	border: 1px solid #c59650;
 }
