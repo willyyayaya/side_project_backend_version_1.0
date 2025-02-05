@@ -1,4 +1,4 @@
-package tw.sideproject.model;
+package tw.platform.sideProject.model;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
