@@ -1,5 +1,5 @@
 /* 設定網頁內外距為0，加入底色 */
-header button{
+* {
     margin: 0;
     padding: 0;
     background-color: #bbc8d8;
@@ -20,6 +20,7 @@ header {
     width: 100%;
     background-color: #14518e;
     color: #eaeff3;
+    font-size: 20px;
     padding: 0 30px 0 0;
 }
 
@@ -32,21 +33,24 @@ header {
 
 .varBtn {
     padding: 15px;
-    width: 120px;
-    height:70px;
     border-radius: 10px;
     border: 1px solid #14518e;
     color: #14518e;
     /* line-height: 50px; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px
 }
 
 .varBtn:hover {
     padding: 15px;
-    width: 120px;
+    max-width: 200px;
     background-color: #14518e;
     border-radius: 10px;
     border: 1px solid #eaeff3;
     color: #eaeff3;
+    transition: 0.5s;
 }
 
 #logoBtn {
@@ -115,4 +119,54 @@ footer>span {
 footer>a,
 footer>span {
     font-size: 24px;
+}
+
+/* 其他 */
+.keywordList {
+    width: 100%;
+    /* display: flex; */
+    /* justify-content: space-evenly; */
+}
+
+.keywordBtn {
+    margin: 8px 0 6px 0;
+    padding: 2px 5px;
+    border-width: 0 0 1px 0;
+    border-color: transparent;
+    border-style: solid;
+    color: #14518e;
+}
+
+.keywordBtn:hover {
+    border-width: 0 0 1px 0;
+    border-color: #c59650;
+    border-style: solid;
+}
+
+.randomKeyword {
+    color: #c59650;
+}
+
+.tagBack {
+    color: green;
+    /* border: 1px solid green; */
+    margin-right: 10px;
+    /* padding: 2px 5px; */
+    /* border-radius: 10px; */
+}
+
+.tagDatabase {
+    color: orange;
+    /* border: 1px solid orange; */
+    margin-right: 10px;
+    /* padding: 2px 5px; */
+    /* border-radius: 10px; */
+}
+
+.tagFront {
+    color: rgb(170, 11, 213);
+    /* border: 1px solid rgb(170, 11, 213); */
+    margin-right: 10px;
+    /* padding: 2px 5px; */
+    /* border-radius: 10px; */
 }
