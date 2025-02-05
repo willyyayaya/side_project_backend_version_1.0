@@ -120,3 +120,12 @@ a[class="d-inline col-md-3 mt-1"] {
 #ButtonArea {
 	text-align: center;
 }
+
+p,m,.col,#updateDate,.text-end,#projectTitle,h5,#detail,a,.col-6,#rank,.all,#introduce,#imgBorder,img{
+	background-color: #eaeff3;
+}
+.p-3{
+	background-color: #eaeff3;
+	margin-left:10px;
+	width:380px;
+}
