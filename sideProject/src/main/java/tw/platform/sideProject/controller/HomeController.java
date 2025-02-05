@@ -92,7 +92,7 @@ public class HomeController {
 		} else {
 			System.out.println("目前無登入紀錄");
 		}
-
+		model.addAttribute("message", new Message());
 		model.addAttribute("orderId", orderId);
 		return "order_main";
 	}
