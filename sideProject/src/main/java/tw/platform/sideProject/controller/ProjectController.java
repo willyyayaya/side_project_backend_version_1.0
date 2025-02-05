@@ -19,13 +19,14 @@ import tw.platform.sideProject.model.Member;
 import tw.platform.sideProject.model.Order;
 import tw.platform.sideProject.model.mimiMember;
 import tw.platform.sideProject.repository.MemberRepository;
+import tw.platform.sideProject.repository.mimiMemberRepository;
 import tw.platform.sideProject.service.MemberOrderService;
 import tw.platform.sideProject.service.MemberService;
 
 @Controller
 public class ProjectController {
 	@Autowired
-	private MemberRepository memberRepository;
+	private mimiMemberRepository memberRepository;
 
 	@Autowired
 	private MemberService memberService;
@@ -47,59 +48,54 @@ public class ProjectController {
 	                           @RequestParam(value = "picurl", required = false) String picurl,
 	                           @ModelAttribute Member member,
 	                           HttpSession session, Model model) throws IOException {
-	    
-	    System.out.println("Received picurl: " + picurl); // Debugging
+	    System.out.println("儲存後端");
+//	    System.out.println("Received picurl: " + picurl); // Debugging
 	    
 	 // 查找数据库中的会员数据
-        Optional<Member> memberOpt = memberRepository.findById(memberid);
-        if (memberOpt.isPresent()) {
-            Member existMember = memberOpt.get();
-            Object sessionMemberObject = session.getAttribute("member");
+		  mimiMember sessionMember = (mimiMember) session.getAttribute("member");
+		   
+  
             // 更新其他字段（检查是否为空，如果不为空才进行更新）
             if (member.getAccount() != null && !member.getAccount().isEmpty()) {
-                existMember.setAccount(member.getAccount());
+            	sessionMember.setAccount(member.getAccount());
             }
             if (member.getEmail() != null && !member.getEmail().isEmpty()) {
-                existMember.setEmail(member.getEmail());
+            	sessionMember.setEmail(member.getEmail());
             }
             if (member.getPassword() != null && !member.getPassword().isEmpty()) {
-                existMember.setPassword(member.getPassword());
+            	sessionMember.setPassword(member.getPassword());
             }
             if (member.getTel() != null && !member.getTel().isEmpty()) {
-                existMember.setTel(member.getTel());
+            	sessionMember.setTel(member.getTel());
             }
             
             if (member.getGithub() != null && !member.getGithub().isEmpty()) {
-                existMember.setGithub(member.getGithub());
+            	sessionMember.setGithub(member.getGithub());
             }
             
             if (member.getBirthday() != null) {
-                existMember.setBirthday(member.getBirthday());
+            	sessionMember.setBirthday(member.getBirthday());
             }
             if (member.getIntro() != null && !member.getIntro().isEmpty()) {
-                existMember.setIntro(member.getIntro());
+            	sessionMember.setIntro(member.getIntro());
             }
 
             // 处理图片上传（已直接传递 Base64 字符串）
             if (picurl != null && !picurl.isEmpty()) {
                 // 直接将 Base64 字符串赋值给 picurl 字段
-                existMember.setPicurl(picurl);
+            	sessionMember.setPicurl(picurl);
             }
 
             // 更新数据库中的会员数据
-            memberRepository.save(existMember);
+            memberRepository.save(sessionMember);
 
             // 将更新后的数据添加到 model 中，以便返回到前端
-            model.addAttribute("member", existMember);
-            session.setAttribute("member", sessionMemberObject);
-            System.out.println(sessionMemberObject);
+            model.addAttribute("member", sessionMember);
+            session.setAttribute("member", sessionMember);
+            System.out.println(sessionMember);
             // 返回更新后的页面
-            return "memberHome";  // 返回更新后的页面
-        } else {
-            // 如果找不到该会员，则返回错误信息
-            model.addAttribute("error", "会员资料更新失败");
-            return "memberHome";  // 返回错误页面
-        }
+        
+        return "redirect:/memberHome";  // 返回更新后的页面
     }
 			//=========================================//
 	@GetMapping("/memberProjectP2/{memberid}")
@@ -108,16 +104,16 @@ public class ProjectController {
 		return "memberProjectP2"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
 	}
 
-	@GetMapping("/OrderProjectP1/{memberid}")
-	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
-		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
-		Optional<Member> memberOpt = memberRepository.findById(memberid);
-		if (memberOpt.isPresent()) {
-			Member member = memberOpt.get();
-			model.addAttribute("member", member);
-		}
-		return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
-	}
+//	@GetMapping("/OrderProjectP1/{memberid}")
+//	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
+//		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+//		Optional<Member> memberOpt = memberRepository.findById(memberid);
+//		if (memberOpt.isPresent()) {
+//			Member member = memberOpt.get();
+//			model.addAttribute("member", member);
+//		}
+//		return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+//	}
 
 	@GetMapping("/getMembersByorderid/{orderid}")
 	public String getorderByorderid(@PathVariable Long orderid, Model model) {
