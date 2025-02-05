@@ -27,13 +27,13 @@ import tw.platform.sideProject.service.MemberService;
 public class ProjectController {
 	@Autowired
 	private mimiMemberRepository memberRepository;
+	
 	@Autowired
-	private MemberRepository memberRepositoryV2;
+	private MemberRepository mimimemberRepository;
 
 	@Autowired
 	private MemberService memberService;
 	
-	//會員首頁
 	@GetMapping("/memberHome")
 	public String showMemberHomePage(HttpSession session, Model model) {
 		System.out.println("思宇登入後的後端");
@@ -44,7 +44,7 @@ public class ProjectController {
 	   
 	    return "memberHome";  // 返回视图
 	}
-//會員首頁更新資料
+
 	@Transactional
 	@PostMapping("/memberHome/{memberid}/update")
 	public String updateMember(@PathVariable("memberid") Long memberid,
@@ -100,43 +100,64 @@ public class ProjectController {
         
         return "redirect:/memberHome";  // 返回更新后的页面
     }
-
-	//發案者後端
-	@GetMapping("/OrderProjectP1/{memberid}")
-	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
-		System.out.println("進入專案後端");
-		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
-		Optional<Member> memberOpt = memberRepositoryV2.findById(memberid);
-		if (memberOpt.isPresent()) {
-			Member member = memberOpt.get();
-			model.addAttribute("member", member);
-		}
-		return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
-	}
-
-	@GetMapping("/getMembersByorderid/{orderid}")
-	public String getorderByorderid(@PathVariable Long orderid, Model model) {
-		model.addAttribute("orderid", orderid); // 将 memberid 传递给前端
-
-		return "evaluate"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
-	}
+			//=========================================//
+//	@GetMapping("/memberProjectP2/{memberid}")
+//	public String getMemberProjectPage2(@PathVariable Long memberid, Model model) {
+//		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+//		return "memberProjectP2"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+//	}
+	//我接案的跳轉後端
+	@GetMapping("/memberProjectP1/{memberid}")
+    public String getMemberProjectPage(@PathVariable Long memberid, Model model) {
+        model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+        Optional<Member> memberOpt = mimimemberRepository.findById(memberid);
+        if (memberOpt.isPresent()) {
+            Member member = memberOpt.get();
+            model.addAttribute("member", member);
+        }
+        return "memberProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+    }
+    
+    
+    @GetMapping("/memberProjectP2/{memberid}")
+    public String getMemberProjectPage2(@PathVariable Long memberid, Model model) {
+        model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+        return "memberProjectP2"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+    }
+    
+    @GetMapping("/OrderProjectP1/{memberid}")
+    public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
+        model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+        Optional<Member> memberOpt = mimimemberRepository.findById(memberid);
+        if (memberOpt.isPresent()) {
+            Member member = memberOpt.get();
+            model.addAttribute("member", member);
+        }
+        return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+    }
+    
+    @GetMapping("/getMembersByorderid/{orderid}")
+    public String getorderByorderid(@PathVariable Long orderid, Model model) {
+        model.addAttribute("orderid", orderid); // 将 memberid 传递给前端
+        
+        return "evaluate"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+    }
 	
 	// 查詢某個會員相關的所有專案
-		@GetMapping("/memberProjectP1/{memberid}")
-		public String showMemberProjectPage(@PathVariable Long memberid, HttpSession session, Model model) {
-		    // 從 session 或直接使用 memberid 查詢會員資料
-		    Object sessionMemberObject = session.getAttribute("member");
-		   System.out.printf("member", sessionMemberObject);
-		    if (sessionMemberObject instanceof Member) {
-		        Member sessionMember = (Member) sessionMemberObject;
-		        // 根據 memberid 查詢專案或進行其他邏輯處理
-		        model.addAttribute("member", sessionMember);
-		        session.setAttribute("member", sessionMemberObject);
-		        return "memberProjectP1";
-		    } else {
-		        return "redirect:/login";
-		    }
-		}
-
-
+//		@GetMapping("/memberProjectP1")
+//		public String showMemberProjectPage(HttpSession session, Model model,Long orderid) {
+//		    // 從 session 或直接使用 memberid 查詢會員資料
+//			System.out.println("思宇memberProjectP1");
+//			mimiMember sessionMember = (mimiMember) session.getAttribute("member");
+//			   
+////		    Object sessionMemberObject = session.getAttribute("member");
+//			System.out.printf("member", sessionMember);
+//		    
+//				model.addAttribute("orderid", orderid);
+//		        // 根據 memberid 查詢專案或進行其他邏輯處理
+//		        model.addAttribute("member", sessionMember);
+//		        session.setAttribute("member", sessionMember);
+//		        return "memberProjectP1";
+//		    } 
+//		}
 }
