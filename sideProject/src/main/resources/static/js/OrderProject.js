@@ -156,15 +156,19 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     if (status === '進行中') {
                         card.innerHTML = `
 			                <div class="card-content"  data-order-id="${order.orderid}">
-			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
-			                    <h4>${order.name}</h4>
+			                    <div style="width:150px;height:150px;background-color: #c59650;">
+                        <img src="${order.picurl}" alt="${order.orderid}">
+                        </div>
+                        <h4>${order.name}</h4>
 			                    <p class="title">${order.intro}</p>
 			                    <button class="Card_btn" id="openPopupBtn">編輯</button>
 			                </div>
 			            `;
                     } else {
                         card.innerHTML = `
-			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+                        <div style="width:150px;height:150px;background-color: #c59650;">
+                        <img src="${order.picurl}" alt="${order.orderid}">
+                        </div>
 			                    <h4>${order.name}</h4>
 			                    <p class="title">${order.intro}</p>
 			                    <button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>

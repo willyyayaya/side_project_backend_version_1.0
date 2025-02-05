@@ -33,6 +33,7 @@ public class ProjectController {
 	@Autowired
 	private MemberService memberService;
 	
+	//會員首頁
 	@GetMapping("/memberHome")
 	public String showMemberHomePage(HttpSession session, Model model) {
 		System.out.println("思宇登入後的後端");
@@ -43,7 +44,7 @@ public class ProjectController {
 	   
 	    return "memberHome";  // 返回视图
 	}
-
+//會員首頁更新資料
 	@Transactional
 	@PostMapping("/memberHome/{memberid}/update")
 	public String updateMember(@PathVariable("memberid") Long memberid,
@@ -99,15 +100,11 @@ public class ProjectController {
         
         return "redirect:/memberHome";  // 返回更新后的页面
     }
-			//=========================================//
-	@GetMapping("/memberProjectP2/{memberid}")
-	public String getMemberProjectPage2(@PathVariable Long memberid, Model model) {
-		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
-		return "memberProjectP2"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
-	}
 
+	//發案者後端
 	@GetMapping("/OrderProjectP1/{memberid}")
 	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
+		System.out.println("進入專案後端");
 		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
 		Optional<Member> memberOpt = memberRepositoryV2.findById(memberid);
 		if (memberOpt.isPresent()) {
@@ -125,7 +122,7 @@ public class ProjectController {
 	}
 	
 	// 查詢某個會員相關的所有專案
-		@GetMapping("/memberProjectP1")
+		@GetMapping("/memberProjectP1/{memberid}")
 		public String showMemberProjectPage(@PathVariable Long memberid, HttpSession session, Model model) {
 		    // 從 session 或直接使用 memberid 查詢會員資料
 		    Object sessionMemberObject = session.getAttribute("member");
