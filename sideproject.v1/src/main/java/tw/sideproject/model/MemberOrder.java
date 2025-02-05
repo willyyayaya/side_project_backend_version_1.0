@@ -120,7 +120,7 @@ public class MemberOrder {
         this.wanted = wanted;
     }
 
-	public Boolean getCollected() {
+	public Boolean isCollected() {
 		return collected;
 	}
 
