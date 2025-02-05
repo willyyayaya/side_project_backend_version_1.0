@@ -1,15 +1,19 @@
 package tw.platform.sideProject.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.servlet.http.HttpSession;
 import tw.platform.sideProject.model.AddMemberOrderRequest;
 import tw.platform.sideProject.model.Member;
 import tw.platform.sideProject.model.MemberOrder;
 import tw.platform.sideProject.model.Order;
+import tw.platform.sideProject.model.UpdateFavoriteRequest;
 import tw.platform.sideProject.repository.MemberOrderRepository;
 import tw.platform.sideProject.service.MemberOrderService;
 
@@ -46,17 +50,15 @@ public class MemberOrderController {
 		return memberOrderService.deleteOwnedOrder(memberId, orderId);
 	}
 
-	// 查詢某個會員相關的所有專案
-	@GetMapping("/getOrdersByMemberId/{memberId}")
-	public List<Order> getOrdersByMemberId(@PathVariable Long memberId) {
-		return memberOrderService.getOrdersByMemberId(memberId);
-	}
-
-	// 查詢某個專案相關的所有會員
-	@GetMapping("/getMembersByOrderId/{orderId}")
-	public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
-		return memberOrderService.getMembersByOrderId(orderId);
-	}
+   // 查詢某個會員相關的所有專案
+	@GetMapping("/getOrdersByMemberid/{memberid}")
+    public List<MemberOrder> getOrdersByMemberid(@PathVariable Long memberid) throws IOException {
+        // 查询所有对应 memberid 的订单
+        List<MemberOrder> orders = memberOrderRepository.findAllById_Memberid(memberid);
+        
+        return orders;
+    }
+	
 
 	// 查詢某個會員相關的所有專案的關係(admin)
 	@GetMapping("/getAllMemberOrdersByMemberId/{memberId}")
@@ -67,6 +69,11 @@ public class MemberOrderController {
 	// 根據orderid來找發行會員(order)
 	@GetMapping("/getMemberIdByOrderId/{orderId}")
 	public List<Member> getMemberIdByOrderID(@PathVariable Long orderId) {
+		return memberOrderService.getMemberByOrderId(orderId);
+	}
+	// 查詢某個專案相關的所有會員
+	@GetMapping("/getMembersByOrderid/{orderId}")
+	public List<Member> getMembersByOrderid(@PathVariable Long orderId) {
 		return memberOrderService.getMemberByOrderId(orderId);
 	}
 
@@ -100,6 +107,8 @@ public class MemberOrderController {
 		request.setCollected(false); // 將 collected 設置為 false，代表取消收藏
 		return memberOrderService.removeMemberCollected(request);
 	}
+	
+	
 
 	// 查詢申請案件人數(order)
 	@GetMapping("/wanted/people/{orderId}")
@@ -134,7 +143,7 @@ public class MemberOrderController {
 	@Autowired
 	private MemberOrderRepository memberOrderRepository;
 
-
+	//memberlike跳轉後端
 	// 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
 	@GetMapping("/memberlike/{memberid}")
 	public boolean getMemberCollecteded(@PathVariable Long memberid, @RequestParam Long orderid) {
@@ -145,10 +154,10 @@ public class MemberOrderController {
 	}
 
 	// 更新收藏狀態
-//	@PostMapping("/updateFavoriteStatus")
-//	public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
-//		memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
-//	}
+	@PostMapping("/updateFavoriteStatus")
+    public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
+        memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
+	}
 
 	@GetMapping("/Evaluate/{orderid}")
 	public String Evaluate(@PathVariable Long orderid, @RequestBody AddMemberOrderRequest memberOrder) {

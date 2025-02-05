@@ -72,79 +72,140 @@ public class MemberController {
 
 	// 从数据库获取数据并将其传递给模板
 	// 处理会员主页和更新会员信息时，加入类型判断
-	@GetMapping("/memberHome")
-	public String showMemberHomePage(HttpSession session, Model model) {
-	    // 从 session 获取会员对象
-	    Object sessionMemberObject = session.getAttribute("member");
-	    
-	    if (sessionMemberObject instanceof Member) {
-	        Member sessionMember = (Member) sessionMemberObject;
-	        model.addAttribute("member", sessionMember);
-	        return "memberHome";  // 返回视图
-	    } else {
-	        // 如果 session 中的对象不是 Member 类型，可能是 mimiMember 类型，进行错误处理
-	        return "redirect:/login";  // 重定向到登录页面，表示未登录或类型错误
-	    }
-	}
-
-	@Transactional
-	@PostMapping("/memberHome/{memberid}/update")
-	public String updateMember(@PathVariable("memberid") Long memberid,
-	                           @RequestParam(value = "picurl", required = false) String picurl,
-	                           @ModelAttribute Member member,
-	                           HttpSession session, Model model) throws IOException {
-	    
-	    System.out.println("Received picurl: " + picurl); // Debugging
-	    
-	 // 查找数据库中的会员数据
-        Optional<Member> memberOpt = memberRepository.findById(memberid);
-        if (memberOpt.isPresent()) {
-            Member existMember = memberOpt.get();
-
-            // 更新其他字段（检查是否为空，如果不为空才进行更新）
-            if (member.getAccount() != null && !member.getAccount().isEmpty()) {
-                existMember.setAccount(member.getAccount());
-            }
-            if (member.getEmail() != null && !member.getEmail().isEmpty()) {
-                existMember.setEmail(member.getEmail());
-            }
-            if (member.getPassword() != null && !member.getPassword().isEmpty()) {
-                existMember.setPassword(member.getPassword());
-            }
-            if (member.getTel() != null && !member.getTel().isEmpty()) {
-                existMember.setTel(member.getTel());
-            }
-            
-            if (member.getGithub() != null && !member.getGithub().isEmpty()) {
-                existMember.setGithub(member.getGithub());
-            }
-            
-            if (member.getBirthday() != null) {
-                existMember.setBirthday(member.getBirthday());
-            }
-            if (member.getIntro() != null && !member.getIntro().isEmpty()) {
-                existMember.setIntro(member.getIntro());
-            }
-
-            // 处理图片上传（已直接传递 Base64 字符串）
-            if (picurl != null && !picurl.isEmpty()) {
-                // 直接将 Base64 字符串赋值给 picurl 字段
-                existMember.setPicurl(picurl);
-            }
-
-            // 更新数据库中的会员数据
-            memberRepository.save(existMember);
-
-            // 将更新后的数据添加到 model 中，以便返回到前端
-            model.addAttribute("member", existMember);
-
-            // 返回更新后的页面
-            return "memberHome";  // 返回更新后的页面
-        } else {
-            // 如果找不到该会员，则返回错误信息
-            model.addAttribute("error", "会员资料更新失败");
-            return "memberHome";  // 返回错误页面
-        }
-    }
+//	@GetMapping("/memberHome")
+//	public String showMemberHomePage(HttpSession session, Model model) {
+//		System.out.println("思宇後端");
+//	    // 从 session 获取会员对象
+//	    Object sessionMemberObject = session.getAttribute("member");
+//	    
+//	    if (sessionMemberObject instanceof Member) {
+//	        Member sessionMember = (Member) sessionMemberObject;
+//	        model.addAttribute("member", sessionMember);
+//	     // 在用戶登入後，將 Member 物件存入 session
+//	        session.setAttribute("member", sessionMemberObject);
+//
+//	        return "memberHome";  // 返回视图
+//	    } else {
+//	        // 如果 session 中的对象不是 Member 类型，可能是 mimiMember 类型，进行错误处理
+//	        return "redirect:/login";  // 重定向到登录页面，表示未登录或类型错误
+//	    }
+//	}
+//
+//	@Transactional
+//	@PostMapping("/memberHome/{memberid}/update")
+//	public String updateMember(@PathVariable("memberid") Long memberid,
+//	                           @RequestParam(value = "picurl", required = false) String picurl,
+//	                           @ModelAttribute Member member,
+//	                           HttpSession session, Model model) throws IOException {
+//	    
+//	    System.out.println("Received picurl: " + picurl); // Debugging
+//	    
+//	 // 查找数据库中的会员数据
+//        Optional<Member> memberOpt = memberRepository.findById(memberid);
+//        if (memberOpt.isPresent()) {
+//            Member existMember = memberOpt.get();
+//            Object sessionMemberObject = session.getAttribute("member");
+//            // 更新其他字段（检查是否为空，如果不为空才进行更新）
+//            if (member.getAccount() != null && !member.getAccount().isEmpty()) {
+//                existMember.setAccount(member.getAccount());
+//            }
+//            if (member.getEmail() != null && !member.getEmail().isEmpty()) {
+//                existMember.setEmail(member.getEmail());
+//            }
+//            if (member.getPassword() != null && !member.getPassword().isEmpty()) {
+//                existMember.setPassword(member.getPassword());
+//            }
+//            if (member.getTel() != null && !member.getTel().isEmpty()) {
+//                existMember.setTel(member.getTel());
+//            }
+//            
+//            if (member.getGithub() != null && !member.getGithub().isEmpty()) {
+//                existMember.setGithub(member.getGithub());
+//            }
+//            
+//            if (member.getBirthday() != null) {
+//                existMember.setBirthday(member.getBirthday());
+//            }
+//            if (member.getIntro() != null && !member.getIntro().isEmpty()) {
+//                existMember.setIntro(member.getIntro());
+//            }
+//
+//            // 处理图片上传（已直接传递 Base64 字符串）
+//            if (picurl != null && !picurl.isEmpty()) {
+//                // 直接将 Base64 字符串赋值给 picurl 字段
+//                existMember.setPicurl(picurl);
+//            }
+//
+//            // 更新数据库中的会员数据
+//            memberRepository.save(existMember);
+//
+//            // 将更新后的数据添加到 model 中，以便返回到前端
+//            model.addAttribute("member", existMember);
+//            session.setAttribute("member", sessionMemberObject);
+//            System.out.println(sessionMemberObject);
+//            // 返回更新后的页面
+//            return "memberHome";  // 返回更新后的页面
+//        } else {
+//            // 如果找不到该会员，则返回错误信息
+//            model.addAttribute("error", "会员资料更新失败");
+//            return "memberHome";  // 返回错误页面
+//        }
+//    }
+//	@PostMapping("/memberHome/{memberid}/update")
+//    public String updateMember(@PathVariable("memberid") Long memberid,
+//                               @ModelAttribute Member member,  
+//                               @RequestParam(value = "picurl", required = false) String picurl, 
+//                               Model model) throws IOException {
+//
+//        // 查找数据库中的会员数据
+//        Optional<Member> memberOpt = memberRepository.findById(memberid);
+//        if (memberOpt.isPresent()) {
+//            Member existMember = memberOpt.get();
+//
+//            // 更新其他字段（检查是否为空，如果不为空才进行更新）
+//            if (member.getAccount() != null && !member.getAccount().isEmpty()) {
+//                existMember.setAccount(member.getAccount());
+//            }
+//            if (member.getEmail() != null && !member.getEmail().isEmpty()) {
+//                existMember.setEmail(member.getEmail());
+//            }
+//            if (member.getPassword() != null && !member.getPassword().isEmpty()) {
+//                existMember.setPassword(member.getPassword());
+//            }
+//            if (member.getTel() != null && !member.getTel().isEmpty()) {
+//                existMember.setTel(member.getTel());
+//            }
+//            
+//            if (member.getGithub() != null && !member.getGithub().isEmpty()) {
+//                existMember.setGithub(member.getGithub());
+//            }
+//            
+//            if (member.getBirthday() != null) {
+//                existMember.setBirthday(member.getBirthday());
+//            }
+//            if (member.getIntro() != null && !member.getIntro().isEmpty()) {
+//                existMember.setIntro(member.getIntro());
+//            }
+//
+//            // 处理图片上传（已直接传递 Base64 字符串）
+//            if (picurl != null && !picurl.isEmpty()) {
+//                // 直接将 Base64 字符串赋值给 picurl 字段
+//                existMember.setPicurl(picurl);
+//            }
+//
+//            // 更新数据库中的会员数据
+//            memberRepository.save(existMember);
+//
+//            // 将更新后的数据添加到 model 中，以便返回到前端
+//            model.addAttribute("member", existMember);
+//
+//            // 返回更新后的页面
+//            return "memberHome";  // 返回更新后的页面
+//        } else {
+//            // 如果找不到该会员，则返回错误信息
+//            model.addAttribute("error", "会员资料更新失败");
+//            return "memberHome";  // 返回错误页面
+//        }
+//    }
 
 }
