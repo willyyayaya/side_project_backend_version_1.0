@@ -122,5 +122,10 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 
 	// 站內信專用
 	List<MemberOrder> findByGetprojectTrue(); // 查找 getproject = true 的所有記錄
-
+	
+	@Modifying
+    @Transactional
+    @Query("UPDATE MemberOrder mo SET mo.collected = :collected WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
+    void updateCollectedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("collected") boolean collected);
+	
 }

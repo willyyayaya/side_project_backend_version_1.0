@@ -70,7 +70,7 @@ main form {
     object-fit: cover;
 }
 
-#sortBtn {
+#btn {
     display: flex;
     justify-content: flex-end;
 }

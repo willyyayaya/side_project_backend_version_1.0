@@ -13,6 +13,7 @@ import tw.platform.sideProject.model.AddMemberOrderRequest;
 import tw.platform.sideProject.model.Member;
 import tw.platform.sideProject.model.MemberOrder;
 import tw.platform.sideProject.model.Order;
+import tw.platform.sideProject.model.UpdateFavoriteRequest;
 import tw.platform.sideProject.repository.MemberOrderRepository;
 import tw.platform.sideProject.service.MemberOrderService;
 
@@ -109,6 +110,8 @@ public class MemberOrderController {
 		request.setCollected(false); // 將 collected 設置為 false，代表取消收藏
 		return memberOrderService.removeMemberCollected(request);
 	}
+	
+	
 
 	// 查詢申請案件人數(order)
 	@GetMapping("/wanted/people/{orderId}")
@@ -154,10 +157,10 @@ public class MemberOrderController {
 	}
 
 	// 更新收藏狀態
-//	@PostMapping("/updateFavoriteStatus")
-//    public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
-//        memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
-//    }
+	@PostMapping("/updateFavoriteStatus")
+    public void updateFavoriteStatus(@RequestBody UpdateFavoriteRequest request) {
+        memberOrderService.updateCollectedStatus(request.getMemberid(), request.getOrderid(), request.isCollected());
+	}
 
 	@GetMapping("/Evaluate/{orderid}")
 	public String Evaluate(@PathVariable Long orderid, @RequestBody AddMemberOrderRequest memberOrder) {

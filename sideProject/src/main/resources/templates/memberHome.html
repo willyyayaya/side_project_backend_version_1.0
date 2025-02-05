@@ -24,7 +24,8 @@
 <body>
 
 <!-- 上方菜單 -->
-    <div class="sticky" th:if="${member != null}" th:insert="fragments::userHeader"></div>
+    <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
+	<div class="sticky" th:if="${member!= null}" th:insert="fragments::userHeader"></div> 
 
 <!-- 中間 -->
     <div id="outSide">
@@ -42,11 +43,13 @@
                 <b>功能列</b>
                 <dl>
                     <dt>專案管理</dt>
-                    <a  th:href="@{/memberProjectP1/{memberid}(memberid=${member.memberid})}">我接的專案</a>
+                    <a id="link1" href="#">我接的專案</a>
                     <br />
-                    <a id="link4" th:href="@{/OrderProjectP1/{memberid}(memberid=${member.memberid})}">我發的專案</a>
+                    <a id="link4" href="#">我發的專案</a>
+                    <br />
+                    <a id="link3" href="#">建立新專案</a>         
                     <dt>專案收藏</dt>
-                    <a id="link2" th:href="@{/api/memberOrders/memberlike/{memberid}(memberid=${member.memberid})}">資料夾管理</a>
+                    <a id="link2" href="#">資料夾管理</a>
                     <dt>站內信件</dt>
                     <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
                 </dl>
@@ -198,13 +201,16 @@ function submitImage() {
 
     // 設置其他頁面功能鏈接
     
-    //const link1 = document.getElementById("link1");
-    //const link2 = document.getElementById("link2");
-    //const link4 = document.getElementById("link4");
+    const link1 = document.getElementById("link1");
+    const link2 = document.getElementById("link2");
+    const link3 = document.getElementById("link3");
+    const link4 = document.getElementById("link4");
 
-    //link1.href = `/memberProjectP1/${memberid}`;
-    //link2.href = `/memberlike/${memberid}`;
-   // link4.href = `/OrderProjectP1/${memberid}`;
+    link1.href = `/memberProjectP1/${memberid}`;
+    link2.href = `/memberlike/${memberid}`;
+    // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+    link3.href = `http://localhost:8080/order_edit`;
+    link4.href = `/OrderProjectP1/${memberid}`;
 
     </script>
     

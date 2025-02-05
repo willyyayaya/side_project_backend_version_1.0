@@ -1,4 +1,3 @@
-
 /**
  * 
  */
@@ -68,11 +67,11 @@ if (!memberid || isNaN(memberid)) {
     const link3 = document.getElementById("link3");
     const link4 = document.getElementById("link4");
 
-    link1.href = `/memberProjectP1/${memberid}`;
-    link2.href = `/memberlike/${memberid}`;
-    // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
-    // link3.href = `/memberProjectP1/${memberid}`;
-    link4.href = `/OrderProjectP1/${memberid}`;
+	link1.href = `/memberProjectP1/${memberid}`;
+	link2.href = `/memberlike/${memberid}`;
+	// link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+	link3.href = `http://localhost:8080/order_edit`;
+	link4.href = `/OrderProjectP1/${memberid}`;
 }
 
 
@@ -121,12 +120,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
-                        memberpicDiv.innerHTML = `
-                              <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
-                              <img  name="picurl" id="icon" src="${member.picurl}" 
-                                  width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-                              <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-                          `;
+						memberpicDiv.innerHTML = `
+							<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+						    `;
+							//<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+
+							//<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+
+						//	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
                     }
                     )
                 }
@@ -148,13 +149,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
-                        memberpicDiv.innerHTML = `
-                              <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
-                              <img  name="picurl" id="icon" src="${member.picurl}" 
-                                  width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-                              <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-                          `;
+						memberpicDiv.innerHTML = `
+							<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+						    `;
+							//<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
+							//<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+
+						//	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
 
                         const svgElement = `
                             <svg class="icon favorite-icon" style="fill: currentcolor; width: 24px; height: 24px; cursor: pointer;" 
@@ -173,7 +175,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         card.innerHTML = `
                             <img src="${order.picurl}" alt="${order.name}" style="width:150px; height:150px;">
                             <h4>${order.name}</h4>
-                            <p class="title">${order.detail}</p>
+                            <p class="title">${order.intro}</p>
                             <div class="card-icon ${collectedStatus}">
                                 ${svgElement}
                             </div>
@@ -224,10 +226,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                 .catch(error => {
                                     console.error("Error updating favorite status:", error);
                                     alert('更新成功');
+									location.reload();
                                 });
 
                         });
-
+						
 
                         container.appendChild(card);
                     });

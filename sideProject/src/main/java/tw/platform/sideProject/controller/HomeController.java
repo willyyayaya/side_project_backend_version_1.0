@@ -236,44 +236,9 @@ public class HomeController {
 		return "memberShow";
 	}
 
-//--------return視圖使用---------------
-	@GetMapping("/memberShow")
-	public String getmemberShow(@RequestParam Long memberid, Model model, HttpSession session) {
-		// 获取会员信息
-		System.out.println("前端傳送的會員ID : " + memberid);
-
-		// 根据 memberid 查找会员数据
-		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
-		for (yuMember memberCheck : memberShow) {
-			System.out.println(memberCheck.getName());
-			System.out.println(memberCheck.getEmail());
-
-			// 如果订单没有图片，加入默认图片
-			if (memberCheck.getPicurl() == null) {
-				memberCheck.setPicurl("../img/caseImg.jpg");
-			}
-
-			// 获取 receiverMember 信息
-			mimiMember receiverMember = mimiMemberService.getMemberById(memberid);
-			String receiverEmail = memberCheck.getEmail();
-
-			// 创建 Message 对象并设置 receiverid 和 email
-			Message message = new Message();
-			message.setReceiverid(receiverMember); // 设置 receiverid 为 mimiMember 对象
-			message.setReceiverEmail(receiverEmail); // 设置收件人的 Email
-
-			model.addAttribute("message", message); // 将 Message 放入模型
-		}
-
-		model.addAttribute("memberShow", memberShow); // 将 memberShow 放入模型
-		session.setAttribute("message", new Message()); // 存储空的 Message 到 Session
-		return "memberShow"; // 返回 memberShow 页面
-	}
-
 	// --------彈窗測試項目-----------
 	@GetMapping("/indexText")
 	public String indexText(Model model, HttpSession session) {
-		model.addAttribute("message", new Message());
 		return "memberShowBtn";
 	}
 

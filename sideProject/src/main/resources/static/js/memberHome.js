@@ -1,4 +1,4 @@
-
+console.log("memberid:", memberid);  // 輸出 memberid，確認它是否正確
     //const memberid = document.querySelector('meta[name="memberid"]').getAttribute('content');
 
     //console.log('memberid: ' + memberid);
@@ -31,7 +31,7 @@ function submitImage() {
     // 从meta标签获取 memberid
     console.log("Member ID:", memberid);  // 确认输出
 
-    var url = `/api/members/memberHome/${memberid}/update`;  // 使用 memberid 生成 URL
+    var url = `/memberHome/${memberid}/update`;  // 使用 memberid 生成 URL
 
     fetch(url, {
         method: 'POST',
@@ -58,7 +58,7 @@ function submitImage() {
 
         // 从meta标签获取 memberid
         const memberid = document.querySelector('meta[name="memberid"]').getAttribute('content');
-        const url = `/api/members/memberHome/${memberid}/update`;  // 使用 memberid 生成 URL
+        const url = `/memberHome/${memberid}/update`;  // 使用 memberid 生成 URL
 
         fetch(url, {
             method: 'POST',
@@ -79,10 +79,13 @@ function submitImage() {
 
     // 設置其他頁面功能鏈接
     
-    const link1 = document.getElementById("link1");
-    const link2 = document.getElementById("link2");
-    const link4 = document.getElementById("link4");
+	// const link1 = document.getElementById("link1");
+	//     const link2 = document.getElementById("link2");
+	//     const link3 = document.getElementById("link3");
+	//     const link4 = document.getElementById("link4");
 
-    link1.href = `/memberProjectP1/${memberid}`;
-    link2.href = `/memberlike/${memberid}`;
-    link4.href = `/OrderProjectP1/${memberid}`;
+	//     link1.href = `/memberProjectP1/${memberid}`;
+	//     link2.href = `/memberlike/${memberid}`;
+	//     // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+	//     link3.href = `http://localhost:8080/order_edit`;
+	//     link4.href = `/OrderProjectP1/${memberid}`;

@@ -1,9 +1,7 @@
 package tw.platform.sideProject.model;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -14,7 +12,6 @@ import jakarta.persistence.Table;
 public class MemberOrder {
 
     @EmbeddedId
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private MemberOrderKey id;
 
     @ManyToOne
@@ -29,50 +26,19 @@ public class MemberOrder {
 
     private Boolean owned;
     private Boolean wanted;
-    private Boolean collected;
-    private Boolean getproject;
+    private boolean collected;
     private String evaluate;
+    private boolean getproject;
     private String picurl;   // 確保有這個屬性
     private String name;
-    
 
 
     // Getters and Setters
-    
-    public Long getMemberid() {
-        return id.getMemberid();
-    }
-
-    public Long getOrderid() {
-        return id.getOrderid();
-    }
-
-    
     public MemberOrderKey getId() {
         return id;
     }
 
-
-	public String getPicurl() {
-		return picurl;
-	}
-
-
-	public void setPicurl(String picurl) {
-		this.picurl = picurl;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setId(MemberOrderKey id) {
+    public void setId(MemberOrderKey id) {
         this.id = id;
     }
 
@@ -108,33 +74,6 @@ public class MemberOrder {
         this.wanted = wanted;
     }
 
-	public Boolean isCollected() {
-		return collected;
-	}
-
-
-	public void setCollected(Boolean collected) {
-		this.collected = collected;
-	}
-    
-	@Override
-	public String toString() {
-	    return "MemberOrder{" +
-	            "orderid=" + getOrderid() +
-	            ", name='" + name + '\'' +
-	            ", picurl='" + picurl + '\'' +
-	            ", collected=" + collected +
-	            '}';
-	}
-
-	public Boolean getGetproject() {
-		return getproject;
-	}
-
-	public void setGetproject(Boolean getproject) {
-		this.getproject = getproject;
-	}
-
 	public String getEvaluate() {
 		return evaluate;
 	}
@@ -143,6 +82,30 @@ public class MemberOrder {
 		this.evaluate = evaluate;
 	}
 
+	public boolean isCollected() {
+		return collected;
+	}
+
+	public void setCollected(boolean collected) {
+		this.collected = collected;
+	}
+
+	public boolean isGetproject() {
+		return getproject;
+	}
+
+	public void setGetproject(boolean getproject) {
+		this.getproject = getproject;
+	}
 	
+	@Override
+	public String toString() {
+	    return "MemberOrder{" +
+	            "orderid=" + getOrder() +
+	            ", name='" + name + '\'' +
+	            ", picurl='" + picurl + '\'' +
+	            ", collected=" + collected +
+	            '}';
+	}
 	
 }

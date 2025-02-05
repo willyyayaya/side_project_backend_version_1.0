@@ -289,8 +289,10 @@ public class MemberOrderService {
 		return memberOrderRepository.findByMember_memberidAndOrder_orderid(memberId, orderId);
 	}
 
-//	// 更新會員對某個專案的收藏狀態(member)
-//	public void updateCollectedStatus(Long memberid, Long orderid, boolean collected) {
-//		memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
-//	}
+	// 更新會員對某個專案的收藏狀態(member)
+	public void updateCollectedStatus(Long memberid, Long orderid, boolean collected) {
+		// TODO Auto-generated method stub
+		memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
+
+	}
 }
