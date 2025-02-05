@@ -30,13 +30,11 @@
     border: 2px solid black;
 }
 #MyModal {
-    display: block !important;
-    padding-left: 0px !important;
     background:none;
 
 }
 
-.modal-body, .col-5, .col-7 ,.col-7 > h4,.col-7 > div,.col-7>p,.star-rating>p {
+.modal-body, .col-5, .col-7 ,.col-7 > h4,.col-7 > .star-rating {
      background:none;
 }
 
