@@ -61,14 +61,15 @@ $(document).ready(async function () {
         let responseOrdermember = await fetch(ordermemberUrl);
         let responseOrdermemberToJSON = await responseOrdermember.json();
         console.log(responseOrdermemberToJSON);
-        imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseOrdermemberToJSON[0].order.picurl}">`;
-        modalName.innerText = `${responseOrdermemberToJSON[0].order.name}`;
+        imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseOrdermemberToJSON[0].picurl}">`;
+        modalName.innerText = `${responseOrdermemberToJSON[0].name}`;
         //顯示專案名字
-        let orderUrl = `http://localhost:8080/api/memberOrders/getMembersByOrderid/${orderid}`;
+        let orderUrl = `http://localhost:8080/api/memberOrders/getOrdersByMemberid/${memberid}`;
         let responseOrder = await fetch(orderUrl);
         let responseOrderToJSON = await responseOrder.json();
-        console.log(responseOrderToJSON);
-        projectTitle.innerText = `${responseOrdermemberToJSON[0].order.detail}`;
+        console.log(responseOrderToJSON[0]);
+        console.log(responseOrderToJSON[1]);
+        projectTitle.innerText = `${responseOrdermemberToJSON[0].name}`;
     }
 
     //送出

@@ -172,15 +172,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         const card = document.createElement('div');
                         card.classList.add('Card');
-                        card.innerHTML = `
-                            <img src="${order.picurl}" alt="${order.name}" style="width:150px; height:150px;">
-                            <h4>${order.name}</h4>
-                            <p class="title">${order.intro}</p>
-                            <div class="card-icon ${collectedStatus}">
-                                ${svgElement}
-                            </div>
-                            <button class="Card_btn">了解詳細</button>
-                        `;
+						card.innerHTML = `
+						    <img src="${order.picurl}" alt="${order.name}" data-order-id="${order.orderid}" style="width:150px; height:150px;">
+						    <h4>${order.name}</h4>
+						    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
+						    <div class="card-icon ${collectedStatus}">
+						        ${svgElement}
+						    </div>
+						    <button class="Card_btn">了解詳細</button>
+						`;
+
+						// 等待DOM渲染完成後綁定按鈕點擊事件
+						const cardButton = card.querySelector('.Card_btn');
+
+						// 綁定按鈕的點擊事件
+						cardButton.addEventListener('click', function() {
+						    // 從圖片元素獲取 data-order-id 屬性
+						    const orderid = card.querySelector('img').getAttribute('data-order-id');
+						    // 使用 orderid 進行跳轉
+						    window.location.href = `http://localhost:8080/order_main/${orderid}`; // 假設這是詳細頁面的URL
+						});
+
 
                         // 添加收藏狀態的事件監聽器
                         const favoriteIcon = card.querySelector(`#favorite-icon-${order.orderid}`);

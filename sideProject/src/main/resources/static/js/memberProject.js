@@ -167,10 +167,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					    <div class="card-content" data-order-id="${order.orderid}">
 					        <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
 					        <h4>${order.name}</h4>
-					        <p class="title">${order.intro}</p>
+					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 					        <button class="Card_btn" id="openPopupBtn">閱讀詳細</button>
 					    </div>
 					`;
+
 
 					// 根據 status 和其他條件將卡片加入對應的容器
 					if (status === '進行中' && orderData.getproject == true && orderData.wanted === true) {

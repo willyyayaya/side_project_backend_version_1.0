@@ -29,3 +29,17 @@
     height: 200px;
     border: 2px solid black;
 }
+#MyModal {
+    display: block !important;
+    padding-left: 0px !important;
+    background:none;
+
+}
+
+.modal-body, .col-5, .col-7 ,.col-7 > h4,.col-7 > div,.col-7>p,.star-rating>p {
+     background:none;
+}
+
+#imgBorder, #modalName, .img-fluid,.col-form-label {
+    background:none;
+}

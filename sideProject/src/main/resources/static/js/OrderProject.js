@@ -59,20 +59,20 @@ if (!memberid || isNaN(memberid)) {
     console.error("Invalid memberid:", memberid);
     alert("Invalid member ID");
 } else {
-    // 設置連結的 href 屬性
-    const link1 = document.getElementById("link1");
-    const link2 = document.getElementById("link2");
-    const link3 = document.getElementById("link3");
-    const link4 = document.getElementById("link4");
-
-    link1.href = `/memberProjectP1/${memberid}`;
-    link2.href = `/memberlike/${memberid}`;
-    // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
-    // link3.href = `/memberProjectP1/${memberid}`;
-    link4.href = `/OrderProjectP1/${memberid}`;
+   
 }
 
+// 設置連結的 href 屬性
+   const link1 = document.getElementById("link1");
+   const link2 = document.getElementById("link2");
+   const link3 = document.getElementById("link3");
+   const link4 = document.getElementById("link4");
 
+   link1.href = `/memberProjectP1/${memberid}`;
+      link2.href = `/memberlike/${memberid}`;
+      // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+      link3.href = `http://localhost:8080/order_edit`;
+      link4.href = `/OrderProjectP1/${memberid}`;
 
 //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
@@ -101,12 +101,10 @@ fetch(url)
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
                     memberpicDiv.innerHTML = `
-	<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
-	<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
-        <input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+					<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
     `;
-                }
+             
+	   }
                 )
             }
         }
@@ -160,7 +158,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					card.innerHTML = `
 					    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
 					    <h4>${order.name}</h4>
-					    <p class="title">${order.detail}</p>
+						<p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 					    <!-- 只在 box3 中的卡片按鈕才帶有觸發彈窗的功能 -->
 					    ${status === '已完成' ? 
 					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 

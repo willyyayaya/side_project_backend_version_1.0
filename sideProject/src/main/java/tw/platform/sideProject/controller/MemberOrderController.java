@@ -60,14 +60,6 @@ public class MemberOrderController {
     }
 	
 
-
-
-	// 查詢某個專案相關的所有會員
-	@GetMapping("/getMembersByOrderId/{orderId}")
-	public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
-		return memberOrderService.getMembersByOrderId(orderId);
-	}
-
 	// 查詢某個會員相關的所有專案的關係(admin)
 	@GetMapping("/getAllMemberOrdersByMemberId/{memberId}")
 	public List<MemberOrder> getAllMemberOrdersByMemberId(@PathVariable Long memberId) {
@@ -77,6 +69,11 @@ public class MemberOrderController {
 	// 根據orderid來找發行會員(order)
 	@GetMapping("/getMemberIdByOrderId/{orderId}")
 	public List<Member> getMemberIdByOrderID(@PathVariable Long orderId) {
+		return memberOrderService.getMemberByOrderId(orderId);
+	}
+	// 查詢某個專案相關的所有會員
+	@GetMapping("/getMembersByOrderid/{orderId}")
+	public List<Member> getMembersByOrderid(@PathVariable Long orderId) {
 		return memberOrderService.getMemberByOrderId(orderId);
 	}
 
