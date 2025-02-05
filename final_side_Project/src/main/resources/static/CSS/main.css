@@ -3,7 +3,7 @@ body {
 	color: #303030;
 }
 
-#detailBox, #title, #member, #info, #buttonArea, [id^=another],
+#detailBox, #title, #member, #info, #buttonArea, [id^=another], [class*=another],
 	#getProject {
 	border: 1px solid #c59650;
 	padding: 10px;
@@ -101,7 +101,7 @@ a[class="d-inline col-md-3 mt-1"] {
 	font-size: 24px;
 }
 
-#anotherTitle {
+.anotherTitle {
 	font-size: 20px;
 	font-weight: bold;
 	text-align: center;
@@ -117,7 +117,7 @@ a[class="d-inline col-md-3 mt-1"] {
 	max-height: 100px;
 }
 
-#ButtonArea {
+[class*=ButtonArea] {
 	text-align: center;
 }
 

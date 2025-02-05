@@ -1,6 +1,6 @@
+
 package tw.platform.sideProject.service;
 
-import java.util.Base64;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +39,15 @@ public class mimiMemberService {
 		}
 	}
 
-	// 拿到memberid
+	// Long
 	public Long getMemberid(Long memberid) {
 		mimiMember member = memberRepository.findById(memberid)
 				.orElseThrow(() -> new RuntimeException("Member not found"));
 		return member.getMemberid();
 	}
+	//mimiMember
+	public mimiMember getMemberById(Long memberid) {
+        // 假設 mimiMemberRepository 有一個 findById 方法
+        return memberRepository.findById(memberid).orElse(null); // 返回找到的會員，若找不到則返回 null
+    }
 }

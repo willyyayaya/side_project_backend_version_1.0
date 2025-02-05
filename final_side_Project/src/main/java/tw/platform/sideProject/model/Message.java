@@ -43,6 +43,19 @@ public class Message {
 //----------------	
 	@Transient
 	private String isreadText;
+
+//----------------
+	private String receiverEmail;
+	
+	
+	public String getReceiverEmail() {
+        return receiverEmail;
+    }
+
+    public void setReceiverEmail(String receiverEmail) {
+        this.receiverEmail = receiverEmail;
+    }
+//----------------
 	
 	public String getIsreadText() {
 		return isreadText;
