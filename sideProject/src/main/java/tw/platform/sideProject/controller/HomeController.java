@@ -273,6 +273,7 @@ public class HomeController {
 	// --------彈窗測試項目-----------
 	@GetMapping("/indexText")
 	public String indexText(Model model, HttpSession session) {
+		model.addAttribute("message", new Message());
 		return "memberShowBtn";
 	}
 

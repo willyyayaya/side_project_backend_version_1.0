@@ -34,7 +34,6 @@ public class MemberOrder {
     private String evaluate;
     private String picurl;   // 確保有這個屬性
     private String name;
-    private String detail;
     
 
 
@@ -72,17 +71,6 @@ public class MemberOrder {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-
-	public String getDetail() {
-		return detail;
-	}
-
-
-	public void setDetail(String detail) {
-		this.detail = detail;
-	}
-
 
 	public void setId(MemberOrderKey id) {
         this.id = id;

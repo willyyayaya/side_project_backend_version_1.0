@@ -27,6 +27,8 @@ import tw.platform.sideProject.service.MemberService;
 public class ProjectController {
 	@Autowired
 	private mimiMemberRepository memberRepository;
+	@Autowired
+	private MemberRepository memberRepositoryV2;
 
 	@Autowired
 	private MemberService memberService;
@@ -104,16 +106,16 @@ public class ProjectController {
 		return "memberProjectP2"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
 	}
 
-//	@GetMapping("/OrderProjectP1/{memberid}")
-//	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
-//		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
-//		Optional<Member> memberOpt = memberRepository.findById(memberid);
-//		if (memberOpt.isPresent()) {
-//			Member member = memberOpt.get();
-//			model.addAttribute("member", member);
-//		}
-//		return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
-//	}
+	@GetMapping("/OrderProjectP1/{memberid}")
+	public String getOrderProjectPage(@PathVariable Long memberid, Model model) {
+		model.addAttribute("memberid", memberid); // 将 memberid 传递给前端
+		Optional<Member> memberOpt = memberRepositoryV2.findById(memberid);
+		if (memberOpt.isPresent()) {
+			Member member = memberOpt.get();
+			model.addAttribute("member", member);
+		}
+		return "OrderProjectP1"; // 返回的是位于 static 文件夹下的 memberProjectP1.html
+	}
 
 	@GetMapping("/getMembersByorderid/{orderid}")
 	public String getorderByorderid(@PathVariable Long orderid, Model model) {

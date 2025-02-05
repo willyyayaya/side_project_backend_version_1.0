@@ -45,19 +45,18 @@ CREATE TABLE `memberorder` (
 --
 
 INSERT INTO `memberorder` (`memberid`, `orderid`, `owned`, `wanted`, `collected`, `getproject`, `detail`, `evaluate`, `name`, `picurl`) VALUES
-(103, 3, 1, 0, 0, b'1', NULL, '', NULL, NULL),
-(103, 2, 1, 0, 0, b'1', NULL, '2399999', NULL, NULL),
-(111, 2, 0, 1, 1, NULL, NULL, '0', NULL, NULL),
-(105, 111, 1, 1, 0, b'1', NULL, '0', NULL, NULL),
-(103, 111, 1, 0, 0, b'1', NULL, '0', NULL, NULL),
-(103, 105, 0, 1, 1, b'0', NULL, '0', NULL, NULL),
-(103, 103, 0, 1, 1, b'1', NULL, '0', NULL, NULL),
-(103, 102, 0, 1, 1, b'0', NULL, '0', NULL, NULL),
-(104, 102, 0, 1, 1, b'0', NULL, '0', NULL, NULL),
-(104, 103, 1, 0, 0, b'1', NULL, '0', NULL, NULL),
-(103, 104, 0, 1, 1, b'1', NULL, '0', NULL, NULL),
-(103, 106, 1, 0, 0, b'0', NULL, '0', NULL, NULL),
-(103, 107, 0, 1, 0, b'1', NULL, '0', NULL, NULL);
+(9, 8, 0, 1, 1, NULL, NULL, '0', NULL, NULL),
+(9, 7, 1, 1, 0, b'1', NULL, '0', NULL, NULL),
+(9, 9, 0, 1, 1, b'0', NULL, '0', NULL, NULL),
+(9, 10, 1, 0, 0, b'1', NULL, '0', NULL, NULL),
+(9, 11, 0, 1, 1, b'1', NULL, '0', NULL, NULL),
+(9, 14, 1, 0, 0, b'0', NULL, '0', NULL, NULL),
+(10, 11, 1, 0, 0, b'1', NULL, '', NULL, NULL),
+(10, 9, 1, 0, 0, b'1', NULL, '2399999', NULL, NULL),
+(10, 8, 1, 0, 0, b'1', NULL, '0', NULL, NULL),
+(10, 7, 0, 1, 1, b'0', NULL, '0', NULL, NULL),
+(10, 10, 0, 1, 1, b'1', NULL, '0', NULL, NULL),
+(10, 14, 0, 1, 0, b'1', NULL, '0', NULL, NULL);
 
 --
 -- 已傾印資料表的索引

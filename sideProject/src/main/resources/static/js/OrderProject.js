@@ -158,7 +158,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 			                <div class="card-content"  data-order-id="${order.orderid}">
 			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
 			                    <h4>${order.name}</h4>
-			                    <p class="title">${order.detail}</p>
+			                    <p class="title">${order.intro}</p>
 			                    <button class="Card_btn" id="openPopupBtn">編輯</button>
 			                </div>
 			            `;
@@ -166,7 +166,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         card.innerHTML = `
 			                    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
 			                    <h4>${order.name}</h4>
-			                    <p class="title">${order.detail}</p>
+			                    <p class="title">${order.intro}</p>
 			                    <button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>
 			                </div>
 			            `;
