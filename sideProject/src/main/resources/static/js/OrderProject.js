@@ -156,6 +156,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const member = orderData.member;  // member 資料
 
 					card.innerHTML = `
+					<div class="card-content" data-order-id="${order.orderid}">
 					    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
 					    <h4>${order.name}</h4>
 						<p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
@@ -163,10 +164,27 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					    ${status === '已完成' ? 
 					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 
 					        : 
-					        `<button class="Card_btn">編輯</button>`
+					        `<button class="Card_btn" id="openPopupBtn">編輯</button>`
 					    }
 					`;
 
+					// 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
+										box1.addEventListener('click', function(event) {
+										    if (event.target.closest('.card-content')) { // 確認點擊的是 .card-content
+										        const cardContent = event.target.closest('.card-content');
+										        const orderid = cardContent.getAttribute('data-order-id');
+										        window.location.href = `http://localhost:8080/order_update/${orderid}`; // 跳轉到相應頁面
+										    }
+										});
+
+										box2.addEventListener('click', function(event) {
+										    if (event.target.closest('.card-content')) {
+										        const cardContent = event.target.closest('.card-content');
+										        const orderid = cardContent.getAttribute('data-order-id');
+										        window.location.href = `http://localhost:8080/order_update/${orderid}`;
+										    }
+										});
+					
 					// 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
 					if (status === '進行中' && orderData.getproject == true && orderData.owned === true) {
 					    box1.appendChild(card);
