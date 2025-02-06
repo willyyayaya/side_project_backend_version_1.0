@@ -164,8 +164,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
 					// 生成動態卡片並將其加入對應的容器
 					card.innerHTML = `
-					    <div class="card-content" data-order-id="${order.orderid}">
-					        <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+					    <div class="card-content" data-order-id="${order.orderid}" style="width:150px;height:150px;">
+							<div id="imgOut">
+								<img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+							</div>
 					        <h4>${order.name}</h4>
 					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 					        <button class="Card_btn" id="openPopupBtn">閱讀詳細</button>

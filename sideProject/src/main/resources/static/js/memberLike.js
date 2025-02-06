@@ -173,7 +173,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         const card = document.createElement('div');
                         card.classList.add('Card');
 						card.innerHTML = `
-						    <img src="${order.picurl}" alt="${order.name}" data-order-id="${order.orderid}" style="width:150px; height:150px;">
+						<div id="imgOut">
+							<img src="${order.picurl || '/img/caseImg.jpg'}" data-order-id="${order.orderid}" style="width:150px;height:150px;">
+						</div>
 						    <h4>${order.name}</h4>
 						    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 						    <div class="card-icon ${collectedStatus}">
