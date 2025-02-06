@@ -176,13 +176,20 @@ button:hover{
     margin:auto;
     background-color: #eaeff3;
     display:inline-table;
+    overflow: hidden;
+}
+
+#imgOut{
+	width: 150px;
+    height: 150px;
+    background-color: #eaeff3;
 }
 
 .card-content img , .Card img{
-    margin-left:5px;
-    margin-top:5px;
+    margin-left:7px;
+    margin-top:6px;
     background-color: #eaeff3;
-
+    object-fit: cover;
 }
 
 .title{

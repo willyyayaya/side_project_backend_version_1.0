@@ -65,6 +65,10 @@
                 <div class="revise">
                     <b>姓&nbsp;&nbsp;名：</b><input th:value="${member.name}" id="input_index_name" readonly />
                 </div>
+                <!-- 電子信箱 -->
+                <div class="revise">
+                    <b>Email：</b><input type="email" th:value="${member.email}" id="input_index_email" readonly />
+                </div>
                 <!-- 帳號 -->
                 <div class="revise">
                     <b>帳&nbsp;&nbsp;號：</b><input type="text" th:value="${member.account}" id="input_index_account"
@@ -76,11 +80,6 @@
                     <b>密&nbsp;&nbsp;碼：</b><input type="password" th:value="${member.password}" id="input_index_password"
                         name="password" />
                     <button type="button" onclick="submitField('password')">編輯</button>
-                </div>
-                <!-- 電子信箱 -->
-                <div class="revise">
-                    <b>Email：</b><input type="email" th:value="${member.email}" id="input_index_email" name="email" />
-                    <button type="button" onclick="submitField('email')">編輯</button>
                 </div>
                 <!-- 電話 -->
                 <div class="revise">

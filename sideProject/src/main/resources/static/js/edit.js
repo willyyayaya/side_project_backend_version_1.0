@@ -211,7 +211,7 @@ $(document).ready(async function() {
 				intro: $('#simpleInfo').val(),
 				deadline: $('#deadline').val(),
 				detail: htmlContent,
-				picurl: $('#preview').prop("src"),
+				picurl: $('#preview').prop(""),
 				location: rigion,
 				people: $('#people').val(),
 				tagIds: selectedSkills,

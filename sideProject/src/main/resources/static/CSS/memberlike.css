@@ -166,10 +166,17 @@ button:hover{
     border-radius: 5px;
 }
 
-.Card > img{
-    margin-left:5px;
-    margin-top:5px;
+#imgOut{
+	width: 150px;
+    height: 150px;
     background-color: #eaeff3;
+    margin-left:4px;
+    margin-top:5px;
+}
+
+.Card img{
+    background-color: #eaeff3;
+    object-fit: cover;
 
 }
 
