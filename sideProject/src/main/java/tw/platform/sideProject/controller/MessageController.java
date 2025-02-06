@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -333,9 +335,9 @@ public class MessageController {
 		return "redirect:memberShow?memberid=" + memberid;
 	}
 	
-//-------------以下是button2，評價用-------------
+//-------------以下是button2，評價用，寄信換轉回order_main-------------
 	@PostMapping("/sendButton2_submit")
-	public String sendBtnMesg2(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model,
+	public String sendBtnMesg2(@ModelAttribute("message") @Valid Message message, @RequestParam("orderid") Long orderid,BindingResult result, Model model,
 			HttpSession session) {
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
@@ -344,11 +346,11 @@ public class MessageController {
 			System.out.println("未登入");
 			return "redirect:/login";
 		}
+		System.out.println("進入送信後端2");
+		System.out.println("送信後端2收到的訂單ID : " + orderid);
 		String receiverEmail = message.getReceiverid().getEmail();
 		mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
 		Long memberid = receiver.getMemberid();
-		Order order = memberOrderRepository.findByMember_memberidAndOrder_orderid(memberid, memberid);
-		Long orderid = order.getOrderid();
 		
 		if (result.hasErrors()) {
 			model.addAttribute("message", message); // 重新放入 Model
@@ -364,7 +366,7 @@ public class MessageController {
 		messageService.addMesg(message);
 		model.addAttribute("success", "Message sent successfully!");
 		model.addAttribute("message", new Message()); // 重置表單
-		return "redirect:memberShow?memberid=" + memberid;
+		return "redirect:/order_main/" + orderid;
 	}
 
 }

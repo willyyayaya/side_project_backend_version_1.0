@@ -145,7 +145,7 @@ $(document).ready(async function () {
 	} else {
 		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
 	}
-	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">詳細資料</button>`;
+	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}" data-orderid="orderId">詳細資料</button>`;
 	//內容
 	goMember.onclick = function () {
 		let goMemberUrl = 'http://localhost:8080/memberShow';
@@ -156,7 +156,8 @@ $(document).ready(async function () {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					memberid: responseMemberToJSON[0].memberid
+					memberid: responseMemberToJSON[0].memberid,
+					orderid: orderId
 				})
 			})
 				.then(response => {
@@ -227,11 +228,11 @@ $(document).ready(async function () {
 		let responseGetToJSON = await responseGet.json();
 		console.log("BUG1");
 		console.log(responseGetToJSON);
-		
+
 		responseGetToJSON.forEach(item => {
 			console.log("BUG2");
 			console.log(item);
-			
+
 			let another2 = $('<div>', {
 				class: 'mx-auto rounded-2 another',
 			});
@@ -494,7 +495,8 @@ $(document).ready(async function () {
 		// 點擊按鈕打開彈窗
 		openBtn.onclick = function () {
 			modal.style.display = "block";
-
+			$("#sendProjectTitle").val("《來自〈" + responseOrderToJSON.name + "〉專案》");
+			$('#sendOrderid').val(orderId);
 		}
 
 		// 點擊關閉按鈕關閉彈窗
