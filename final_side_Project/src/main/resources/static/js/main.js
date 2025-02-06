@@ -145,8 +145,12 @@ $(document).ready(async function() {
 	} else {
 		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
 	}
-
+	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">個人網站</button>`;
 	//內容
+	goMember.onclick = function() {
+		window.location.href = `http://localhost:8080/memberShow?memberid=${responseMemberToJSON[0].memberid}`;
+	};
+
 	detail.innerHTML = responseOrderToJSON.detail;
 
 	//看目前使用者是誰來決定要顯示其他案件或是決定接案者
@@ -302,10 +306,6 @@ $(document).ready(async function() {
 		}
 
 	}
-
-	goMember.onclick = function() {
-		window.location.href = "";
-	};
 
 
 	//編輯和申請按鈕

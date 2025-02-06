@@ -1,4 +1,3 @@
-
 package tw.platform.sideProject.controller;
 
 import java.util.ArrayList;
@@ -129,134 +128,187 @@ public class HomeController {
 	}
 
 	// 搜尋鈕
-	@GetMapping("/search")
-	public String search(Model model, HttpSession session) {
-		System.out.println("---搜尋---");
-		// 判斷是否有登入狀態
-		if (session.getAttribute("member") != null) {
-			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("search目前登入狀態:" + member.getName());
-			model.addAttribute("member", member);
-		} else {
-			System.out.println("search訪客模式");
+		@GetMapping("/search")
+		public String search(Model model, HttpSession session) {
+			System.out.println("---搜尋---");
+			// 判斷是否有登入狀態
+			if (session.getAttribute("member") != null) {
+				mimiMember member = (mimiMember) session.getAttribute("member");
+				System.out.println("search目前登入狀態:" + member.getName());
+				model.addAttribute("member", member);
+			} else {
+				System.out.println("search訪客模式");
+			}
+
+			// 隨機關鍵字
+			List<Keywords> kwlist = keywordService.getKeywordDesc();
+			model.addAttribute("kw", kwlist);
+
+			// 從session拿取搜尋邏輯的結果
+			@SuppressWarnings("unchecked")
+			List<yuOrder> keywordCase = (List<yuOrder>) session.getAttribute("keywordCase");
+			if (keywordCase != null) {
+				System.out.println("test :" + keywordCase);
+				for (yuOrder order : keywordCase) {
+					// 如果訂單沒圖片，加入圖片
+					if (order.getPicurl() == null) {
+						order.setPicurl("../img/caseImg.jpg");
+					}
+				}
+				model.addAttribute("keywordCase", keywordCase);
+			} else {
+				System.out.println("注入失敗");
+			}
+			session.setAttribute("keywordCase", keywordCase);
+			return "search";
 		}
 
-		// 隨機關鍵字
-		List<Keywords> kwlist = keywordService.getKeywordDesc();
-		model.addAttribute("kw", kwlist);
+		// 找case進入
+		@GetMapping("/searchCase")
+		public String searchCase(Model model, HttpSession session) {
+			System.out.println("---進入searchCase---");
+			// 判斷是否有登入狀態
+			if (session.getAttribute("member") != null) {
+				mimiMember member = (mimiMember) session.getAttribute("member");
+				System.out.println("searchCase目前登入狀態:" + member.getName());
+				model.addAttribute("member", member);
+			} else {
+				System.out.println("searchCase訪客模式");
+			}
 
-		// 從session拿取搜尋邏輯的結果
-		@SuppressWarnings("unchecked")
-		List<yuOrder> keywordCase = (List<yuOrder>) session.getAttribute("keywordCase");
-		if (keywordCase != null) {
-			System.out.println("test :" + keywordCase);
-			for (yuOrder order : keywordCase) {
-				// 如果訂單沒圖片，加入圖片
+			// 隨機關鍵字
+			List<Keywords> kwlist = keywordService.getKeywordDesc();
+			model.addAttribute("kw", kwlist);
+
+			// 抓取隨機專案
+			List<yuOrder> ranOrders = orderService.getRandomYuOrders();
+			for (yuOrder order : ranOrders) {
 				if (order.getPicurl() == null) {
 					order.setPicurl("../img/caseImg.jpg");
 				}
 			}
-			model.addAttribute("keywordCase", keywordCase);
-		} else {
-			System.out.println("注入失敗");
-		}
-		session.setAttribute("keywordCase", keywordCase);
-		return "search";
-	}
-
-	// 找case進入
-	@GetMapping("/searchCase")
-	public String searchCase(Model model, HttpSession session) {
-		System.out.println("---進入searchCase---");
-		// 判斷是否有登入狀態
-		if (session.getAttribute("member") != null) {
-			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("searchCase目前登入狀態:" + member.getName());
-			model.addAttribute("member", member);
-		} else {
-			System.out.println("searchCase訪客模式");
+			model.addAttribute("keywordCase", ranOrders);
+			session.setAttribute("keywordCase", ranOrders);
+			return "search";
 		}
 
-		// 隨機關鍵字
-		List<Keywords> kwlist = keywordService.getKeywordDesc();
-		model.addAttribute("kw", kwlist);
-
-		// 抓取隨機專案
-		List<yuOrder> ranOrders = orderService.getRandomYuOrders();
-		for (yuOrder order : ranOrders) {
-			if (order.getPicurl() == null) {
-				order.setPicurl("../img/caseImg.jpg");
+		@GetMapping("/orderShow")
+		public String orderShow(@RequestParam Long orderid, Model model) {
+			System.out.println("前端傳送的專案ID : " + orderid);
+			List<yuOrder> orderShow = orderService.getyuOrderById(orderid);
+			for (yuOrder orderCheck : orderShow) {
+				// 如果訂單沒圖片，加入圖片
+				if (orderCheck.getPicurl() == null) {
+					orderCheck.setPicurl("../img/caseImg.jpg");
+				}
 			}
+			model.addAttribute("orderShow", orderShow);
+			return "orderShow";
 		}
-		model.addAttribute("keywordCase", ranOrders);
-		session.setAttribute("keywordCase", ranOrders);
-		return "search";
-	}
 
-	@GetMapping("/orderShow")
-	public String orderShow(@RequestParam Long orderid, Model model) {
-		System.out.println("前端傳送的專案ID : " + orderid);
-		List<yuOrder> orderShow = orderService.getyuOrderById(orderid);
-		for (yuOrder orderCheck : orderShow) {
-			// 如果訂單沒圖片，加入圖片
-			if (orderCheck.getPicurl() == null) {
-				orderCheck.setPicurl("../img/caseImg.jpg");
-			}
-		}
-		model.addAttribute("orderShow", orderShow);
-		return "orderShow";
-	}
+		@PostMapping("/memberShow")
+		public String memberShow(@RequestParam Long memberid, Model model, HttpSession session) {
+			System.out.println("前端傳送的會員ID : " + memberid);
 
-	@PostMapping("/memberShow")
-	public String memberShow(@RequestParam Long memberid, Model model, HttpSession session) {
-		System.out.println("前端傳送的會員ID : " + memberid);
-		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
-		for (yuMember memberCheck : memberShow) {
-			System.out.println(memberCheck.getName());
-			System.out.println(memberCheck.getEmail());
-
-			// 如果訂單沒圖片，加入圖片
-			if (memberCheck.getPicurl() == null) {
-				memberCheck.setPicurl("../img/caseImg.jpg");
+			if (session.getAttribute("member") != null) {
+				mimiMember member = (mimiMember) session.getAttribute("member");
+				System.out.println("search目前登入狀態:" + member.getName());
+				model.addAttribute("member", member);
+			} else {
+				System.out.println("訪客模式");
 			}
 
-			// 假設這裡的 receiverid 是 mimiMember 類型
-			mimiMember receiverMember = mimiMemberService.getMemberById(memberid); // 通過 memberid 查詢 mimiMember
-			String receiverEmail = memberCheck.getEmail(); // 取得該會員的 Email
+			List<yuMember> memberShow = memberService.getyuMemberById(memberid);
+			for (yuMember memberCheck : memberShow) {
+				System.out.println(memberCheck.getName());
+				System.out.println(memberCheck.getEmail());
 
-			// 創建 Message 物件並設置 receiverid
-			Message message = new Message();
-			message.setReceiverid(receiverMember); // 設置 receiverid 為 mimiMember 物件
+				// 如果訂單沒圖片，加入圖片
+				if (memberCheck.getPicurl() == null) {
+					memberCheck.setPicurl("../img/caseImg.jpg");
+				}
 
-			// 設置收件人 Email
-			message.setReceiverEmail(receiverEmail); // 設置收件人的 Email
+				// 假設這裡的 receiverid 是 mimiMember 類型
+				mimiMember receiverMember = mimiMemberService.getMemberById(memberid); // 通過 memberid 查詢 mimiMember
+				String receiverEmail = memberCheck.getEmail(); // 取得該會員的 Email
 
-			model.addAttribute("message", message); // 添加 Message 物件到模型
-		}
-		model.addAttribute("memberShow", memberShow);
-		session.setAttribute("message", new Message()); // 把空的 Message 存到 Session
-		return "memberShow";
-	}
+				// 創建 Message 物件並設置 receiverid
+				Message message = new Message();
+				message.setReceiverid(receiverMember); // 設置 receiverid 為 mimiMember 物件
 
-	// --------彈窗測試項目-----------
-	@GetMapping("/indexText")
-	public String indexText(Model model, HttpSession session) {
-		return "memberShowBtn";
-	}
+				// 設置收件人 Email
+				message.setReceiverEmail(receiverEmail); // 設置收件人的 Email
 
-	// 彈窗後端
-	@GetMapping("/caseMember")
-	@ResponseBody
-	public yuMember caseMember(@RequestParam("memberid") Long memberid) {
-		System.out.println("前端傳送的會員ID : " + memberid);
-		List<yuMember> caseMember = memberService.getyuMemberById(memberid);
-		for (yuMember memberCheck : caseMember) {
-			System.out.println(memberCheck.getName());
-			if (memberCheck.getPicurl() == null) {
-				memberCheck.setPicurl("../img/caseImg.jpg");
+				model.addAttribute("message", message); // 添加 Message 物件到模型
 			}
+			model.addAttribute("memberShow", memberShow);
+			session.setAttribute("message", new Message()); // 把空的 Message 存到 Session
+			return "memberShow";
 		}
-		return caseMember.isEmpty() ? null : caseMember.get(0);
-	}
+
+	//--------return視圖使用---------------
+		@GetMapping("/memberShow")
+		public String getmemberShow(@RequestParam Long memberid, Model model, HttpSession session) {
+			// 获取会员信息
+			System.out.println("前端傳送的會員ID : " + memberid);
+
+			if (session.getAttribute("member") != null) {
+				mimiMember member = (mimiMember) session.getAttribute("member");
+				System.out.println("search目前登入狀態:" + member.getName());
+				model.addAttribute("member", member);
+			} else {
+				System.out.println("訪客模式");
+			}
+			
+			// 根据 memberid 查找会员数据
+			List<yuMember> memberShow = memberService.getyuMemberById(memberid);
+			for (yuMember memberCheck : memberShow) {
+				System.out.println(memberCheck.getName());
+				System.out.println(memberCheck.getEmail());
+
+				// 如果订单没有图片，加入默认图片
+				if (memberCheck.getPicurl() == null) {
+					memberCheck.setPicurl("../img/caseImg.jpg");
+				}
+
+				// 获取 receiverMember 信息
+				mimiMember receiverMember = mimiMemberService.getMemberById(memberid);
+				String receiverEmail = memberCheck.getEmail();
+
+				// 创建 Message 对象并设置 receiverid 和 email
+				Message message = new Message();
+				message.setReceiverid(receiverMember); // 设置 receiverid 为 mimiMember 对象
+				message.setReceiverEmail(receiverEmail); // 设置收件人的 Email
+
+				model.addAttribute("message", message); // 将 Message 放入模型
+			}
+
+			model.addAttribute("memberShow", memberShow); // 将 memberShow 放入模型
+			session.setAttribute("message", new Message()); // 存储空的 Message 到 Session
+			return "memberShow"; // 返回 memberShow 页面
+		}
+
+		// --------彈窗測試項目-----------
+		@GetMapping("/indexText")
+		public String indexText(Model model, HttpSession session) {
+			model.addAttribute("message", new Message());
+			return "memberShowBtn";
+		}
+
+		// 彈窗後端
+		@GetMapping("/caseMember")
+		@ResponseBody
+		public yuMember caseMember(@RequestParam("memberid") Long memberid) {
+			System.out.println("前端傳送的會員ID : " + memberid);
+			List<yuMember> caseMember = memberService.getyuMemberById(memberid);
+			for (yuMember memberCheck : caseMember) {
+				System.out.println(memberCheck.getName());
+				if (memberCheck.getPicurl() == null) {
+					memberCheck.setPicurl("../img/caseImg.jpg");
+				}
+			}
+			return caseMember.isEmpty() ? null : caseMember.get(0);
+		}
+
 
 }

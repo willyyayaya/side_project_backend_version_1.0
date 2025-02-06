@@ -1,3 +1,4 @@
+
 a{
     text-decoration: none;
 }
@@ -6,7 +7,6 @@ body {
     background: #bbc8d8;
     height: 750px;    
 }
-
 /**-----------------*/
 #outSide{
     /* background-color: #14518e; */
@@ -72,6 +72,7 @@ dd,a{
     border-radius: 5px;
 }
 /**-----------------*/
+
 .sendemail{
     margin: 15px;
     color: #303030;
