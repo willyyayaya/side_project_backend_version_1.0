@@ -148,7 +148,28 @@ $(document).ready(async function() {
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">詳細資料</button>`;
 	//內容
 	goMember.onclick = function() {
-		window.location.href = `http://localhost:8080/memberShow?memberid=${responseMemberToJSON[0].memberid}`;
+		let goMemberUrl = 'http://localhost:8080/memberShow';
+		window.location.href =
+
+			fetch(goMemberUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					memberid: responseMemberToJSON[0].memberid
+				})
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.href = 'http://localhost:8080/memberShow';
+					} else {
+						console.error('Request failed');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
@@ -261,6 +282,10 @@ $(document).ready(async function() {
 				alert('就決定是他了');
 			}
 		});
+
+		if (!responseGetedToJSON && !responseGetToJSON) {
+			$('#applyPepple').css('display', 'none')
+		}
 
 	} else {
 		$('#getProject').css('display', 'none');
