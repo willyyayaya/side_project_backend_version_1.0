@@ -108,7 +108,7 @@
                 </div>
                 <div id="keywordsearchBox">
                     <div class="boxBorder caseCards" th:each="keywordCase : ${keywordCase}">
-                        <a class="row" th:href="@{/orderShow(orderid=${keywordCase.orderid})}">
+                        <a class="row" th:href="@{/order_main/{orderId}(orderId=${keywordCase.orderid})}">
                             <div class="col-4 caseImgBox">
                                 <img th:src="@{(${keywordCase.picurl})}" alt="">
                             </div>
