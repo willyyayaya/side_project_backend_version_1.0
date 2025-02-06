@@ -199,6 +199,12 @@ $(document).ready(async function() {
 		var htmlContent = quill.root.innerHTML; // 獲取 HTML 內容
 		console.log(htmlContent);
 
+		// let imgSrc;
+		// if (!$('#preview').attr("src")) {
+		// 	imgSrc = 'null'; // 如果沒有設置圖片，則設置 imgSrc 為 'null'
+		// } else {
+		// 	imgSrc = $('#preview').attr("src"); // 否則，取圖片的 src 值
+		// }
 		//上傳專案表單
 		let orderUrl = 'http://localhost:8080/api/orders/addOrder';
 		fetch(orderUrl, {
@@ -211,7 +217,7 @@ $(document).ready(async function() {
 				intro: $('#simpleInfo').val(),
 				deadline: $('#deadline').val(),
 				detail: htmlContent,
-				picurl: $('#preview').prop("src"),
+				// picurl: $('#preview').prop("src"),
 				location: rigion,
 				people: $('#people').val(),
 				tagIds: selectedSkills,

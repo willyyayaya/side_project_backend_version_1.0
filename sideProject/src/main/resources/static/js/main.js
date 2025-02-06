@@ -1,4 +1,4 @@
-$(document).ready(async function() {
+$(document).ready(async function () {
 
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
 	let memberId = document.querySelector('meta[name="memberId"]').getAttribute('content');
@@ -147,8 +147,28 @@ $(document).ready(async function() {
 	}
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">詳細資料</button>`;
 	//內容
-	goMember.onclick = function() {
-		window.location.href = `http://localhost:8080/memberShow?memberid=${responseMemberToJSON[0].memberid}`;
+	goMember.onclick = function () {
+		let goMemberUrl = 'http://localhost:8080/memberShow';
+		window.location.href =
+			fetch(goMemberUrl, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					memberid: responseMemberToJSON[0].memberid
+				})
+			})
+				.then(response => {
+					if (response.ok) {
+						window.location.href = 'http://localhost:8080/memberShow';
+					} else {
+						console.error('Request failed');
+					}
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
@@ -205,11 +225,13 @@ $(document).ready(async function() {
 		let getUrl = `http://localhost:8080/api/memberOrders/allMemberWanted/${orderId}`;
 		let responseGet = await fetch(getUrl);
 		let responseGetToJSON = await responseGet.json();
+		console.log("BUG1");
 		console.log(responseGetToJSON);
-
+		
 		responseGetToJSON.forEach(item => {
+			console.log("BUG2");
 			console.log(item);
-
+			
 			let another2 = $('<div>', {
 				class: 'mx-auto rounded-2 another',
 			});
@@ -225,7 +247,7 @@ $(document).ready(async function() {
 			});
 
 			let anotherButton = $('<button>', {
-				id: anotherButton,
+				id: 'anotherButton',
 				text: "交給他",
 				class: "btn btn-outline-primary"
 			});
@@ -245,7 +267,7 @@ $(document).ready(async function() {
 
 			anotherButtonArea.append(anotherButton);
 
-			anotherButton[0].onclick = function() {
+			anotherButton[0].onclick = function () {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
 				fetch(ButtonUrl, {
 					method: 'PUT',
@@ -326,11 +348,11 @@ $(document).ready(async function() {
 		};
 	}
 
-	edit.onclick = function() {
+	edit.onclick = function () {
 		window.location.href = `/order_update/${orderId}`;
 	}
 
-	apply.onclick = function() {
+	apply.onclick = function () {
 		let applyUrl = 'http://localhost:8080/api/memberOrders/addWantedOrder';
 		fetch(applyUrl, {
 			method: 'POST',
@@ -386,7 +408,7 @@ $(document).ready(async function() {
 		collect.innerText = "收藏";  // 初始顯示為「收藏」
 	}
 
-	collect.onclick = function() {
+	collect.onclick = function () {
 		let url;
 		let collectedStatus;
 
@@ -422,7 +444,7 @@ $(document).ready(async function() {
 	var model = $('#memberModel');
 	var span = $('.close');
 	$('.showMemberBtn').click(
-		function() {
+		function () {
 			console.log('案件被點擊');
 			var memberid = $(this).data('memberid');
 			console.log('會員ID: ' + memberid);
@@ -432,7 +454,7 @@ $(document).ready(async function() {
 				data: {
 					memberid: memberid
 				},
-				success: function(data) {
+				success: function (data) {
 					if (data) {
 						console.log(data);
 						$('#caseMemberIcon').attr('src',
@@ -455,7 +477,7 @@ $(document).ready(async function() {
 						console.log('接收到的數據為空');
 					}
 				},
-				error: function(jqXHR, textStatus,
+				error: function (jqXHR, textStatus,
 					errorThrown) {
 					console.log('請求失敗: ' + textStatus);
 				}
@@ -470,18 +492,18 @@ $(document).ready(async function() {
 	// 確保元素都成功選取
 	if (modal && openBtn && closeBtn) {
 		// 點擊按鈕打開彈窗
-		openBtn.onclick = function() {
+		openBtn.onclick = function () {
 			modal.style.display = "block";
 
 		}
 
 		// 點擊關閉按鈕關閉彈窗
-		closeBtn.onclick = function() {
+		closeBtn.onclick = function () {
 			modal.style.display = "none";
 		}
 
 		// 點擊彈窗以外區域時也關閉彈窗
-		window.onclick = function(event) {
+		window.onclick = function (event) {
 			if (event.target === modal) {
 				modal.style.display = "none";
 			}
@@ -489,10 +511,10 @@ $(document).ready(async function() {
 	} else {
 		console.error("找不到 modal 或按鈕，請檢查 HTML 結構！");
 	}
-	span.click(function() {
+	span.click(function () {
 		model.hide();
 	});
-	$(window).click(function(event) {
+	$(window).click(function (event) {
 		if ($(event.target).is(model)) {
 			model.hide();
 		}
