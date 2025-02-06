@@ -1,3 +1,20 @@
+function subMemberid(memberid){
+    console.log('進入傳輸表單的function')
+    var form = $('<form>',{
+        'method':'POST',
+        'action':'/memberShow'
+    });
+
+    var input =$('<input>',{
+        'type':'hidden',
+        'name':'memberid',
+        'value':memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();
+}
 $(document).ready(async function () {
 
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
@@ -129,7 +146,7 @@ $(document).ready(async function () {
 	} else {
 		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
 	}
-	memberName.innerText = `${responseMemberToJSON[0].name}`;
+	memberName.innerText = `${responseMemberToJSON[0].account}`;
 	//if (!responseMemberToJSON[0].intro) {
 	//	introduce.innerText = '這個人很懶什麼都沒有寫';
 	//} else {
@@ -146,30 +163,13 @@ $(document).ready(async function () {
 		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
 	}
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}" data-orderid="orderId">詳細資料</button>`;
-	//內容
+	//專案會員點擊 詳細資料Btn 跳轉到memberShow(最上面的function記得複製)
 	goMember.onclick = function () {
-		let goMemberUrl = 'http://localhost:8080/memberShow';
-		window.location.href =
-			fetch(goMemberUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					memberid: responseMemberToJSON[0].memberid,
-					orderid: orderId
-				})
-			})
-				.then(response => {
-					if (response.ok) {
-						window.location.href = 'http://localhost:8080/memberShow';
-					} else {
-						console.error('Request failed');
-					}
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
+		console.log('我被點到了');
+        event.preventDefault();
+        var memberid = $(this).data('memberid');
+        console.log(memberid);
+        subMemberid(memberid);
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
