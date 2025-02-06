@@ -1,11 +1,12 @@
 body{
 	background-color: #bbc8d8;
 }
+/**-----------------*/
 #outSide{
     /* background-color: #14518e; */
     width: 80%;
     margin-left: 12%;
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     margin-bottom: 5%;
 }
@@ -18,56 +19,20 @@ body{
     border-radius: 5px;
     display: inline-block;
 }
-#UserIcon{
-    background-color: #14518e;
+
+#icon{
+	background-color: #14518e;
     width: 150px;
     height: 150px;
-    margin-left: 20px;
-    margin-top: 20px;
+    margin-left: 35px;
+    margin-top: 35px;
     border-radius: 5px;
 }
-#updateIcon{
-    width:150px;
-    height: 150px;
-    margin-left:20px;
-    margin-top:20px;
-}
-#icon,#updateIcon{
-    width:150px;
-    height: 150px;
-    margin-top: 20px;
-    margin-left:17px;
-    background-color: #eaeff3;
-    border-radius: 5px;
-}
-#icon:hover {
-    background-color: #bbc8d8;
-    border: 2px solid #bbc8d8;
-}
-#upload{
-    display: none;
-}
-#icon_btn {
-    background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 70px;
-    font-size:14px;
-    margin-left:98px;
-    margin-top: 10px;
-}
-#icon_btn:hover {
-    background-color: #14518e;
-    color: #eaeff3;
-}
-/* 功能列 */
 #UserUse{
     width: 150px;
     height: auto;
-    margin-left: 34px;
-    margin-top: 90px;
+    margin-left: 50px;
+    margin-top: 30px;
     background-color:#eaeff3;
 }
 b{
@@ -91,7 +56,6 @@ dd,a{
     margin-left: 20px;
     text-decoration: none;
 }
-
 #leftArea{
     background-color: #eaeff3;
     margin-left: 40px;
@@ -101,6 +65,7 @@ dd,a{
     height: auto;
     border-radius: 5px;
 }
+/**-----------------*/
 #updateForm{
     background-color: #eaeff3;
 }

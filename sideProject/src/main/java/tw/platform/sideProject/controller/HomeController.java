@@ -245,6 +245,33 @@ public class HomeController {
 		return "memberShow";
 	}
 
+	//--------return視圖使用---------------
+	@GetMapping("/memberShow")
+	public String getmemberShow(@RequestParam Long memberid, Model model, HttpSession session) {
+
+		System.out.println("前端傳送的會員ID : " + memberid);
+		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
+		for (yuMember memberCheck : memberShow) {
+			System.out.println(memberCheck.getName());
+			System.out.println(memberCheck.getEmail());
+
+			if (memberCheck.getPicurl() == null) {
+				memberCheck.setPicurl("../img/caseImg.jpg");
+			}
+			// get receiverMember 
+			mimiMember receiverMember = mimiMemberService.getMemberById(memberid);
+			String receiverEmail = memberCheck.getEmail();
+			//  Message 表單置入 receiverid 的 email
+			Message message = new Message();
+			message.setReceiverid(receiverMember);
+			message.setReceiverEmail(receiverEmail); 
+			model.addAttribute("message", message); 
+		}
+		model.addAttribute("memberShow", memberShow); 
+		session.setAttribute("message", new Message()); 
+		return "memberShow"; 
+	}
+
 	// --------彈窗測試項目-----------
 	@GetMapping("/indexText")
 	public String indexText(Model model, HttpSession session) {
