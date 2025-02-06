@@ -121,7 +121,7 @@ a[class="d-inline col-md-3 mt-1"] {
 	text-align: center;
 }
 
-p,m,.col,#updateDate,.text-end,#projectTitle,h5,#detail,a,.col-6,#rank,.all,#introduce,#imgBorder,img{
+p,m,.col,#updateDate,.text-end,#projectTitle,h5,#detail,a,.col-6,#rank,.all,#introduce,#imgBorder,img,#ButtonArea,.all{
 	background-color: #eaeff3;
 }
 .p-3{
