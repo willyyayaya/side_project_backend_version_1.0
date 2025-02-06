@@ -45,18 +45,26 @@ public class HomeController {
 			mimiMember member = (mimiMember) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
+			List<yuMember> ranMembers = memberService.getRandomYuMembers2(member.getMemberid());
+			for (yuMember member2 : ranMembers) {
+				if (member2.getPicurl() == null || member2.getPicurl() == "") {
+					member2.setPicurl("../img/memberImg.jpg");
+					System.out.println(member2.getMemberid());
+				}
+			}
+			model.addAttribute("ranMembers", ranMembers);
 		} else {
 			System.out.println("index訪客模式");
-		}
-		// 抓取隨機會員資料
-		List<yuMember> ranMembers = memberService.getRandomYuMembers();
-		for (yuMember member : ranMembers) {
-			if (member.getPicurl() == null || member.getPicurl() == "") {
-				member.setPicurl("../img/memberImg.jpg");
-				System.out.println(member.getMemberid());
+			// 抓取隨機會員資料
+			List<yuMember> ranMembers = memberService.getRandomYuMembers();
+			for (yuMember member : ranMembers) {
+				if (member.getPicurl() == null || member.getPicurl() == "") {
+					member.setPicurl("../img/memberImg.jpg");
+					System.out.println(member.getMemberid());
+				}
 			}
+			model.addAttribute("ranMembers", ranMembers);
 		}
-		model.addAttribute("ranMembers", ranMembers);
 		// 抓取熱門申請專案
 		List<Object[]> owentLise = orderService.getWantedCountByOrderId();
 		List<yuOrder> wentOrders = new ArrayList<>();
