@@ -28,7 +28,7 @@
 				<h1>熱門申請案件推薦</h1>
 				<div class="indexCaseBox" th:each="keywordCase, iter : ${keywordCase}">
 					<div class="boxBorder">
-						<a class="row" th:href="@{/orderShow(orderid=${keywordCase.orderid})}">
+						<a class="row" th:href="@{/order_main/{orderId}(orderId=${keywordCase.orderid})}">
 							<div class="col-8">
 								<h3 th:text=${keywordCase.name}>案件名稱案件名稱</h3>
 							</div>
