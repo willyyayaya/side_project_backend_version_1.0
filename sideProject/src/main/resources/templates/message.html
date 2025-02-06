@@ -37,13 +37,16 @@
 				<div id="UserUse">
 					<b>功能列</b>
 					<dl>
-						<a  th:href="@{/memberProjectP1/{memberid}(memberid=${receiverid})}">我接的專案</a>
-                    <br />
-                    <a id="link4" th:href="@{/OrderProjectP1/{memberid}(memberid=${receiverid})}">我發的專案</a>
-                    <dt>專案收藏</dt>
-                    <a id="link2" th:href="@{/api/memberOrders/memberlike/{memberid}(memberid=${receiverid})}">資料夾管理</a>
-                    <dt>站內信件</dt>
-						<a th:href="@{'/message/'+${receiverid}}">收件匣</a>
+						<dt>專案管理</dt>
+						<a th:href="@{/memberProjectP1/{memberid}(memberid=${member.memberid})}">我接的專案</a>
+						<br />
+						<a th:href="@{/OrderProjectP1/{memberid}(memberid=${member.memberid})}">我發的專案</a>
+						<br />
+						<a th:href="@{http://localhost:8080/order_edit}">建立新專案</a>
+						<dt>專案收藏</dt>
+						<a th:href="@{/memberlike/{memberid}(memberid=${member.memberid})}">資料夾管理</a>
+						<dt>站內信件</dt>
+						<a th:href="@{'/message/'+${member.memberid}}">收件匣</a>
 					</dl>
 				</div>
 			</div>
