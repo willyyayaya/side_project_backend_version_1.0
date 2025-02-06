@@ -106,11 +106,11 @@ fetch(url)
                     memberpicDiv.innerHTML = `
 	<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
     `;
-	//<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+                    //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
-	//<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+                    //<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
 
-//	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+                    //	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
 
                 }
                 )
@@ -157,59 +157,55 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const today = new Date();
                     const status = deadline > today ? '進行中' : '已完成';
 
-					//console.log("orderData:", orderData);
+                    //console.log("orderData:", orderData);
                     // 使用變數抓取對應的資料
                     const order = orderData.order;  // order 資料
                     const member = orderData.member;  // member 資料
 
-					// 生成動態卡片並將其加入對應的容器
-					card.innerHTML = `
+                    // 生成動態卡片並將其加入對應的容器
+                    card.innerHTML = `
 					    <div class="card-content" data-order-id="${order.orderid}" style="width:150px;height:150px;">
 							<div id="imgOut">
 								<img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 							</div>
 					        <h4>${order.name}</h4>
 					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
-					        <button class="Card_btn" id="openPopupBtn">閱讀詳細</button>
+					        
+                               ${status === '已完成' ?
+                            `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>`
+                            :
+                            `<button class="Card_btn" id="openPopupBtn">閱讀詳細</button>
+							`
+                        }
 					    </div>
 					`;
 
 
-					// 根據 status 和其他條件將卡片加入對應的容器
-					if (status === '進行中' && orderData.getproject == true && orderData.wanted === true) {
-					    box1.appendChild(card);
-					} else if (status === '已完成' && orderData.getproject == true && orderData.wanted === true) {
-					    box3.appendChild(card);
-					} else if (status === '進行中' && orderData.getproject == false && orderData.wanted === true) {
-					    box2.appendChild(card);
-					}
+                    // 根據 status 和其他條件將卡片加入對應的容器
+                    if (status === '進行中' && orderData.getproject == true && orderData.wanted === true) {
+                        box1.appendChild(card);
+                    } else if (status === '已完成' && orderData.getproject == true && orderData.wanted === true) {
+                        box3.appendChild(card);
+                    } else if (status === '進行中' && orderData.getproject == false && orderData.wanted === true) {
+                        box2.appendChild(card);
+                    }
 
-					// 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
-					box1.addEventListener('click', function(event) {
-					    if (event.target.closest('.card-content')) { // 確認點擊的是 .card-content
-					        const cardContent = event.target.closest('.card-content');
-					        const orderid = cardContent.getAttribute('data-order-id');
-					        window.location.href = `http://localhost:8080/order_main/${orderid}`; // 跳轉到相應頁面
-					    }
-					});
+                    // 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
+                    box1.addEventListener('click', function (event) {
+                        if (event.target.closest('.card-content')) { // 確認點擊的是 .card-content
+                            const cardContent = event.target.closest('.card-content');
+                            const orderid = cardContent.getAttribute('data-order-id');
+                            window.location.href = `http://localhost:8080/order_main/${orderid}`; // 跳轉到相應頁面
+                        }
+                    });
 
-					box2.addEventListener('click', function(event) {
-					    if (event.target.closest('.card-content')) {
-					        const cardContent = event.target.closest('.card-content');
-					        const orderid = cardContent.getAttribute('data-order-id');
-					        window.location.href = `http://localhost:8080/order_main/${orderid}`;
-					    }
-					});
-
-					box3.addEventListener('click', function(event) {
-					    if (event.target.closest('.card-content')) {
-					        const cardContent = event.target.closest('.card-content');
-					        const orderid = cardContent.getAttribute('data-order-id');
-					        window.location.href = `http://localhost:8080/order_main/${orderid}`;
-					    }
-					});
-
-
+                    box2.addEventListener('click', function (event) {
+                        if (event.target.closest('.card-content')) {
+                            const cardContent = event.target.closest('.card-content');
+                            const orderid = cardContent.getAttribute('data-order-id');
+                            window.location.href = `http://localhost:8080/order_main/${orderid}`;
+                        }
+                    });
                 });
             } else {
                 console.error("Received data is not an array or is empty.");

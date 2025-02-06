@@ -164,7 +164,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 					    <!-- 只在 box3 中的卡片按鈕才帶有觸發彈窗的功能 -->
 					    ${status === '已完成' ?
-                            `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>`
+                            `<button class="Card_btn" id="openPopupBtn">閱讀詳細</button>`
                             :
                             `<button class="Card_btn" id="editBtn">編輯</button>
 					         <button class="Card_btn" id="mainBtn">審核</button>
@@ -186,6 +186,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                 // 如果點擊的是 "View Details" 按鈕
                                 window.location.href = `http://localhost:8080/order_main/${orderid}`;
                             }
+                        }
+                    });
+
+                    box3.addEventListener('click', function (event) {
+                        if (event.target.closest('.card-content')) {
+                            const cardContent = event.target.closest('.card-content');
+                            const orderid = cardContent.getAttribute('data-order-id');
+                            window.location.href = `http://localhost:8080/order_main/${orderid}`;
                         }
                     });
 
