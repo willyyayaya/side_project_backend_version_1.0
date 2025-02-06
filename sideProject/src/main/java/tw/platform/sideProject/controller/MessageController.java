@@ -303,48 +303,68 @@ public class MessageController {
 
 
 	@PostMapping("/sendButton_submit")
-	public String sendBtnMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model, HttpSession session) {
-	    if (session.getAttribute("member") != null) {
-	        mimiMember member = (mimiMember) session.getAttribute("member");
-	        model.addAttribute("member", member);
-	    } else {
-	        System.out.println("未登入");
-	    }
+	public String sendBtnMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model,
+			HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("未登入");
+			return "redirect:/login";
+		}
+		String receiverEmail = message.getReceiverid().getEmail();
+		mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
+		Long memberid = receiver.getMemberid();
 
-	    // 確保 message 存在於 Model
-	    if (result.hasErrors()) {
-	        model.addAttribute("message", message); // 重新放入 Model
-	        return "sendButton";
-	    }
-
-	    mimiMember sender = (mimiMember) session.getAttribute("member");
-	    if (sender == null) {
-	        return "redirect:/login";
-	    }
-
-	    if (message.getReceiverid() == null) {
-	        message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
-	    }
-
-	    String receiverEmail = message.getReceiverid().getEmail();
-	    mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
-	    if (receiver == null) {
-	        model.addAttribute("errorMessage", "此信箱不存在");
-	        model.addAttribute("message", message); // 確保表單回傳時有 message
-	        return "sendButton";
-	    }
-
-	    message.setSenderid(sender);
-	    message.setReceiverid(receiver);
-
-	    // 儲存訊息
-	    messageService.addMesg(message);
-	    model.addAttribute("success", "Message sent successfully!");
-	    model.addAttribute("message", new Message()); // 重置表單
-
-	    return "sendButton"; // 確保成功後仍然返回 sendButton
+		if (result.hasErrors()) {
+			model.addAttribute("message", message); // 重新放入 Model
+			return "memberShow";
+		}
+		mimiMember sender = (mimiMember) session.getAttribute("member");
+		if (message.getReceiverid() == null) {
+			message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+		}
+		message.setSenderid(sender);
+		message.setReceiverid(receiver);
+		// 儲存訊息
+		messageService.addMesg(message);
+		model.addAttribute("success", "Message sent successfully!");
+		model.addAttribute("message", new Message()); // 重置表單
+		return "redirect:memberShow?memberid=" + memberid;
 	}
-
-
+	
+//-------------以下是button2，評價用-------------
+	@PostMapping("/sendButton2_submit")
+	public String sendBtnMesg2(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model,
+			HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("未登入");
+			return "redirect:/login";
+		}
+		String receiverEmail = message.getReceiverid().getEmail();
+		mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
+		Long memberid = receiver.getMemberid();
+		Order order = memberOrderRepository.findByMember_memberidAndOrder_orderid(memberid, memberid);
+		Long orderid = order.getOrderid();
+		
+		if (result.hasErrors()) {
+			model.addAttribute("message", message); // 重新放入 Model
+			return "memberShow";
+		}
+		mimiMember sender = (mimiMember) session.getAttribute("member");
+		if (message.getReceiverid() == null) {
+			message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+		}
+		message.setSenderid(sender);
+		message.setReceiverid(receiver);
+		// 儲存訊息
+		messageService.addMesg(message);
+		model.addAttribute("success", "Message sent successfully!");
+		model.addAttribute("message", new Message()); // 重置表單
+		return "redirect:memberShow?memberid=" + memberid;
+	}
 
 }

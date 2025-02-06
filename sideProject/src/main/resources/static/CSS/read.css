@@ -179,6 +179,7 @@ textarea{
     width: 100%; 
     margin-left: 10px;
     margin-bottom: 10px;
+    resize: none;
     background-color: #eaeff3;
 }
 
