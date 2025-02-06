@@ -65,12 +65,10 @@
 			<div id="member" class="p-2 rounded-2 ms-auto">
 				<m>會員資料</m>
 				<div class="row p-3">
-					<div class="col-6">
+					<div id='memberArea' class="col-6">
 						<a id="memberName" href="">某某某</a>
-						<button id="openModalBtn" class="sendBtnMemberid bi bi-envelope"></button>
 						<div id="rank">評價:5.0分</div>
-						<div>自我介紹:</div>
-						<div id="introduce">1234567489</div>
+						<button id='goMember' class='btn btn-outline-primary'>個人網站</button>
 					</div>
 					<div class="col-6">
 						<div id="imgBorder"
@@ -134,7 +132,8 @@
 						<label for="receiverEmail" class="mystyle">收信人&emsp; <span
 							th:if="${#fields.hasErrors('receiverid.email')}"
 							th:errors="*{receiverid.email}" style="color: red;"></span>
-						</label> <input type="email" class='emailInnerEmail' th:field="*{receiverid.email}" />
+						</label> <input type="email" class='emailInnerEmail'
+							th:field="*{receiverid.email}" />
 					</div>
 					<div class="left">
 						<label for="title" class="mystyle">標&emsp;題&emsp; <span
@@ -165,7 +164,8 @@
 						<label for="receiverEmail" class="mystyle">收信人&emsp; <span
 							th:if="${#fields.hasErrors('receiverid.email')}"
 							th:errors="*{receiverid.email}" style="color: red;"></span>
-						</label> <input type="email" class='emailInnerEmail' th:field="*{receiverid.email}" />
+						</label> <input type="email" class='emailInnerEmail'
+							th:field="*{receiverid.email}" />
 					</div>
 					<div class="left">
 						<label for="title" class="mystyle">標&emsp;題&emsp; <span

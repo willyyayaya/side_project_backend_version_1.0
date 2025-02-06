@@ -130,11 +130,11 @@ $(document).ready(async function() {
 		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
 	}
 	memberName.innerText = `${responseMemberToJSON[0].name}`;
-	if (!responseMemberToJSON[0].intro) {
-		introduce.innerText = '這個人很懶什麼都沒有寫';
-	} else {
-		introduce.innerText = `${responseMemberToJSON[0].intro}`;
-	}
+	//if (!responseMemberToJSON[0].intro) {
+	//	introduce.innerText = '這個人很懶什麼都沒有寫';
+	//} else {
+	//	introduce.innerText = `${responseMemberToJSON[0].intro}`;
+	//}
 
 	let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
 	let responseRank = await fetch(rankUrl);
@@ -303,8 +303,16 @@ $(document).ready(async function() {
 
 	}
 
+	goMember.onclick = function() {
+		window.location.href = "";
+	};
+
 
 	//編輯和申請按鈕
+	if (!memberId) {
+		$('#buttonArea').css('display', 'none');
+	}
+
 	if (responseMemberToJSON[0].memberid == `${memberId}`) {
 		$('#edit').css('display', 'block');
 	} else {
@@ -440,7 +448,8 @@ $(document).ready(async function() {
 								data.name + '的GitHub');
 						$('#intro').text(data.intro);
 						model.show();
-						$('.emailInnerEmail').val(`${responseMemberToJSON[0].email}`);
+						$('.emailInnerEmail').val(`${data.email}`);
+
 						console.log('彈窗數據注入成功');
 					} else {
 						console.log('接收到的數據為空');
@@ -463,6 +472,7 @@ $(document).ready(async function() {
 		// 點擊按鈕打開彈窗
 		openBtn.onclick = function() {
 			modal.style.display = "block";
+
 		}
 
 		// 點擊關閉按鈕關閉彈窗
