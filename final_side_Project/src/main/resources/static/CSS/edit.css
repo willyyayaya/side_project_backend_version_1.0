@@ -12,6 +12,10 @@ body {
 	background-color: #eaeff3;
 }
 
+#projectTitle {
+	width: 90%;
+}
+
 #simpleInfo {
 	width: 90%;
 	height: 90px;

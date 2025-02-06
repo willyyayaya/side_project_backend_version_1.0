@@ -81,8 +81,8 @@ body {
 #imgBorder {
 	border: 1.5px solid #c59650;
 	max-width: 300px;
-	max-height: 150px;
 	height: 150px;
+	overflow: hidden;
 }
 
 #memberName {

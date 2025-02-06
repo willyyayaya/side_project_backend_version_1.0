@@ -145,7 +145,7 @@ $(document).ready(async function() {
 	} else {
 		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
 	}
-	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">個人網站</button>`;
+	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">詳細資料</button>`;
 	//內容
 	goMember.onclick = function() {
 		window.location.href = `http://localhost:8080/memberShow?memberid=${responseMemberToJSON[0].memberid}`;
