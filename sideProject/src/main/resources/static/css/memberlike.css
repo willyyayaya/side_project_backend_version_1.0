@@ -47,7 +47,7 @@ body{
 #upload{
     display: none;
 }
-#icon_btn {
+#icon_btn{
     background-color: #bbc8d8;
     color: #14518e;
     border: 1px solid #14518e;
@@ -58,7 +58,7 @@ body{
     margin-left:98px;
     margin-top: 10px;
 }
-#icon_btn:hover {
+#icon_btn:hover{
     background-color: #14518e;
     color: #eaeff3;
 }
@@ -109,7 +109,7 @@ dd,a{
     margin-left: 30px;
     padding: 10px;
 }
-input ,.modal fade show textarea:not(form-control){
+input ,textarea{
     padding: 5px;
     border: none;
     border: solid 1px #c59650;
@@ -119,7 +119,7 @@ input ,.modal fade show textarea:not(form-control){
     margin-bottom: 10px;
     background-color: #eaeff3;
 }
-.modal fade show button:not(.btn):not(.btn-secondary){
+button[type=button]{
     background-color: #bbc8d8;
     color: #14518e;
     border: 1px solid #14518e;
@@ -140,19 +140,13 @@ button:hover{
 /* ================================================ */
 #icon_test{
     background-color: #eaeff3;
-    margin-left:-8px;
+    margin-left:-9px;
 }
 
 .box , .boxOut{
     background:#eaeff3;
-    
 }
 
-.box{
-    margin-bottom:20px;
-    border: none;
-    border-radius: 5px;
-}
 #Card_out{
     margin-left:40px;
     background-color: #eaeff3;
@@ -172,13 +166,7 @@ button:hover{
     border-radius: 5px;
 }
 
-.card-content{
-    margin:auto;
-    background-color: #eaeff3;
-    display:inline-table;
-}
-
-.card-content img , .Card img{
+.Card > img{
     margin-left:5px;
     margin-top:5px;
     background-color: #eaeff3;
@@ -205,10 +193,10 @@ svg {
     margin-bottom:5px;
 }
 
-.Card h4 {
+h4 {
     color: #14518e;
     background-color: #eaeff3;
-    font-size: 15px;
+    font-size: 18px;
     margin: 10px;
 }
 
@@ -247,19 +235,3 @@ color: #eaeff3;
 }
 
 /* ================================================ */
-
-#openPopupBtn{
-    background-color: #bbc8d8;
-    color: #14518e;
-    border: 1px solid #14518e;
-    height: 25px;
-    border-radius: 10px;
-    width: 70px;
-    font-size:14px;
-    margin-left:80px;
-    margin-top: 10px;
-}
-#openPopupBtn:hover{
-    background-color: #14518e;
-    color: #eaeff3;
-}
