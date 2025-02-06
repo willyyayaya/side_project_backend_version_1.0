@@ -166,18 +166,29 @@ window.addEventListener('DOMContentLoaded', (event) => {
 					    ${status === '已完成' ? 
 					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 
 					        : 
-					        `<button class="Card_btn" id="openPopupBtn">編輯</button>`
+					        `<button class="Card_btn" id="editBtn">編輯</button>
+					         <button class="Card_btn" id="mainBtn">審核</button>
+							`
 					    }
 					  </div>`;
 
 					// 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
-										box1.addEventListener('click', function(event) {
-										    if (event.target.closest('.card-content')) { // 確認點擊的是 .card-content
-										        const cardContent = event.target.closest('.card-content');
-										        const orderid = cardContent.getAttribute('data-order-id');
-										        window.location.href = `http://localhost:8080/order_update/${orderid}`; // 跳轉到相應頁面
-										    }
-										});
+					box1.addEventListener('click', function(event) {
+					    if (event.target.closest('.card-content')) {
+					        const cardContent = event.target.closest('.card-content');
+					        const orderid = cardContent.getAttribute('data-order-id');  // 獲取 orderid
+
+					        // 根據 id 判斷是哪個按鈕被點擊
+					        if (event.target.id === 'editBtn') {
+					            // 如果點擊的是 "Update Order" 按鈕
+					            window.location.href = `http://localhost:8080/order_update/${orderid}`;
+					        } else if (event.target.id === 'mainBtn') {
+					            // 如果點擊的是 "View Details" 按鈕
+					            window.location.href = `http://localhost:8080/order_main/${orderid}`;
+					        }
+					    }
+					});
+
 
 										
 					
