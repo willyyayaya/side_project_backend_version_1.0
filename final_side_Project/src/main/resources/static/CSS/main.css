@@ -4,7 +4,7 @@ body {
 }
 
 #detailBox, #title, #member, #info, #buttonArea, [id^=another], [class*=another],
-	#getProject {
+	#getProject, #evaluate {
 	border: 1px solid #c59650;
 	padding: 10px;
 	background-color: #eaeff3;
@@ -133,4 +133,26 @@ a[class="d-inline col-md-3 mt-1"] {
 
 #anotherButton {
 	border: 1px solid #c59650;
+}
+
+.evaArea {
+	border: 1.5px solid #c59650;
+}
+.evaAreaName{
+	width: 18%;
+	display: inline-block;
+		font-size: 20px;
+	
+}
+.evaAreaRank{
+	width: 10%;
+	display: inline-block;
+		font-size: 20px;
+	
+}
+.evaAreaEva{
+	width: 60%;
+	display: inline-block;
+		font-size: 20px;
+	
 }

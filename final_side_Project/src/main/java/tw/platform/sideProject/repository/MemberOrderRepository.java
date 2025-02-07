@@ -127,4 +127,12 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	// 新增評價
 	List<MemberOrder> findByOrder_orderidAndGetprojectAndMember_memberid(Long orderId, Boolean getProject,
 			Long memberId);
+	
+//	@Query("SELECT AVG(mo.rank) FROM MemberOrder mo WHERE mo.member.memberid = :memberId AND mo.owned = true")
+//	Double findAverageRankForOwnedOrdersByMemberId(@Param("memberId") Long memberId);
+	
+	@Query("SELECT mo FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.getproject = true")
+    List<MemberOrder> getEvaluateAndRank(@Param("orderId") Long orderId);
+	
+
 }

@@ -150,22 +150,23 @@ public class MemberOrderService {
 	// 新增評價(order)
 	public String addEvaluate(Long orderId, AddMemberOrderRequest request) {
 		// 查找指定訂單號碼，且 getProject 為 true，並且指定 memberId 的 MemberOrder
-		 List<MemberOrder> memberOrders = memberOrderRepository.findByOrder_orderidAndGetprojectAndMember_memberid(orderId, Boolean.TRUE, request.getMemberId());
+		List<MemberOrder> memberOrders = memberOrderRepository
+				.findByOrder_orderidAndGetprojectAndMember_memberid(orderId, Boolean.TRUE, request.getMemberId());
 
-		    if (memberOrders.isEmpty()) {
-		        return "找不到對應的訂單或指定的 memberId，無法新增評價";
-		    }
+		if (memberOrders.isEmpty()) {
+			return "找不到對應的訂單或指定的 memberId，無法新增評價";
+		}
 
-		    MemberOrder memberOrder = memberOrders.get(0); // 取得符合條件的第一個紀錄
+		MemberOrder memberOrder = memberOrders.get(0); // 取得符合條件的第一個紀錄
 
-		    // 設定評價和評分
-		    memberOrder.setEvaluate(request.getEvaluate());
-		    memberOrder.setRank(request.getRank());
+		// 設定評價和評分
+		memberOrder.setEvaluate(request.getEvaluate());
+		memberOrder.setRank(request.getRank());
 
-		    // 儲存評價
-		    memberOrderRepository.save(memberOrder);
+		// 儲存評價
+		memberOrderRepository.save(memberOrder);
 
-		    return "評價已成功新增";
+		return "評價已成功新增";
 	}
 
 	// 查找某個會員相關的所有專案平均評分(order)
@@ -296,5 +297,14 @@ public class MemberOrderService {
 //	public void updateCollectedStatus(Long memberid, Long orderid, boolean collected) {
 //		memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
 //	}
+
+	// public Double getAverageRankForOwnedOrdersByMemberId(Long memberId) {
+//		return memberOrderRepository.findAverageRankForOwnedOrdersByMemberId(memberId);
+//	}
+
+	// 根據orderId列出找出評價和評分(order)
+	public List<MemberOrder> getEvaluateAndRank(Long orderId) {
+		return memberOrderRepository.getEvaluateAndRank(orderId);
+	}
 
 }

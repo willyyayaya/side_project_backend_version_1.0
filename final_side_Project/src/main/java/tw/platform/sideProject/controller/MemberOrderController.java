@@ -137,7 +137,6 @@ public class MemberOrderController {
 	@Autowired
 	private MemberOrderRepository memberOrderRepository;
 
-
 	// 根據 memberId 和 orderId 獲取該會員對某個專案的收藏狀態（如：wanted）
 	@GetMapping("/memberlike/{memberid}")
 	public boolean getMemberCollecteded(@PathVariable Long memberid, @RequestParam Long orderid) {
@@ -159,5 +158,15 @@ public class MemberOrderController {
 		return "evaluate"; // 假設返回一個評分頁面的模板或數據
 	}
 
+//	@GetMapping("/averageRankForOwnedOrders/{memberId}")
+//	public Double getAverageRankForOwnedOrders(@PathVariable Long memberId) {
+//		return memberOrderService.getAverageRankForOwnedOrdersByMemberId(memberId);
+//	}
+
+	// 根據orderId列出找出評價和評分(order)
+	@GetMapping("/getEvaluateAndRank/{orderId}")
+	public List<MemberOrder> getEvaluateAndRank(@PathVariable Long orderId) {
+		return memberOrderService.getEvaluateAndRank(orderId);
+	}
 
 }
