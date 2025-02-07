@@ -75,12 +75,18 @@ $(document).ready(async function () {
     //送出
     evaluateGo.onclick = async function () {
         var rating = $('#rating-value').text();
-        var reviewText = $('#message-text').val();
+        //var reviewText = $('#message-text').val();
+        const messageText = $('#message-text').val().trim();
 
         // 檢查是否已經選擇了評分
         if (rating == 0) {
             alert("至少請填入分數");
             return;
+        }
+
+        if (messageText === '') {
+            alert('請填寫評價內容！');  // 提示用户填写评论
+            return;  // 阻止提交
         }
 
         //評分部分
@@ -98,17 +104,17 @@ $(document).ready(async function () {
                 alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
             }
         })
-        .catch(error => {
-            console.error("發生錯誤：", error);
-            alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
-        });
+            .catch(error => {
+                console.error("發生錯誤：", error);
+                alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
+            });
 
         //評論部分
         // 動態設置 URL，根據實際訂單 ID
         let evaluateUrl = `http://localhost:8080/api/memberOrders/addEvaluate/${orderid}`;
         // 準備傳送的資料
         let data = {
-            evaluate: reviewText
+            evaluate: messageText
         };
         // 發送 POST 請求
         await fetch(evaluateUrl, {
@@ -120,6 +126,8 @@ $(document).ready(async function () {
         })
 
         // 打印出評分和評價
-        console.log("評分: " + rating + ", 評價: " + reviewText);
+        console.log("評分: " + rating + ", 評價: " + messageText);
     };
+
+
 });
