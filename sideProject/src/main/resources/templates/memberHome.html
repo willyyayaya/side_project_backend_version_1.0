@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="/css/fragment.css">
     <link rel="stylesheet" href="/css/memberHome.css">
     
@@ -53,7 +54,7 @@
                     <dt>站內信件</dt>
                     <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
                     <dt>公開資訊區</dt>
-                    <a th:href="@{'/memberShow/'+${member.memberid}}" id="home">個人資訊</a>
+                    <a id="memberShow" alt="th:value='${member.memberid}'" href="javascript:void(0);">個人資訊</a>
                 </dl>
             </div>
         </div>
@@ -124,7 +125,32 @@
     console.log("memberid:", memberid);  // 輸出 memberid，確認它是否正確
     //const memberid = document.querySelector('meta[name="memberid"]').getAttribute('content');
 
-    //console.log('memberid: ' + memberid);
+    $('#memberShow').click(function(event){
+        console.log('我被點到了');
+        event.preventDefault();
+        //var memberid = memberid;
+   		//const memberid = $(this).attr('alt');
+        console.log(memberid);
+        subMemberid(memberid);  // 提交會員 ID
+    })
+    
+    function subMemberid(memberid){
+        console.log('進入傳輸表單的function')
+        var form = $('<form>',{
+            'method':'POST',
+            'action':'/memberShow'
+        });
+
+        var input =$('<input>',{
+            'type':'hidden',
+            'name':'memberid',
+            'value':memberid
+        });
+
+        form.append(input);
+        $('body').append(form);
+        form.submit();  // 提交表單
+    }
     
     // 顯示選擇的圖片預覽
     function previewImage() {
@@ -212,6 +238,36 @@ function submitImage() {
     // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
     link3.href = `http://localhost:8080/order_edit`;
     link4.href = `/OrderProjectP1/${memberid}`;
+    
+ // 會員連結的點擊事件	
+//  $('#memberShow').click(function(event){
+//      console.log('我被點到了');
+//      event.preventDefault();
+//      //var memberid = memberid;
+//		const memberid = $(this).attr('alt');
+//      console.log(memberid);
+//      subMemberid(memberid);  // 提交會員 ID
+//  })
+////個人頁面跳轉
+//function subMemberid(memberid){
+//  console.log('進入傳輸表單的function')
+//  var form = $('<form>',{
+//      'method':'POST',
+//      'action':'/memberShow'
+//  });
+
+//  var input =$('<input>',{
+//      'type':'hidden',
+//      'name':'memberid',
+//      'value':memberid
+//  });
+
+//  form.append(input);
+//  $('body').append(form);
+//  form.submit();  // 提交表單
+//}
+ 
+    
 
     </script>
     

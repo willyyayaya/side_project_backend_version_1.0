@@ -14,7 +14,7 @@ body{
     /* margin-left: 10%; */
     /* margin-top: 80px; */
     width: 220px;
-    height: 500px;
+    height: 550px;
     background-color: #eaeff3;
     border-radius: 5px;
     display: inline-block;
@@ -24,7 +24,7 @@ body{
 	background-color: #14518e;
     width: 150px;
     height: 150px;
-    margin-left: 35px;
+    margin-left:25px;
     margin-top: 35px;
     border-radius: 5px;
 }
@@ -32,7 +32,7 @@ body{
     width: 150px;
     height: auto;
     margin-left: 50px;
-    margin-top: 30px;
+    margin-top: 40px;
     background-color:#eaeff3;
 }
 b{
@@ -105,7 +105,8 @@ button:hover{
 /* ================================================ */
 #icon_test{
     background-color: #eaeff3;
-    margin-left:-8px;
+    border-radius: 5px;
+
 }
 
 .box , .boxOut{

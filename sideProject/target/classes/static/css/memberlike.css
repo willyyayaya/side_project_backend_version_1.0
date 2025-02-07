@@ -5,7 +5,7 @@ body{
     /* background-color: #14518e; */
     width: 80%;
     margin-left: 12%;
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     margin-bottom: 5%;
 }
@@ -13,7 +13,7 @@ body{
     /* margin-left: 10%; */
     /* margin-top: 80px; */
     width: 220px;
-    height: 500px;
+    height: 550px;
     background-color: #eaeff3;
     border-radius: 5px;
     display: inline-block;
@@ -67,7 +67,7 @@ body{
     width: 150px;
     height: auto;
     margin-left: 34px;
-    margin-top: 90px;
+    margin-top: 40px;
     background-color:#eaeff3;
 }
 b{
@@ -140,7 +140,8 @@ button:hover{
 /* ================================================ */
 #icon_test{
     background-color: #eaeff3;
-    margin-left:-9px;
+    margin-left:8px;
+    margin-top:15px;
 }
 
 .box , .boxOut{

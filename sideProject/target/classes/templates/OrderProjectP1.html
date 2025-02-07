@@ -9,6 +9,7 @@
 <!-- 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"> -->
     <!-- 只有此頁面可以在VS Code用Live Server開啟，CSS link 如下 -->
+    <script src="/js/jquery-3.7.1.js"></script> <!-- 確保這個路徑正確 -->
     <link rel="stylesheet" href="/fragment.css">
     <!-- 各自頁面要用日蝕spring跑才看得到，CSS link 如下，加在自己頁面的head -->
     <link rel="stylesheet" href="/css/memberProject.css">
@@ -46,6 +47,8 @@
                     <a id="link2" href="#">資料夾管理</a>
                     <dt>站內信件</dt>
                     <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
+                    <dt>公開資訊區</dt>
+					<a id="memberShow" href="javascript:void(0);">個人資訊</a>
                 </dl>
             </div>
         </div>
