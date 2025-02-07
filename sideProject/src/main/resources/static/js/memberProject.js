@@ -133,9 +133,7 @@ fetch(url)
                     //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
-                    memberpicDiv.innerHTML = `
-	<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
-    `;
+                    memberpicDiv.innerHTML = `<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />`;
                     //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
                     //<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
@@ -196,7 +194,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     card.innerHTML = `
 					    <div class="card-content" data-order-id="${order.orderid}" style="width:150px;height:150px;">
 							<div id="imgOut">
-								<img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+								<img src="${order.picurl || '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 							</div>
 					        <h4>${order.name}</h4>
 					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>

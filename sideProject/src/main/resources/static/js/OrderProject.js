@@ -130,7 +130,7 @@ fetch(url)
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
                     memberpicDiv.innerHTML = `
-					<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
+					<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
     `;
 
                 }
@@ -187,7 +187,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     card.innerHTML = `
 					  <div class="card-content" data-order-id="${order.orderid}">
 					    <div id="imgOut">
-					      <img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+					      <img src="${order.picurl || '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 					    </div>
 					    <h4>${order.name}</h4>
 					    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
