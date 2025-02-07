@@ -63,7 +63,7 @@ input {
 .col-8>div {
 	margin: 5px;
 }
-label,span,svg,p,.all,.ql-toolbar,.ql-editor{
+label,span,svg,p,.all,.ql-toolbar,.ql-editor,#region{
 	background-color: #eaeff3;
 }
 #imageInput{

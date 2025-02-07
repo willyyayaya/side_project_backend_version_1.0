@@ -26,11 +26,15 @@ function previewImage() {
     const reader = new FileReader();
 
     reader.onloadend = function () {
-        document.getElementById('icon').src = reader.result;
+        const imgSrc = reader.result || '/img/caseImg.jpg';  // 默认图片路径
+        document.getElementById('icon').src = imgSrc;
     }
 
     if (file) {
         reader.readAsDataURL(file);
+    } else {
+        // 如果没有选择文件，设置为默认图片
+        document.getElementById('icon').src = '/img/caseImg.jpg'; // 默认图片路径
     }
 }
 
@@ -150,7 +154,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
                         memberpicDiv.innerHTML = `
-							<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+							<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
 						    `;
                         //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
@@ -179,7 +183,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
                         memberpicDiv.innerHTML = `
-							<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+							<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
 						    `;
                         //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
