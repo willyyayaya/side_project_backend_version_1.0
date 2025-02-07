@@ -201,9 +201,9 @@ $(document).ready(async function() {
 
 		let imgSrc;
 		if (!$('#preview').attr("src")) {
-			imgSrc = 'null'; // 如果沒有設置圖片，則設置 imgSrc 為 'null'
+			imgSrc = 'null'; 
 		} else {
-			imgSrc = $('#preview').attr("src"); // 否則，取圖片的 src 值
+			imgSrc = $('#preview').attr("src");
 		}
 		//上傳專案表單
 		let orderUrl = 'http://localhost:8080/api/orders/addOrder';

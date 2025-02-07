@@ -1,3 +1,20 @@
+function subMemberid(memberid) {
+	console.log('進入傳輸表單的function')
+	var form = $('<form>', {
+		'method': 'POST',
+		'action': '/memberShow'
+	});
+
+	var input = $('<input>', {
+		'type': 'hidden',
+		'name': 'memberid',
+		'value': memberid
+	});
+
+	form.append(input);
+	$('body').append(form);
+	form.submit();
+}
 $(document).ready(async function() {
 
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
@@ -129,7 +146,8 @@ $(document).ready(async function() {
 	} else {
 		imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseMemberToJSON[0].picurl}">`;
 	}
-	memberName.innerText = `${responseMemberToJSON[0].name}`;
+	//memberName.innerText = `${responseMemberToJSON[0].name}`;
+	memberName.innerText = `${responseMemberToJSON[0].account}`;
 	//if (!responseMemberToJSON[0].intro) {
 	//	introduce.innerText = '這個人很懶什麼都沒有寫';
 	//} else {
@@ -148,28 +166,12 @@ $(document).ready(async function() {
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}">詳細資料</button>`;
 	//內容
 	goMember.onclick = function() {
-		let goMemberUrl = 'http://localhost:8080/memberShow';
-		window.location.href =
+		console.log('我被點到了');
+		event.preventDefault();
+		var memberid = $(this).data('memberid');
+		console.log(memberid);
+		subMemberid(memberid);
 
-			fetch(goMemberUrl, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					memberid: responseMemberToJSON[0].memberid
-				})
-			})
-				.then(response => {
-					if (response.ok) {
-						window.location.href = 'http://localhost:8080/memberShow';
-					} else {
-						console.error('Request failed');
-					}
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
@@ -201,7 +203,6 @@ $(document).ready(async function() {
 			});
 
 			let anotherButton = $('<button>', {
-				id: 'anotherButton',
 				text: "已決定",
 				class: "btn btn-outline-primary",
 				disabled: 'true'
@@ -241,12 +242,12 @@ $(document).ready(async function() {
 			});
 
 			let anotherButtonArea = $('<div>', {
-				id: `ButtonAreaV${item.memberid}`,
+				id: `ButtonAreaB${item.memberid}`,
 				class: "mt-2 ButtonArea2"
 			});
 
 			let anotherButton = $('<button>', {
-				id: anotherButton,
+				id: `anotherButtonOnClick${item.memberid}`,
 				text: "交給他",
 				class: "btn btn-outline-primary"
 			});
@@ -260,13 +261,13 @@ $(document).ready(async function() {
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
 
-			$(`#ButtonAreaV${item.memberid}`).html(`
+			$(`#ButtonAreaB${item.memberid}`).html(`
 						<button id='anotherabd' class="btn btn-outline-primary showMemberBtn" data-memberid="${item.memberid}">詳細資料</button>
 						`);
 
 			anotherButtonArea.append(anotherButton);
 
-			anotherButton[0].onclick = function() {
+			$(`#anotherButtonOnClick${item.memberid}`).on('click', function() {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
 				fetch(ButtonUrl, {
 					method: 'PUT',
@@ -280,10 +281,10 @@ $(document).ready(async function() {
 					})
 				})
 				alert('就決定是他了');
-			}
+			});
 		});
 
-		if (!responseGetedToJSON && !responseGetToJSON) {
+		if (responseGetedToJSON.length || responseGetToJSON.length) {
 			$('#applyPepple').css('display', 'none')
 		}
 
@@ -308,17 +309,16 @@ $(document).ready(async function() {
 			//const element = responseAnotherToJSON[i];
 			// console.log(element);
 			let another1 = $('<div>', {
-				id: 'another1',
-				class: 'mx-auto rounded-2',
+				class: 'mx-auto rounded-2 another1'
 			});
 
 			let anotherTitle = $('<div>', {
-				id: 'anotherTitle',
+				class: 'anotherTitle',
 				text: element.name,
 			});
 
 			let anotherImg = $('<div>', {
-				id: 'anotherImg',
+				class: 'anotherImg',
 				text: element.intro,
 			});
 			another1.append(anotherTitle, anotherImg)
