@@ -34,7 +34,7 @@ function submitImage(picurl) {
 
     // 动态构建 URL，替换 {memberid} 为实际的 memberid
     var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
-
+	
     // 通过 Fetch 请求将 Base64 字符串传递到后端
     fetch(url, {
         method: 'POST',
@@ -56,6 +56,36 @@ function submitImage(picurl) {
 //獲取 memberid
 const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
+
+//console.log(memberid);
+	
+	$('#memberShow').click(function(event){
+	        console.log('我被點到了');
+	        event.preventDefault();
+	        //var memberid = memberid;
+	   		//const memberid = $(this).attr('alt');
+	        console.log(memberid);
+	        subMemberid(memberid);  // 提交會員 ID
+	    })
+	    
+	    function subMemberid(memberid){
+	        console.log('進入傳輸表單的function')
+	        var form = $('<form>',{
+	            'method':'POST',
+	            'action':'/memberShow'
+	        });
+
+	        var input =$('<input>',{
+	            'type':'hidden',
+	            'name':'memberid',
+	            'value':memberid
+	        });
+
+	        form.append(input);
+	        $('body').append(form);
+	        form.submit();  // 提交表單
+	    }
+
 
 // 確保 memberid 是有效的
 if (!memberid || isNaN(memberid)) {

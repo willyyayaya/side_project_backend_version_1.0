@@ -69,7 +69,7 @@ label,span,svg,p,.all,.ql-toolbar,.ql-editor{
 #imageInput{
 	width: 250px;
 }
-ol,li,strong,ul{
+ol,li,strong,ul,em,u,s{
 	background-color: #eaeff3;
 }
 .container{

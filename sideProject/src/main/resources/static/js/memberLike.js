@@ -56,6 +56,35 @@ function submitImage(picurl) {
 const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
 
+$('#memberShow').click(function(event){
+        console.log('我被點到了');
+        event.preventDefault();
+        //var memberid = memberid;
+   		//const memberid = $(this).attr('alt');
+        console.log(memberid);
+        subMemberid(memberid);  // 提交會員 ID
+    })
+    
+    function subMemberid(memberid){
+        console.log('進入傳輸表單的function')
+        var form = $('<form>',{
+            'method':'POST',
+            'action':'/memberShow'
+        });
+
+        var input =$('<input>',{
+            'type':'hidden',
+            'name':'memberid',
+            'value':memberid
+        });
+
+        form.append(input);
+        $('body').append(form);
+        form.submit();  // 提交表單
+    }
+
+
+
 // 確保 memberid 是有效的
 if (!memberid || isNaN(memberid)) {
     console.error("Invalid memberid:", memberid);
