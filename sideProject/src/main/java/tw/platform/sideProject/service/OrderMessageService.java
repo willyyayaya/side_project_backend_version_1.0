@@ -28,7 +28,7 @@ public class OrderMessageService {
 	private mimiMemberRepository memberRepository; // 需要查詢 receiver 會員信息
 	@Autowired
 	private MessageRepository messageRepository;
-	private static final Long SENDER_ID = 999L; // 固定的 sender ID
+	private static final Long SENDER_ID = 1L; // 固定的 sender ID
 
 	
 	@Scheduled(fixedRate = 5000) // 每 5 秒檢查一次
