@@ -55,6 +55,8 @@ $(document).ready(async function () {
         // 根據訂單 ID 載入對應的資料
         loadOrderData(orderid);
     });
+	
+	
     async function loadOrderData(orderid) {
         //顯示發案者頭像和名字
         let ordermemberUrl = `http://localhost:8080/api/memberOrders/getMembersByOrderid/${orderid}`;
@@ -77,7 +79,9 @@ $(document).ready(async function () {
         var rating = $('#rating-value').text();
         //var reviewText = $('#message-text').val();
         const messageText = $('#message-text').val().trim();
-
+		const remaining = 200 ;
+		// 获取当前输入的字符数
+		const currentLength = messageText.length;
         // 檢查是否已經選擇了評分
         if (rating == 0) {
             alert("至少請填入分數");
@@ -88,6 +92,11 @@ $(document).ready(async function () {
             alert('請填寫評價內容！');  // 提示用户填写评论
             return;  // 阻止提交
         }
+		
+		if (currentLength > remaining ) {
+		   alert('評價內容過長！');  // 提示用户填写评论
+		   return;  // 阻止提交
+		}
 
         //評分部分
         let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderid}`;
@@ -128,6 +137,4 @@ $(document).ready(async function () {
         // 打印出評分和評價
         console.log("評分: " + rating + ", 評價: " + messageText);
     };
-
-
 });

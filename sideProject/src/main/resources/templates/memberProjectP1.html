@@ -114,7 +114,8 @@
                         </div>
                         <div>
                             <label for="message-text" class="col-form-label">評價:</label>
-                            <textarea id="message-text" class="form-control"></textarea>
+                            <textarea id="message-text" class="form-control" maxlength="200" required></textarea>
+    						<small id="char-count">剩餘字數: 200</small> <!-- 显示剩余字数 -->
                         </div>
                     </div>
 
@@ -135,6 +136,27 @@
 
     <!-- 引入 JavaScript -->
     <script th:src="@{/js/memberProject.js}"></script>
+    
+    <script>
+$(document).ready(function() {
+    const maxLength = 200;  // 设置最大字符数
+    
+    $('#message-text').on('input', function() {
+        const currentLength = $(this).val().length;  // 获取当前输入的字符数
+        const remaining = maxLength - currentLength;  // 计算剩余字数
+        
+        // 更新显示的剩余字数
+        $('#char-count').text('剩餘字數: ' + remaining);
+        
+        // 如果输入字数超过最大字数，禁止输入
+        if (currentLength >= maxLength) {
+            $('#char-count').css('color', 'red');  // 超过字数后，显示红色警告
+        } else {
+            $('#char-count').css('color', 'black');
+        }
+    });
+});
+</script>
 
 </body>
 
