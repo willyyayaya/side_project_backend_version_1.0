@@ -37,7 +37,7 @@ public class OrderMessageService {
 		List<MemberOrder> orders = memberOrderRepository.findByGetprojectTrue();
 
 		for (MemberOrder order : orders) {
-			mimiMember sender = memberRepository.findById(999L)
+			mimiMember sender = memberRepository.findById(1L)
 					.orElseThrow(() -> new RuntimeException("Sender not found"));
 			mimiMember receiver = memberRepository.findById(order.getMember().getMemberid())
 					.orElseThrow(() -> new RuntimeException("Receiver not found"));
