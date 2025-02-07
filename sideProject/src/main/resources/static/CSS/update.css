@@ -66,9 +66,18 @@ input {
 .col-8>div {
     margin: 5px;
 }
-label,span,svg,p,.all,.ql-toolbar,.ql-editor,#region,#category{
+label,span,svg,p,.all,.ql-toolbar,.ql-editor,#region,#category,#preview,strong,em,u,h2,h3,h4,h5{
 	background-color: #eaeff3;
 }
 #imageInput{
 	width: 250px;
+}
+.container{
+	margin-top:50px;
+	margin-bottom:50px;
+}
+#projectTitle,#simpleInfo,#deadline,#people,#casutamu,select{
+	border: 1px solid #c59650;
+	border-radius: 5px;
+	margin:10px;
 }

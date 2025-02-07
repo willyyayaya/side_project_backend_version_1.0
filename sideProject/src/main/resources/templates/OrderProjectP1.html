@@ -24,14 +24,8 @@
     <!-- 中間 -->
     <div id="outSide">
         <div id="User">
-            <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post"
-                enctype="multipart/form-data">
-                <div id=icon_test>
-                    <!-- 預覽圖片 -->
-                    <input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-                    <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-                </div>
-            </form>
+            <!-- 預覽圖片 -->
+			<img name="picurl" id="icon" alt="" th:src="@{${member.picurl}}" />
             <!-- 功能列 -->
             <div id="UserUse">
                 <b>功能列</b>
@@ -46,6 +40,8 @@
                     <a id="link2" href="#">資料夾管理</a>
                     <dt>站內信件</dt>
                     <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
+                    <dt>公開資訊區</dt>
+					<a id="memberShow" alt="th:value='${member.memberid}'" href="javascript:void(0);">個人資訊</a>
                 </dl>
             </div>
         </div>

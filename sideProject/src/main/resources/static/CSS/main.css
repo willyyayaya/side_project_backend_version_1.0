@@ -132,7 +132,9 @@ a[class="d-inline col-md-3 mt-1"] {
 
 #anotherImg {
 	width: 100%;
-	max-height: 100px;
+	max-height: 110px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #ButtonArea {
@@ -155,12 +157,36 @@ a,
 #imgBorder,
 img,
 #ButtonArea,
-.all {
+.all,
+strong,
+em,
+u,
+#applyPepple,
+.anotherTitle,
+.d-inline,
+.ButtonArea2,
+.mx-auto {
 	background-color: #eaeff3;
 }
-
+#none{
+	background-color:transparent;
+}
+h6{
+	margin-top:40px;
+}
 .p-3 {
 	background-color: #eaeff3;
 	margin-left: 10px;
 	width: 380px;
+}
+#openModalBtn{ 
+    margin: 10px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid #14518e;
+    color: #14518e;
+    background-color: #bbc8d8;     
+}
+#another,#getProject{
+	margin-bottom:50px;
 }

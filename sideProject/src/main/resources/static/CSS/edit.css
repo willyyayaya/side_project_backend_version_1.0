@@ -72,3 +72,12 @@ label,span,svg,p,.all,.ql-toolbar,.ql-editor{
 ol,li,strong,ul{
 	background-color: #eaeff3;
 }
+.container{
+	margin-top:50px;
+	margin-bottom:50px;
+}
+#projectTitle,#simpleInfo,#deadline,#people,#casutamu,select{
+	border: 1px solid #c59650;
+	border-radius: 5px;
+	margin:10px;
+}
