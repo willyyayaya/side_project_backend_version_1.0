@@ -1,7 +1,23 @@
 
 
 //<!-- 頭像JS部分 -->
+function subMemberid(memberid) {
+    console.log('進入傳輸表單的function')
+    var form = $('<form>', {
+        'method': 'POST',
+        'action': '/memberShow'
+    });
 
+    var input = $('<input>', {
+        'type': 'hidden',
+        'name': 'memberid',
+        'value': memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();  // 提交表單
+}
 //顯示選擇的圖片預覽
 function previewImage() {
     const file = document.getElementById('upload').files[0];
@@ -65,23 +81,7 @@ $('#memberShow').click(function (event) {
     subMemberid(memberid);  // 提交會員 ID
 })
 
-function subMemberid(memberid) {
-    console.log('進入傳輸表單的function')
-    var form = $('<form>', {
-        'method': 'POST',
-        'action': '/memberShow'
-    });
 
-    var input = $('<input>', {
-        'type': 'hidden',
-        'name': 'memberid',
-        'value': memberid
-    });
-
-    form.append(input);
-    $('body').append(form);
-    form.submit();  // 提交表單
-}
 
 // 確保 memberid 是有效的
 if (!memberid || isNaN(memberid)) {
