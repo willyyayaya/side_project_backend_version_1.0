@@ -105,7 +105,7 @@ button:hover{
 /* ================================================ */
 #icon_test{
     background-color: #eaeff3;
-    margin-left:-8px;
+    width: 220px;
 }
 
 .box , .boxOut{
