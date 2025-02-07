@@ -130,7 +130,7 @@ fetch(url)
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
                     memberpicDiv.innerHTML = `
-					<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+					<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
     `;
 
                 }
