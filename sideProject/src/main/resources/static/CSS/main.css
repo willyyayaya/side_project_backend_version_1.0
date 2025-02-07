@@ -199,3 +199,7 @@ h4{
 	border: 1.5px solid #c59650;
 	padding: 10px;
 }
+
+[id^=ButtonArea]{
+	background-color:#eaeff3;
+}
