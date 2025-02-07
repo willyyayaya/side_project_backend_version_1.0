@@ -45,18 +45,26 @@ public class HomeController {
 			mimiMember member = (mimiMember) session.getAttribute("member");
 			System.out.println("index目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
+			List<yuMember> ranMembers = memberService.getRandomYuMembers2(member.getMemberid());
+			for (yuMember member2 : ranMembers) {
+				if (member2.getPicurl() == null || member2.getPicurl() == "") {
+					member2.setPicurl("../img/memberImg.jpg");
+					System.out.println(member2.getMemberid());
+				}
+			}
+			model.addAttribute("ranMembers", ranMembers);
 		} else {
 			System.out.println("index訪客模式");
-		}
-		// 抓取隨機會員資料
-		List<yuMember> ranMembers = memberService.getRandomYuMembers();
-		for (yuMember member : ranMembers) {
-			if (member.getPicurl() == null || member.getPicurl() == "") {
-				member.setPicurl("../img/memberImg.jpg");
-				System.out.println(member.getMemberid());
+			// 抓取隨機會員資料
+			List<yuMember> ranMembers = memberService.getRandomYuMembers();
+			for (yuMember member : ranMembers) {
+				if (member.getPicurl() == null || member.getPicurl() == "") {
+					member.setPicurl("../img/memberImg.jpg");
+					System.out.println(member.getMemberid());
+				}
 			}
+			model.addAttribute("ranMembers", ranMembers);
 		}
-		model.addAttribute("ranMembers", ranMembers);
 		// 抓取熱門申請專案
 		List<Object[]> owentLise = orderService.getWantedCountByOrderId();
 		List<yuOrder> wentOrders = new ArrayList<>();
@@ -93,6 +101,7 @@ public class HomeController {
 			System.out.println("目前無登入紀錄");
 		}
 
+		model.addAttribute("message", new Message());
 		model.addAttribute("orderId", orderId);
 		return "order_main";
 	}
@@ -234,6 +243,33 @@ public class HomeController {
 		model.addAttribute("memberShow", memberShow);
 		session.setAttribute("message", new Message()); // 把空的 Message 存到 Session
 		return "memberShow";
+	}
+
+	//--------return視圖使用---------------
+	@GetMapping("/memberShow")
+	public String getmemberShow(@RequestParam Long memberid, Model model, HttpSession session) {
+
+		System.out.println("前端傳送的會員ID : " + memberid);
+		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
+		for (yuMember memberCheck : memberShow) {
+			System.out.println(memberCheck.getName());
+			System.out.println(memberCheck.getEmail());
+
+			if (memberCheck.getPicurl() == null) {
+				memberCheck.setPicurl("../img/caseImg.jpg");
+			}
+			// get receiverMember 
+			mimiMember receiverMember = mimiMemberService.getMemberById(memberid);
+			String receiverEmail = memberCheck.getEmail();
+			//  Message 表單置入 receiverid 的 email
+			Message message = new Message();
+			message.setReceiverid(receiverMember);
+			message.setReceiverEmail(receiverEmail); 
+			model.addAttribute("message", message); 
+		}
+		model.addAttribute("memberShow", memberShow); 
+		session.setAttribute("message", new Message()); 
+		return "memberShow"; 
 	}
 
 	// --------彈窗測試項目-----------

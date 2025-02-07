@@ -12,7 +12,7 @@ body {
     /* background-color: #14518e; */
     width: 80%;
     margin-left: 12%;
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     margin-bottom: 5%;
 }
@@ -143,6 +143,7 @@ textarea{
     width: 100%; 
     margin-left: 10px;
     margin-bottom: 10px;
+    resize: none;
     background-color: #eaeff3;
 }
 

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -303,48 +305,68 @@ public class MessageController {
 
 
 	@PostMapping("/sendButton_submit")
-	public String sendBtnMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model, HttpSession session) {
-	    if (session.getAttribute("member") != null) {
-	        mimiMember member = (mimiMember) session.getAttribute("member");
-	        model.addAttribute("member", member);
-	    } else {
-	        System.out.println("未登入");
-	    }
+	public String sendBtnMesg(@ModelAttribute("message") @Valid Message message, BindingResult result, Model model,
+			HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("未登入");
+			return "redirect:/login";
+		}
+		String receiverEmail = message.getReceiverid().getEmail();
+		mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
+		Long memberid = receiver.getMemberid();
 
-	    // 確保 message 存在於 Model
-	    if (result.hasErrors()) {
-	        model.addAttribute("message", message); // 重新放入 Model
-	        return "sendButton";
-	    }
-
-	    mimiMember sender = (mimiMember) session.getAttribute("member");
-	    if (sender == null) {
-	        return "redirect:/login";
-	    }
-
-	    if (message.getReceiverid() == null) {
-	        message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
-	    }
-
-	    String receiverEmail = message.getReceiverid().getEmail();
-	    mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
-	    if (receiver == null) {
-	        model.addAttribute("errorMessage", "此信箱不存在");
-	        model.addAttribute("message", message); // 確保表單回傳時有 message
-	        return "sendButton";
-	    }
-
-	    message.setSenderid(sender);
-	    message.setReceiverid(receiver);
-
-	    // 儲存訊息
-	    messageService.addMesg(message);
-	    model.addAttribute("success", "Message sent successfully!");
-	    model.addAttribute("message", new Message()); // 重置表單
-
-	    return "sendButton"; // 確保成功後仍然返回 sendButton
+		if (result.hasErrors()) {
+			model.addAttribute("message", message); // 重新放入 Model
+			return "memberShow";
+		}
+		mimiMember sender = (mimiMember) session.getAttribute("member");
+		if (message.getReceiverid() == null) {
+			message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+		}
+		message.setSenderid(sender);
+		message.setReceiverid(receiver);
+		// 儲存訊息
+		messageService.addMesg(message);
+		model.addAttribute("success", "Message sent successfully!");
+		model.addAttribute("message", new Message()); // 重置表單
+		return "redirect:memberShow?memberid=" + memberid;
 	}
-
-
+	
+//-------------以下是button2，評價用，寄信換轉回order_main-------------
+	@PostMapping("/sendButton2_submit")
+	public String sendBtnMesg2(@ModelAttribute("message") @Valid Message message, @RequestParam("orderid") Long orderid,BindingResult result, Model model,
+			HttpSession session) {
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("未登入");
+			return "redirect:/login";
+		}
+		System.out.println("進入送信後端2");
+		System.out.println("送信後端2收到的訂單ID : " + orderid);
+		String receiverEmail = message.getReceiverid().getEmail();
+		mimiMember receiver = memberRepository.findByEmail(receiverEmail).orElse(null);
+		Long memberid = receiver.getMemberid();
+		
+		if (result.hasErrors()) {
+			model.addAttribute("message", message); // 重新放入 Model
+			return "memberShow";
+		}
+		mimiMember sender = (mimiMember) session.getAttribute("member");
+		if (message.getReceiverid() == null) {
+			message.setReceiverid(new mimiMember()); // 確保 receiverid 不為 null
+		}
+		message.setSenderid(sender);
+		message.setReceiverid(receiver);
+		// 儲存訊息
+		messageService.addMesg(message);
+		model.addAttribute("success", "Message sent successfully!");
+		model.addAttribute("message", new Message()); // 重置表單
+		return "redirect:/order_main/" + orderid;
+	}
 
 }

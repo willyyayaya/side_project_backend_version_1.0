@@ -15,11 +15,14 @@ body {
 #simpleInfo {
 	width: 90%;
 	height: 90px;
+	resize: none;
+	background-color: #eaeff3;
 }
 
 input {
 	padding: 5px;
 	margin: 2px;
+	background-color: #eaeff3;
 }
 
 #casutamu {
@@ -33,6 +36,7 @@ input {
 #editor {
 	height: 500px;
 	overflow: auto;
+	background-color: #eaeff3;
 }
 
 .ql-editor img {
@@ -58,4 +62,13 @@ input {
 
 .col-8>div {
 	margin: 5px;
+}
+label,span,svg,p,.all,.ql-toolbar,.ql-editor{
+	background-color: #eaeff3;
+}
+#imageInput{
+	width: 250px;
+}
+ol,li,strong,ul{
+	background-color: #eaeff3;
 }

@@ -59,20 +59,20 @@ if (!memberid || isNaN(memberid)) {
     console.error("Invalid memberid:", memberid);
     alert("Invalid member ID");
 } else {
-   
+
 }
 
 // 設置連結的 href 屬性
-   const link1 = document.getElementById("link1");
-   const link2 = document.getElementById("link2");
-   const link3 = document.getElementById("link3");
-   const link4 = document.getElementById("link4");
+const link1 = document.getElementById("link1");
+const link2 = document.getElementById("link2");
+const link3 = document.getElementById("link3");
+const link4 = document.getElementById("link4");
 
-   link1.href = `/memberProjectP1/${memberid}`;
-      link2.href = `/memberlike/${memberid}`;
-      // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
-      link3.href = `http://localhost:8080/order_edit`;
-      link4.href = `/OrderProjectP1/${memberid}`;
+link1.href = `/memberProjectP1/${memberid}`;
+link2.href = `/memberlike/${memberid}`;
+// link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+link3.href = `http://localhost:8080/order_edit`;
+link4.href = `/OrderProjectP1/${memberid}`;
 
 //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
@@ -103,8 +103,8 @@ fetch(url)
                     memberpicDiv.innerHTML = `
 					<img  name="picurl" id="icon" src="${member.picurl}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
     `;
-             
-	   }
+
+                }
                 )
             }
         }
@@ -155,50 +155,62 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     const order = orderData.order;  // order 資料
                     const member = orderData.member;  // member 資料
 
-					card.innerHTML = `
-					<div class="card-content" data-order-id="${order.orderid}">
-					    <img src="${order.picurl}" alt="${order.orderid}" style="width:150px;height:150px;">
+                    card.innerHTML = `
+					  <div class="card-content" data-order-id="${order.orderid}">
+					    <div id="imgOut">
+					      <img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+					    </div>
 					    <h4>${order.name}</h4>
-						<p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
+					    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
 					    <!-- 只在 box3 中的卡片按鈕才帶有觸發彈窗的功能 -->
-					    ${status === '已完成' ? 
-					        `<button class="Card_btn" id="openPopupBtn" data-bs-toggle="modal" data-bs-target="#MyModal" data-order-id="${order.orderid}">評價</button>` 
-					        : 
-					        `<button class="Card_btn" id="openPopupBtn">編輯</button>`
-					    }
-					`;
+					    ${status === '已完成' ?
+                            `<button class="Card_btn" id="openPopupBtn">閱讀詳細</button>`
+                            :
+                            `<button class="Card_btn" id="editBtn">編輯</button>
+					         <button class="Card_btn" id="mainBtn">審核</button>
+							`
+                        }
+					  </div>`;
 
-					// 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
-										box1.addEventListener('click', function(event) {
-										    if (event.target.closest('.card-content')) { // 確認點擊的是 .card-content
-										        const cardContent = event.target.closest('.card-content');
-										        const orderid = cardContent.getAttribute('data-order-id');
-										        window.location.href = `http://localhost:8080/order_update/${orderid}`; // 跳轉到相應頁面
-										    }
-										});
+                    // 在容器上設置事件委託，這樣即使是動態生成的卡片也能觸發事件
+                    box1.addEventListener('click', function (event) {
+                        if (event.target.closest('.card-content')) {
+                            const cardContent = event.target.closest('.card-content');
+                            const orderid = cardContent.getAttribute('data-order-id');  // 獲取 orderid
 
-										box2.addEventListener('click', function(event) {
-										    if (event.target.closest('.card-content')) {
-										        const cardContent = event.target.closest('.card-content');
-										        const orderid = cardContent.getAttribute('data-order-id');
-										        window.location.href = `http://localhost:8080/order_update/${orderid}`;
-										    }
-										});
-					
-					// 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
-					if (status === '進行中' && orderData.getproject == true && orderData.owned === true) {
-					    box1.appendChild(card);
-					}
+                            // 根據 id 判斷是哪個按鈕被點擊
+                            if (event.target.id === 'editBtn') {
+                                // 如果點擊的是 "Update Order" 按鈕
+                                window.location.href = `http://localhost:8080/order_update/${orderid}`;
+                            } else if (event.target.id === 'mainBtn') {
+                                // 如果點擊的是 "View Details" 按鈕
+                                window.location.href = `http://localhost:8080/order_main/${orderid}`;
+                            }
+                        }
+                    });
 
-					// 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
-					if (status === '已完成' && orderData.getproject == true && orderData.owned === true) {
-					    box3.appendChild(card);
-					}
+                    box3.addEventListener('click', function (event) {
+                        if (event.target.closest('.card-content')) {
+                            const cardContent = event.target.closest('.card-content');
+                            const orderid = cardContent.getAttribute('data-order-id');
+                            window.location.href = `http://localhost:8080/order_main/${orderid}`;
+                        }
+                    });
 
-					// 如果 order.status 是 '尚未完成'，將 card 加入 box2 (申請)
-					if (status === '進行中' && orderData.getproject == false && orderData.owned === true) {
-					    box2.appendChild(card);
-					}
+
+
+
+                    // 如果 order.status 是 '進行中'，將 card 加入 box1 (進行)
+                    if (status === '進行中' && orderData.owned === true) {
+                        box1.appendChild(card);
+                    }
+
+                    // 如果 orderData.wanted 是 true，將 card 加入 box3 (結束)
+                    if (status === '已完成' && orderData.owned === true) {
+                        box3.appendChild(card);
+                    }
+
+
 
 
                 });

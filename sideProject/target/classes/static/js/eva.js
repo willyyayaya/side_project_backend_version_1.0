@@ -63,6 +63,7 @@ $(document).ready(async function () {
         console.log(responseOrdermemberToJSON);
         imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseOrdermemberToJSON[0].picurl}">`;
         modalName.innerText = `${responseOrdermemberToJSON[0].name}`;
+		personalPage.setAttribute('data-memberid', `${responseOrdermemberToJSON[0].memberid}`);
         //顯示專案名字
         let orderUrl = `http://localhost:8080/api/orders/getOrderById/${orderid}`;
         let responseOrder = await fetch(orderUrl);
@@ -122,4 +123,32 @@ $(document).ready(async function () {
         // 打印出評分和評價
         console.log("評分: " + rating + ", 評價: " + reviewText);
     };
+	
+	// 會員連結的點擊事件	
+		    $('#personalPage').click(function(event){
+		        console.log('我被點到了');
+		        event.preventDefault();
+		        //var memberid = memberid;
+				const memberid = $(this).data('memberid');
+		        console.log(memberid);
+		        subMemberid(memberid);  // 提交會員 ID
+		    })
+		//個人頁面跳轉
+		function subMemberid(memberid){
+		    console.log('進入傳輸表單的function')
+		    var form = $('<form>',{
+		        'method':'POST',
+		        'action':'/memberShow'
+		    });
+
+		    var input =$('<input>',{
+		        'type':'hidden',
+		        'name':'memberid',
+		        'value':memberid
+		    });
+
+		    form.append(input);
+		    $('body').append(form);
+		    form.submit();  // 提交表單
+		}
 });

@@ -5,7 +5,7 @@ body{
     /* background-color: #14518e; */
     width: 80%;
     margin-left: 12%;
-    margin-top: 80px;
+    margin-top: 40px;
     display: flex;
     margin-bottom: 5%;
 }
@@ -26,17 +26,12 @@ body{
     margin-top: 20px;
     border-radius: 5px;
 }
-#updateIcon{
-    width:150px;
-    height: 150px;
-    margin-left:20px;
-    margin-top:20px;
-}
+
 #icon,#updateIcon{
     width:150px;
     height: 150px;
-    margin-top: 20px;
-    margin-left:17px;
+    margin-top: 17.5px;
+    margin-left:17.5px;
     background-color: #eaeff3;
     border-radius: 5px;
 }
@@ -66,8 +61,8 @@ body{
 #UserUse{
     width: 150px;
     height: auto;
-    margin-left: 34px;
-    margin-top: 90px;
+    margin-left: 50px;
+    margin-top: 60px;
     background-color:#eaeff3;
 }
 b{
@@ -91,7 +86,6 @@ dd,a{
     margin-left: 20px;
     text-decoration: none;
 }
-
 #leftArea{
     background-color: #eaeff3;
     margin-left: 40px;

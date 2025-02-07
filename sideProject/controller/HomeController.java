@@ -208,6 +208,15 @@ public class HomeController {
 	@PostMapping("/memberShow")
 	public String memberShow(@RequestParam Long memberid, Model model, HttpSession session) {
 		System.out.println("前端傳送的會員ID : " + memberid);
+
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("search目前登入狀態:" + member.getName());
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("訪客模式");
+		}
+
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {
 			System.out.println(memberCheck.getName());
@@ -242,6 +251,14 @@ public class HomeController {
 		// 获取会员信息
 		System.out.println("前端傳送的會員ID : " + memberid);
 
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("search目前登入狀態:" + member.getName());
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("訪客模式");
+		}
+		
 		// 根据 memberid 查找会员数据
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {

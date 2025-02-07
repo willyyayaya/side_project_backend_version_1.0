@@ -1,11 +1,15 @@
-
 body {
 	background-color: #bbc8d8;
 	color: #303030;
 }
 
-#detailBox, #title, #member, #info, #buttonArea, [id^=another],
-	#getProject {
+#detailBox,
+#title,
+#member,
+#info,
+#buttonArea,
+[id^=another],
+#getProject {
 	border: 1px solid #c59650;
 	padding: 10px;
 	background-color: #eaeff3;
@@ -30,7 +34,13 @@ body {
 	font-weight: bold;
 }
 
-#apply, #edit {
+#goMember {
+	border: 1px solid #c59650;
+	color: #c59650;
+}
+
+#apply,
+#edit {
 	--bs-btn-padding-y: .20rem;
 	--bs-btn-padding-x: .20rem;
 	height: 50px;
@@ -69,6 +79,11 @@ body {
 	max-height: 500px;
 }
 
+#memberArea {
+	display: grid;
+	grid-template-rows: 1fr 1fr;
+}
+
 #imgBorder {
 	border: 1.5px solid #c59650;
 	max-width: 300px;
@@ -77,7 +92,7 @@ body {
 }
 
 #memberName {
-	font-size: 24px;
+	font-size: 30px;
 	text-decoration: none;
 	color: #303030;
 }
@@ -89,8 +104,10 @@ body {
 }
 
 #detail img {
-	max-width: 900px; /* 設置圖片的最大寬度 */
-	height: auto; /* 高度自動調整 */
+	max-width: 900px;
+	/* 設置圖片的最大寬度 */
+	height: auto;
+	/* 高度自動調整 */
 }
 
 a[class="d-inline col-md-3 mt-1"] {
@@ -107,7 +124,8 @@ a[class="d-inline col-md-3 mt-1"] {
 	font-weight: bold;
 }
 
-#another>p, #getProject>p {
+#another>p,
+#getProject>p {
 	font-size: 20px;
 	font-weight: bold;
 }
@@ -119,4 +137,30 @@ a[class="d-inline col-md-3 mt-1"] {
 
 #ButtonArea {
 	text-align: center;
+}
+
+p,
+m,
+.col,
+#updateDate,
+.text-end,
+#projectTitle,
+h5,
+#detail,
+a,
+.col-6,
+#rank,
+.all,
+#introduce,
+#imgBorder,
+img,
+#ButtonArea,
+.all {
+	background-color: #eaeff3;
+}
+
+.p-3 {
+	background-color: #eaeff3;
+	margin-left: 10px;
+	width: 380px;
 }

@@ -280,7 +280,7 @@ $(document).ready(async function () {
                 people: $('#people').val(),
                 deadline: $('#deadline').val(),
                 detail: htmlContent,
-                picurl: $('#preview').prop("src"),
+                picurl: $('#preview').prop(""),
                 // upload: new Date().toISOString().split('T')[0],
                 newdate: new Date().toISOString().split('T')[0],
             })

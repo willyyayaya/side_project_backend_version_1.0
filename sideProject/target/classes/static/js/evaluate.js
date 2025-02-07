@@ -16,7 +16,36 @@ $(document).ready(async function () {
             }
         });
     });
+	
+	// 會員連結的點擊事件
+	    $('#personalPage').click(function(event){
+	        console.log('我被點到了');
+	        event.preventDefault();
+	        var memberid = $(this).data('memberid');
+	        console.log(memberid);
+	        subMemberid(memberid);  // 提交會員 ID
+	    })
+	//個人頁面跳轉
+	function subMemberid(memberid){
+	    console.log('進入傳輸表單的function')
+	    var form = $('<form>',{
+	        'method':'POST',
+	        'action':'/memberShow'
+	    });
 
+	    var input =$('<input>',{
+	        'type':'hidden',
+	        'name':'memberid',
+	        'value':memberid
+	    });
+
+	    form.append(input);
+	    $('body').append(form);
+	    form.submit();  // 提交表單
+	}
+
+	
+	
     // 當用戶點擊星星時
     $('.fa-star').click(function () {
         ratingValue = $(this).data('index');
