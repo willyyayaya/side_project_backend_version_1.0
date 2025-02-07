@@ -124,4 +124,7 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
 	// 站內信專用
 	List<MemberOrder> findByGetprojectTrue(); // 查找 getproject = true 的所有記錄
 
+	// 新增評價
+	List<MemberOrder> findByOrder_orderidAndGetprojectAndMember_memberid(Long orderId, Boolean getProject,
+			Long memberId);
 }
