@@ -32,6 +32,7 @@ body {
 #goMember {
 	border: 1px solid #c59650;
 	color: #c59650;
+	font-size: 20px;
 }
 
 #apply, #edit {
@@ -86,7 +87,7 @@ body {
 }
 
 #memberName {
-	font-size: 30px;
+	font-size: 40px;
 	text-decoration: none;
 	color: #303030;
 }
@@ -114,7 +115,10 @@ a[class="d-inline col-md-3 mt-1"] {
 .anotherTitle {
 	font-size: 20px;
 	font-weight: bold;
+	height: 70px;
 	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 #another>p, #getProject>p {
@@ -122,9 +126,11 @@ a[class="d-inline col-md-3 mt-1"] {
 	font-weight: bold;
 }
 
-#anotherImg {
+.anotherImg {
 	width: 100%;
-	max-height: 100px;
+	height: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 [class*=ButtonArea] {
@@ -138,21 +144,21 @@ a[class="d-inline col-md-3 mt-1"] {
 .evaArea {
 	border: 1.5px solid #c59650;
 }
-.evaAreaName{
+
+.evaAreaName {
 	width: 18%;
 	display: inline-block;
-		font-size: 20px;
-	
+	font-size: 20px;
 }
-.evaAreaRank{
+
+.evaAreaRank {
 	width: 10%;
 	display: inline-block;
-		font-size: 20px;
-	
+	font-size: 20px;
 }
-.evaAreaEva{
+
+.evaAreaEva {
 	width: 60%;
 	display: inline-block;
-		font-size: 20px;
-	
+	font-size: 20px;
 }
