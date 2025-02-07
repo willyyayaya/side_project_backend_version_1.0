@@ -34,9 +34,11 @@
             <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${member.memberid})}" method="post"
                 enctype="multipart/form-data">
                 <!-- 預覽圖片 -->
-                <img name="picurl" id="icon" th:src="${member.picurl}" alt=""
-                    onclick="document.getElementById('upload').click();" />
                 <input type="file" id="upload" accept="image/*" onchange="previewImage()" />
+				<img name="picurl" id="icon" 
+     				th:src="${member.picurl != null && member.picurl != '' ? member.picurl : '/img/caseImg.jpg'}" 
+     				width="100%" height="100%" alt="iconimage"
+     				onclick="document.getElementById('upload').click();" />
                 <button type="button" id="icon_btn" onclick="submitImage()">更換圖片</button>
             </form>
             <!-- 功能列 -->
