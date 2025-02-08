@@ -1,19 +1,19 @@
-function subMemberid(memberid){
-    console.log('進入傳輸表單的function')
-    var form = $('<form>',{
-        'method':'POST',
-        'action':'/memberShow'
-    });
+function subMemberid(memberid) {
+	console.log('進入傳輸表單的function')
+	var form = $('<form>', {
+		'method': 'POST',
+		'action': '/memberShow'
+	});
 
-    var input =$('<input>',{
-        'type':'hidden',
-        'name':'memberid',
-        'value':memberid
-    });
+	var input = $('<input>', {
+		'type': 'hidden',
+		'name': 'memberid',
+		'value': memberid
+	});
 
-    form.append(input);
-    $('body').append(form);
-    form.submit();
+	form.append(input);
+	$('body').append(form);
+	form.submit();
 }
 $(document).ready(async function () {
 
@@ -167,10 +167,10 @@ $(document).ready(async function () {
 	//專案會員點擊 詳細資料Btn 跳轉到memberShow(最上面的function記得複製)
 	goMember.onclick = function () {
 		console.log('我被點到了');
-        event.preventDefault();
-        var memberid = $(this).data('memberid');
-        console.log(memberid);
-        subMemberid(memberid);
+		event.preventDefault();
+		var memberid = $(this).data('memberid');
+		console.log(memberid);
+		subMemberid(memberid);
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
@@ -290,27 +290,38 @@ $(document).ready(async function () {
 			$('#applyPepple').css('display', 'none');
 		}
 
-		//列出評價
-		let EvaAndRankUrl = `http://localhost:8080/api/memberOrders/getEvaluateAndRank/${orderId}`;
-		let responseEvaAndRank = await fetch(EvaAndRankUrl);
-		let responseEvaAndRankToJSON = await responseEvaAndRank.json();
-		console.log(responseEvaAndRankToJSON);
-		if (responseEvaAndRankToJSON.length) {
-			$('#applyevaluate').css('display', 'none');
-			responseEvaAndRankToJSON.forEach(item => {
-				console.log(item);
-				let evaArea = `<div class="evaArea mx-auto rounded-2 mb-1">
-				<div class="evaAreaName"><span>給評價者：</span><span>${item.member.account}</span></div> 
-				<div class="evaAreaRank"><span>給分：</span><span>${item.rank}分</span></div> 
-				<div class="evaAreaEva"><span>評論內容：</span><span>${item.evaluate}</span></div> 
-							</div>`;
-				$('#evaluate').append(evaArea);
-			});
-		};
+		$('#evaluate').css('display', 'none');
 
 	} else {
 		$('#getProject').css('display', 'none');
 		$('#evaluate').css('display', 'none');
+
+		if (new Date(responseOrderToJSON.deadline) < new Date()) {
+			console.log('已截止');
+			// $('#apply').text('已結束');
+		$('#evaluate').css('display', 'block');
+
+			//列出評價
+			let EvaAndRankUrl = `http://localhost:8080/api/memberOrders/getEvaluateAndRank/${orderId}`;
+			let responseEvaAndRank = await fetch(EvaAndRankUrl);
+			let responseEvaAndRankToJSON = await responseEvaAndRank.json();
+			console.log(responseEvaAndRankToJSON);
+			if (responseEvaAndRankToJSON.length) {
+				$('#applyevaluate').css('display', 'none');
+				responseEvaAndRankToJSON.forEach(item => {
+					console.log("評價:"+item);
+					let evaArea = `<div class="evaArea mx-auto rounded-2 mb-1">
+				<div class="evaAreaName"><span>給評價者：</span><span>${item.member.account}</span></div> 
+				<div class="evaAreaRank"><span>給分：</span><span>${item.rank}分</span></div> 
+				<div class="evaAreaEva"><span>評論內容：</span><span>${item.evaluate}</span></div> 
+							</div>`;
+					$('#evaluate').append(evaArea);
+				});
+			};
+		} else {
+			console.log('進行中');
+		}
+
 		//推薦其他專案
 		let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
 		let responseAnother = await fetch(anotherUrl);
@@ -371,7 +382,13 @@ $(document).ready(async function () {
 		if (responseWantToJSON == true) {
 			$('#apply').text('已申請');
 		};
+		if (new Date(responseOrderToJSON.deadline) < new Date()) {
+			$('#apply').text('已結束');
+			$('#apply').prop('disabled', true);
+		}
 	}
+
+
 
 	edit.onclick = function () {
 		window.location.href = `/order_update/${orderId}`;
