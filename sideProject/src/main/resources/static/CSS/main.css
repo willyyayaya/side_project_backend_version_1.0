@@ -9,7 +9,8 @@ body {
 #info,
 #buttonArea,
 [id^=another],
-#getProject, #evaluate {
+#getProject,
+#evaluate {
 	border: 1px solid #c59650;
 	padding: 10px;
 	background-color: #eaeff3;
@@ -17,6 +18,10 @@ body {
 
 #projectTitle {
 	min-height: 60px;
+}
+
+.another {
+	margin: 0 0 5px 0;
 }
 
 #buttonArea {
@@ -35,8 +40,11 @@ body {
 }
 
 #goMember {
+	display: inline-block;
 	border: 1px solid #c59650;
-	color: #c59650;
+	color: #14518e;
+	padding: 0;
+	font-size: 20px;
 }
 
 #apply,
@@ -47,6 +55,21 @@ body {
 	width: 90px;
 	font-size: 24px;
 	display: none;
+	color: #14518e;
+	border: 1px solid #c59650;
+}
+#apply:hover,
+#edit:hover,
+#goMember:hover,
+#anotherButton:hover {
+	border: 1px solid #14518e;
+	color: #eaeff3;
+	background-color: #14518e;
+	transition: 0.5s;
+}
+
+#applyPeople{
+	font-size: 16px;
 }
 
 #collect {
@@ -132,11 +155,12 @@ a[class="d-inline col-md-3 mt-1"] {
 
 #anotherImg {
 	width: 100%;
-	height:110px;
+	height: 110px;
 	max-height: 110px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
 .anotherImg {
 	width: 100%;
 	height: 100px;
@@ -170,70 +194,91 @@ em,
 u,
 #applyPepple,
 .ButtonArea2,
+#applyevaluate,
 .mx-auto {
 	background-color: #eaeff3;
 }
-.anotherTitle{
-	font-size: 20px;
+
+#anotherButton {
+	border-radius: 10px;
+	color: #14518e;
+	width: 85px;
+	margin: 10px;
+}
+
+.anotherTitle {
+	padding: 15px 0;
+	font-size: 24px;
 	font-weight: bold;
-	height: 70px;
+	height: 60px;
 	text-align: center;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	background-color: #eaeff3;
 }
-#none{
-	background-color:transparent;
+
+#none {
+	background-color: transparent;
 }
-h4{
-	margin-top:40px;
+
+h4 {
+	margin-top: 40px;
 }
+
 .p-3 {
 	background-color: #eaeff3;
 	margin-left: 10px;
 	width: 380px;
 }
-#openModalBtn{ 
-    margin: 10px;
-    padding: 3px 8px;
-    border-radius: 10px;
-    border: 1px solid #14518e;
-    color: #14518e;
-    background-color: #bbc8d8;
+
+#openModalBtn {
+	margin: 10px;
+	padding: 3px 8px;
+	border-radius: 10px;
+	border: 1px solid #14518e;
+	color: #14518e;
+	background-color: #bbc8d8;
 }
-#another,#getProject{
-	margin-bottom:50px;
+
+#another,
+#getProject {
+	margin-bottom: 50px;
 }
-.d-inline{
-	
+
+.d-inline {
 	background-color: #eaeff3;
 	border-radius: 10px;
 }
-.mx-auto{
+
+.mx-auto {
 	border: 1.5px solid #c59650;
 	padding: 10px;
 }
 
-[id^=ButtonArea]{
-	background-color:#eaeff3;
+[id^=ButtonArea] {
+	background-color: #eaeff3;
 	text-align: center;
 }
+
 .evaArea {
 	border: 1.5px solid #c59650;
 }
-.evaAreaName{
+
+.evaAreaName {
 	width: 18%;
 	display: inline-block;
 	font-size: 20px;
-	
+
 }
-.evaAreaRank{
+
+.evaAreaRank {
 	width: 10%;
 	display: inline-block;
 	font-size: 20px;
-	
+
 }
-.evaAreaEva{
+
+.evaAreaEva {
 	width: 60%;
 	display: inline-block;
 	font-size: 20px;
