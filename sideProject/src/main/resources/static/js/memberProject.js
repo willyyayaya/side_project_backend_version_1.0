@@ -194,7 +194,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     card.innerHTML = `
 					    <div class="card-content" data-order-id="${order.orderid}" style="width:150px;height:150px;">
 							<div id="imgOut">
-								<img src="${order.picurl || '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+								<img src="${order.picurl !== null ? order.picurl : '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 							</div>
 					        <h4>${order.name}</h4>
 					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>

@@ -220,15 +220,15 @@ public class HomeController {
 		// 判斷是否有登入狀態
 		if (session.getAttribute("member") != null) {
 			mimiMember member = (mimiMember) session.getAttribute("member");
-			System.out.println("searchCase目前登入狀態:" + member.getName());
+			System.out.println("memberShow目前登入狀態:" + member.getName());
 			model.addAttribute("member", member);
 		} else {
 			System.out.println("searchCase訪客模式");
 		}
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {
-			System.out.println(memberCheck.getName());
-			System.out.println(memberCheck.getEmail());
+			System.out.println("前端查詢的會員name : " +memberCheck.getName());
+			System.out.println("前端查詢的會員Email : " +memberCheck.getEmail());
 
 			// 如果訂單沒圖片，加入圖片
 			if (memberCheck.getPicurl() == null) {

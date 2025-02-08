@@ -96,7 +96,8 @@
                     <div class="col-5">
                         <div id="imgBorder" class="d-flex justify-content-center align-items-center mb-1"></div>
                         <h3 id="modalName"></h3>
-                        <a href=""><button id="personalPage" class="btn btn-outline-primary">個人頁面</button></a>
+                        <button id="personalPage" class="btn btn-outline-primary">個人頁面</button>
+                        <!-- <button id="personalShow" class="btn btn-outline-primary">個人頁面</button> -->
                     </div>
                     <div class="col-7">
                         <h4 id="projectTitle"></h4>
@@ -136,6 +137,8 @@
 
     <!-- 引入 JavaScript -->
     <script th:src="@{/js/memberProject.js}"></script>
+    <script src="/js/jquery-3.7.1.js"></script> <!-- 確保這個路徑正確 -->
+    <script src="/js/eva.js"></script> <!-- 確保這個路徑正確 -->
 
     <script>
         $(document).ready(function () {
