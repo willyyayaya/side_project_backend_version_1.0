@@ -198,8 +198,8 @@ u,
 .ButtonArea2,
 #applyevaluate,
 .mx-auto,
-#applyevaluate,
-span {
+#applyevaluate
+{
 	background-color: #eaeff3;
 }
 
@@ -266,6 +266,7 @@ h4 {
 
 .evaArea {
 	border: 1.5px solid #c59650;
+	background-color:#eaeff3;
 }
 
 .evaAreaName {
@@ -276,7 +277,7 @@ h4 {
 }
 
 .evaAreaRank {
-	width: 10%;
+	width: 18%;
 	display: inline-block;
 	font-size: 20px;
 	background-color:#eaeff3;
@@ -288,3 +289,7 @@ h4 {
 	font-size: 20px;
 	background-color:#eaeff3;
 }
+
+span{
+	background-color:transparent;
+} 
