@@ -64,10 +64,23 @@ dl{
 dt{
     background-color: #eaeff3;   
 }
-dd,a{
+dd{
     background-color: #eaeff3;
     margin-left: 20px;
     text-decoration: none;
+}
+a{
+    background-color: #eaeff3;
+    margin-left: 20px;
+    text-decoration: none;
+    color:#14518e;
+    display: inline-block;
+    border-radius:5px;
+    padding:2px;
+    border: 1px solid #eaeff3;
+}
+a:hover{
+    border: 1px solid #c59650;;
 }
 #leftArea{
     background-color: #eaeff3;
