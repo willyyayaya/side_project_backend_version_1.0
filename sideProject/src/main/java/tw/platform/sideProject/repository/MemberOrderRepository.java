@@ -128,4 +128,10 @@ public interface MemberOrderRepository extends JpaRepository<MemberOrder, Member
     @Query("UPDATE MemberOrder mo SET mo.collected = :collected WHERE mo.member.memberid = :memberid AND mo.order.orderid = :orderid")
     void updateCollectedStatus(@Param("memberid") Long memberid, @Param("orderid") Long orderid, @Param("collected") boolean collected);
 	
+	// 新增評價
+	List<MemberOrder> findByOrder_orderidAndGetprojectAndMember_memberid(Long orderId, Boolean getProject,
+			Long memberId);
+
+	@Query("SELECT mo FROM MemberOrder mo WHERE mo.order.id = :orderId AND mo.getproject = true")
+	List<MemberOrder> getEvaluateAndRank(@Param("orderId") Long orderId);
 }

@@ -118,5 +118,18 @@ public class MemberOrder {
 	            ", collected=" + collected +
 	            '}';
 	}
-	
+
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+    
 }

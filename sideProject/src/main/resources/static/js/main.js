@@ -153,15 +153,16 @@ $(document).ready(async function () {
 	//	introduce.innerText = `${responseMemberToJSON[0].intro}`;
 	//}
 
-	let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
-	let responseRank = await fetch(rankUrl);
-	let responseRankToJSON = await responseRank.json();
-	console.log(responseRankToJSON);
-	if (responseRankToJSON === 0) {
-		rank.innerText = '尚未評價過'
-	} else {
-		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
-	}
+
+	// let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
+	// let responseRank = await fetch(rankUrl);
+	// let responseRankToJSON = await responseRank.json();
+	// console.log(responseRankToJSON);
+	// if (responseRankToJSON === 0) {
+	// 	rank.innerText = '尚未評價過'
+	// } else {
+	// 	rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
+	// }
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}" data-orderid="orderId">詳細資料</button>`;
 	//專案會員點擊 詳細資料Btn 跳轉到memberShow(最上面的function記得複製)
 	goMember.onclick = function () {
@@ -261,13 +262,13 @@ $(document).ready(async function () {
 
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
-
+			//下方承豪寫$(`#ButtonAreaB${item.memberid}`).html(`
 			$(`#ButtonAreaV${item.memberid}`).html(`
 						<button id='anotherabd' class="btn btn-outline-primary showMemberBtn" data-memberid="${item.memberid}">詳細資料</button>
 						`);
 
 			anotherButtonArea.append(anotherButton);
-
+			//下方承豪寫$(`#anotherButtonOnClick${item.memberid}`).on('click', function() {
 			anotherButton[0].onclick = function () {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
 				fetch(ButtonUrl, {
@@ -282,11 +283,34 @@ $(document).ready(async function () {
 					})
 				})
 				alert('就決定是他了');
-			}
+			}//});
 		});
+
+		if (responseGetedToJSON.length || responseGetToJSON.length) {
+			$('#applyPepple').css('display', 'none');
+		}
+
+		//列出評價
+		let EvaAndRankUrl = `http://localhost:8080/api/memberOrders/getEvaluateAndRank/${orderId}`;
+		let responseEvaAndRank = await fetch(EvaAndRankUrl);
+		let responseEvaAndRankToJSON = await responseEvaAndRank.json();
+		console.log(responseEvaAndRankToJSON);
+		if (responseEvaAndRankToJSON.length) {
+			$('#applyevaluate').css('display', 'none');
+			responseEvaAndRankToJSON.forEach(item => {
+				console.log(item);
+				let evaArea = `<div class="evaArea mx-auto rounded-2 mb-1">
+				<div class="evaAreaName"><span>給評價者：</span><span>${item.member.account}</span></div> 
+				<div class="evaAreaRank"><span>給分：</span><span>${item.rank}分</span></div> 
+				<div class="evaAreaEva"><span>評論內容：</span><span>${item.evaluate}</span></div> 
+							</div>`;
+				$('#evaluate').append(evaArea);
+			});
+		};
 
 	} else {
 		$('#getProject').css('display', 'none');
+		$('#evaluate').css('display', 'none');
 		//推薦其他專案
 		let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
 		let responseAnother = await fetch(anotherUrl);

@@ -9,7 +9,7 @@ body {
 #info,
 #buttonArea,
 [id^=another],
-#getProject {
+#getProject, #evaluate {
 	border: 1px solid #c59650;
 	padding: 10px;
 	background-color: #eaeff3;
@@ -137,6 +137,12 @@ a[class="d-inline col-md-3 mt-1"] {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.anotherImg {
+	width: 100%;
+	height: 100px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
 
 #ButtonArea {
 	text-align: center;
@@ -163,9 +169,17 @@ strong,
 em,
 u,
 #applyPepple,
-.anotherTitle,
 .ButtonArea2,
 .mx-auto {
+	background-color: #eaeff3;
+}
+.anotherTitle{
+	font-size: 20px;
+	font-weight: bold;
+	height: 70px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	background-color: #eaeff3;
 }
 #none{
@@ -202,4 +216,25 @@ h4{
 
 [id^=ButtonArea]{
 	background-color:#eaeff3;
+	text-align: center;
+}
+.evaArea {
+	border: 1.5px solid #c59650;
+}
+.evaAreaName{
+	width: 18%;
+	display: inline-block;
+	font-size: 20px;
+	
+}
+.evaAreaRank{
+	width: 10%;
+	display: inline-block;
+	font-size: 20px;
+	
+}
+.evaAreaEva{
+	width: 60%;
+	display: inline-block;
+	font-size: 20px;
 }

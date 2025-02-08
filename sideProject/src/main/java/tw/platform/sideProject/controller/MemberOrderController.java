@@ -164,4 +164,9 @@ public class MemberOrderController {
 		memberOrderService.addEvaluate(orderid, memberOrder);
 		return "evaluate"; // 假設返回一個評分頁面的模板或數據
 	}
+
+	@GetMapping("/getEvaluateAndRank/{orderId}")
+	public List<MemberOrder> getEvaluateAndRank(@PathVariable Long orderId) {
+		return memberOrderService.getEvaluateAndRank(orderId);
+	}
 }

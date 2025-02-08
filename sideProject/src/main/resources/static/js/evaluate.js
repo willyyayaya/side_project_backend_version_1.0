@@ -83,31 +83,33 @@ $(document).ready(async function () {
         }
 
         //評分部分
-        let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderId}`;
-        fetch(ratingUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ rank: rating })
-        }).then(response => {
-            if (response.ok) { // 檢查是否成功
-                alert("已成功提交評分!"); // 顯示成功提示
-            } else {
-                alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
-            }
-        })
-        .catch(error => {
-            console.error("發生錯誤：", error);
-            alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
-        });
+        // let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderId}`;
+        //fetch(ratingUrl, {
+        //  method: 'POST',
+        // headers: {
+        //      'Content-Type': 'application/json',
+        //  },
+        //   body: JSON.stringify({ rank: rating })
+        // }).then(response => {
+        //     if (response.ok) { // 檢查是否成功
+        //         alert("已成功提交評分!"); // 顯示成功提示
+        //      } else {
+        //          alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
+        //       }
+        //  })
+        //   .catch(error => {
+        //       console.error("發生錯誤：", error);
+        //       alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
+        //   });
 
         //評論部分
         // 動態設置 URL，根據實際訂單 ID
         let evaluateUrl = `http://localhost:8080/api/memberOrders/addEvaluate/${orderId}`;
         // 準備傳送的資料
         let data = {
-            evaluate: reviewText
+            evaluate: reviewText,
+            rank: rating,
+            memberId: memberid
         };
         // 發送 POST 請求
         await fetch(evaluateUrl, {

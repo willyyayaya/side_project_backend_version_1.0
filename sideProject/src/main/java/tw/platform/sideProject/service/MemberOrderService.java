@@ -147,17 +147,19 @@ public class MemberOrderService {
 
 	// 新增評價(order)
 	public String addEvaluate(Long orderId, AddMemberOrderRequest request) {
-		// 查找與指定訂單號碼對應的所有 MemberOrder
-		List<MemberOrder> memberOrders = memberOrderRepository.findByOrder_orderid(orderId);
+		// 查找指定訂單號碼，且 getProject 為 true，並且指定 memberId 的 MemberOrder
+		List<MemberOrder> memberOrders = memberOrderRepository
+				.findByOrder_orderidAndGetprojectAndMember_memberid(orderId, Boolean.TRUE, request.getMemberId());
 
 		if (memberOrders.isEmpty()) {
-			return "找不到對應的訂單，無法新增評價";
+			return "找不到對應的訂單或指定的 memberId，無法新增評價";
 		}
 
-		MemberOrder memberOrder = memberOrders.get(0); // 取得第一個匹配的紀錄
+		MemberOrder memberOrder = memberOrders.get(0); // 取得符合條件的第一個紀錄
 
-		// 設定評分和評價
+		// 設定評價和評分
 		memberOrder.setEvaluate(request.getEvaluate());
+		memberOrder.setRank(request.getRank());
 
 		// 儲存評價
 		memberOrderRepository.save(memberOrder);
@@ -294,5 +296,9 @@ public class MemberOrderService {
 		// TODO Auto-generated method stub
 		memberOrderRepository.updateCollectedStatus(memberid, orderid, collected);
 
+	}
+	// 根據orderId列出找出評價和評分(order)
+	public List<MemberOrder> getEvaluateAndRank(Long orderId) {
+		return memberOrderRepository.getEvaluateAndRank(orderId);
 	}
 }

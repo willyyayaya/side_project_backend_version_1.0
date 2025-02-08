@@ -8,6 +8,7 @@ public class AddMemberOrderRequest {
     private boolean collected;
     private String evaluate;
     private boolean getproject;
+    private Integer rank;
 
     // Getters and Setters
     public Long getMemberId() {
@@ -63,6 +64,14 @@ public class AddMemberOrderRequest {
 
 	public void setGetproject(boolean getproject) {
 		this.getproject = getproject;
+	}
+
+    public Integer getRank() {
+		return rank;
+	}
+    
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
 }
 
