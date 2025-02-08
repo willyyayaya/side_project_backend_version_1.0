@@ -195,7 +195,9 @@ u,
 #applyPepple,
 .ButtonArea2,
 #applyevaluate,
-.mx-auto {
+.mx-auto,
+#applyevaluate,
+span {
 	background-color: #eaeff3;
 }
 
@@ -268,18 +270,19 @@ h4 {
 	width: 18%;
 	display: inline-block;
 	font-size: 20px;
-
+	background-color:#eaeff3;
 }
 
 .evaAreaRank {
 	width: 10%;
 	display: inline-block;
 	font-size: 20px;
-
+	background-color:#eaeff3;
 }
 
 .evaAreaEva {
 	width: 60%;
 	display: inline-block;
 	font-size: 20px;
+	background-color:#eaeff3;
 }

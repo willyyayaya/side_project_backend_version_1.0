@@ -106,6 +106,7 @@ button:hover{
 #icon_test{
     background-color: #eaeff3;
     width: 220px;
+    border-radius: 5px;
 }
 
 .box , .boxOut{
@@ -252,4 +253,33 @@ color: #eaeff3;
 #editBtn:hover, #mainBtn:hover{
     background-color: #14518e;
     color: #eaeff3;
+    margin-left: 20px;
+}
+#imgBorder{
+	background-color: #eaeff3;
+	border: solid 1px #c59650;
+	border-radius: 10px;
+	margin-left: 20px;
+}
+#modalName{
+	margin-left: 20px;
+}
+.modal-content,.modal-dialog{
+	border-radius: 10px;
+	background-color: transparent;
+}
+.modal-header,.modal-footer,#ModalLabel,.star-rating,p,i,span,label,small,#rightArea{
+	background-color: #eaeff3;
+}
+.modal-body{
+	background-color: #eaeff3;
+		margin-left:0px;
+		margin-right: 0px;
+}
+textarea{
+	resize: none;
+} 
+#personalPage:hover{
+	background-color: #14518e;
+    text-decoration: none;
 }
