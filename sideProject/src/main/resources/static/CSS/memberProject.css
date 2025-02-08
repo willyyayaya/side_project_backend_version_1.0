@@ -347,7 +347,14 @@ textarea {
     resize: none;
 }
 
+#personalPage{
+    border-color: #c59650;
+    margin-left: 20px;
+    color: #14518e;
+}
 #personalPage:hover {
     background-color: #14518e;
+    color: #eaeff3;
     text-decoration: none;
+    border-color: #14518e;
 }
