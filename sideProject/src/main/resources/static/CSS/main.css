@@ -28,6 +28,20 @@ body {
 	margin: 0 0 5px 0;
 }
 
+.memberLink {
+	color: #c59650;
+	border: 1px solid transparent;
+	border-radius: 5px;
+	padding: 2px 5px;
+}
+
+.memberLink:hover {
+	background-color: #14518e;
+	border: 1px solid #14518e;
+	color: #eaeff3;
+	transition: 0.5s;
+}
+
 #buttonArea {
 	height: 150px;
 	width: 150px;
@@ -203,8 +217,7 @@ u,
 .ButtonArea2,
 #applyevaluate,
 .mx-auto,
-#applyevaluate
-{
+#applyevaluate {
 	background-color: #eaeff3;
 }
 
@@ -271,7 +284,7 @@ h4 {
 
 .evaArea {
 	border: 1.5px solid #c59650;
-	background-color:#eaeff3;
+	background-color: #eaeff3;
 }
 
 .evaAreaName {
@@ -292,9 +305,9 @@ h4 {
 	width: 60%;
 	display: inline-block;
 	font-size: 20px;
-	background-color:#eaeff3;
+	background-color: #eaeff3;
 }
 
-span{
-	background-color:transparent;
-} 
+span {
+	background-color: transparent;
+}

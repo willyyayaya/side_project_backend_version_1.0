@@ -299,7 +299,7 @@ $(document).ready(async function () {
 		if (new Date(responseOrderToJSON.deadline) < new Date()) {
 			console.log('已截止');
 			// $('#apply').text('已結束');
-		$('#evaluate').css('display', 'block');
+			$('#evaluate').css('display', 'block');
 
 			//列出評價
 			let EvaAndRankUrl = `http://localhost:8080/api/memberOrders/getEvaluateAndRank/${orderId}`;
@@ -309,19 +309,27 @@ $(document).ready(async function () {
 			if (responseEvaAndRankToJSON.length) {
 				$('#applyevaluate').css('display', 'none');
 				responseEvaAndRankToJSON.forEach(item => {
-					console.log("評價:"+item);
+					console.log("評價:" + item);
 					let evaArea = `<div class="evaArea mx-auto rounded-2 mb-1">
-				<div class="evaAreaName"><span>給評價者：</span><span>${item.member.account}</span></div> 
+				<div class="evaAreaName"><span>給評價者：</span><span><a href="" class="memberLink" data-memberid="${item.member.memberid}">${item.member.account}</a></span></div> 
 				<div class="evaAreaRank"><span>給分：</span><span>${item.rank}分</span></div> 
 				<div class="evaAreaEva"><span>評論內容：</span><span>${item.evaluate}</span></div> 
 							</div>`;
 					$('#evaluate').append(evaArea);
+					//點擊框
 				});
 			};
 		} else {
 			console.log('進行中');
 		}
 
+		$('.memberLink').click(function (event) {
+			console.log('我被點到了');
+			event.preventDefault();
+			var memberid = $(this).data('memberid');
+			console.log(memberid);
+			subMemberid(memberid);
+		});
 		//推薦其他專案
 		let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
 		let responseAnother = await fetch(anotherUrl);
@@ -373,19 +381,27 @@ $(document).ready(async function () {
 
 	if (responseMemberToJSON[0].memberid == `${memberId}`) {
 		$('#edit').css('display', 'block');
+	} else if (new Date(responseOrderToJSON.deadline) < new Date()) {
+		$('#apply').css('display', 'block');
+		$('#apply').text('已結束');
+		$('#apply').prop('disabled', true);
 	} else {
 		$('#apply').css('display', 'block');
 		let memberWantUrl = `http://localhost:8080/api/memberOrders/memberWanted/${orderId}/${memberId}`
 		let responseWant = await fetch(memberWantUrl);
 		let responseWantToJSON = await responseWant.json();
 		console.log(responseWantToJSON);
+		//顯示申請人數
+		let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderId}`;
+		let responsePreople = await fetch(applypeopleUrl);
+		let responsePeopleToJSON = await responsePreople.json();
+		console.log(responsePeopleToJSON);
+		let applyPeople = '目前申請人數:' + responsePeopleToJSON + '人';
+		$('#applyPeople').text(applyPeople);
 		if (responseWantToJSON == true) {
 			$('#apply').text('已申請');
 		};
-		if (new Date(responseOrderToJSON.deadline) < new Date()) {
-			$('#apply').text('已結束');
-			$('#apply').prop('disabled', true);
-		}
+
 	}
 
 
@@ -417,13 +433,7 @@ $(document).ready(async function () {
 		$('#apply').prop('disabled', true);
 	}
 
-	//顯示申請人數
-	let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderId}`;
-	let responsePreople = await fetch(applypeopleUrl);
-	let responsePeopleToJSON = await responsePreople.json();
-	console.log(responsePeopleToJSON);
-	let applyPeople = '目前申請人數:' + responsePeopleToJSON + '人';
-	$('#applyPeople').text(applyPeople);
+
 
 
 
