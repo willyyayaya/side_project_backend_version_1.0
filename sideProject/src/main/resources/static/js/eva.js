@@ -72,8 +72,6 @@ $(document).ready(async function () {
         // 根據訂單 ID 載入對應的資料
         loadOrderData(orderid);
     });
-
-
     async function loadOrderData(orderid) {
         //顯示發案者頭像和名字
         let ordermemberUrl = `http://localhost:8080/api/memberOrders/getMembersByOrderid/${orderid}`;
@@ -104,35 +102,50 @@ $(document).ready(async function () {
     //送出
     evaluateGo.onclick = async function () {
         var rating = $('#rating-value').text();
-        //var reviewText = $('#message-text').val();
-        const messageText = $('#message-text').val().trim();
-        const remaining = 200;
-        // 获取当前输入的字符数
-        const currentLength = messageText.length;
+        var reviewText = $('#message-text').val();
+
         // 檢查是否已經選擇了評分
         if (rating == 0) {
             alert("至少請填入分數");
             return;
         }
 
-        if (messageText === '') {
-            alert('請填寫評價內容！');  // 提示用户填写评论
-            return;  // 阻止提交
-        }
-
-        if (currentLength > remaining) {
-            alert('評價內容過長！');  // 提示用户填写评论
-            return;  // 阻止提交
-        }
-
         //評分部分
-        let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderid}`;
-        fetch(ratingUrl, {
+        // let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderId}`;
+        //fetch(ratingUrl, {
+        //  method: 'POST',
+        // headers: {
+        //      'Content-Type': 'application/json',
+        //  },
+        //   body: JSON.stringify({ rank: rating })
+        // }).then(response => {
+        //     if (response.ok) { // 檢查是否成功
+        //         alert("已成功提交評分!"); // 顯示成功提示
+        //      } else {
+        //          alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
+        //       }
+        //  })
+        //   .catch(error => {
+        //       console.error("發生錯誤：", error);
+        //       alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
+        //   });
+
+        //評論部分
+        // 動態設置 URL，根據實際訂單 ID
+        let evaluateUrl = `http://localhost:8080/api/memberOrders/addEvaluate/${orderId}`;
+        // 準備傳送的資料
+        let data = {
+            evaluate: reviewText,
+            rank: rating,
+            memberId: memberid
+        };
+        // 發送 POST 請求
+        await fetch(evaluateUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ rank: rating })
+            body: JSON.stringify(data), // 注意這裡需要轉換為 JSON 字串
         }).then(response => {
             if (response.ok) { // 檢查是否成功
                 alert("已成功提交評分!"); // 顯示成功提示
@@ -144,24 +157,8 @@ $(document).ready(async function () {
                 console.error("發生錯誤：", error);
                 alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
             });
-
-        //評論部分
-        // 動態設置 URL，根據實際訂單 ID
-        let evaluateUrl = `http://localhost:8080/api/memberOrders/addEvaluate/${orderid}`;
-        // 準備傳送的資料
-        let data = {
-            evaluate: messageText
-        };
-        // 發送 POST 請求
-        await fetch(evaluateUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data), // 注意這裡需要轉換為 JSON 字串
-        })
-
         // 打印出評分和評價
-        console.log("評分: " + rating + ", 評價: " + messageText);
+        console.log("評分: " + rating + ", 評價: " + reviewText);
+        alert("評分已成功送出");
     };
 });
