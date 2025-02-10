@@ -25,7 +25,6 @@ $(document).ready(async function() {
 	});
 	const editor = quill.root;
 	editor.style.fontSize = '24px';
-
 	//地點選單
 	$("#region").append('<option value="taipei">台北市</option>');
 	$("#region").append('<option value="newTaipei">新北市</option>');
@@ -71,14 +70,12 @@ $(document).ready(async function() {
 		// 把checkbox和span放進#skill元素中
 		$("#skill").append(checkbox).append(label);
 	});
-
 	$("input[id='casutamu']").css("display", "none");
 	if ($('input[value="自訂"]').prop('checked')) {
 		$('input[id="casutamu"]').css("display", "inline-block");
 	} else if ($('input[value="另議"]').prop('checked')) {
 		$("input[id='casutamu']").css("display", "none");
 	}
-
 	$('input[name="budget"]').change(function() {
 		if ($('input[value="自訂"]').prop('checked')) {
 			$('input[id="casutamu"]').css("display", "inline-block");
@@ -86,14 +83,12 @@ $(document).ready(async function() {
 			$("input[id='casutamu']").css("display", "none");
 		}
 	})
-
 	$("select[name='region']").css("display", "none");
 	if ($('input[value="region"]').prop('checked')) {
 		$('select[name="region"]').css("display", "inline-block");
 	} else if ($('input[value="remote"]').prop('checked')) {
 		$("select[name='region']").css("display", "none");
 	}
-
 	$('input[name="workplace"]').change(function() {
 		if ($('input[value="region"]').prop('checked')) {
 			$('select[name="region"]').css("display", "inline-block");
@@ -101,7 +96,19 @@ $(document).ready(async function() {
 			$("select[name='region']").css("display", "none");
 		}
 	})
-
+	// 顯示縮圖用
+	imageInput.addEventListener('change', function() {
+		const file = imageInput.files[0];
+		console.log(imageInput.files[0]);
+		if (file) {
+			const reader = new FileReader();
+			reader.onload = function(e) {
+				preview.src = e.target.result;
+				preview.style.display = 'inline-block';
+			};
+			reader.readAsDataURL(file);
+		}
+	});
 	insert.onclick = function() {
 		let empty = '請填寫';
 		if ($("#projectTitle").val() === "") {
@@ -169,7 +176,6 @@ $(document).ready(async function() {
 			// }
 			return; // 阻止提交表單
 		}
-
 		console.log($('#simpleInfo').val());
 		console.log($("#category").val());
 		console.log($("#projectTitle").val());
@@ -198,7 +204,6 @@ $(document).ready(async function() {
 		console.log($('#preview').prop("src"));
 		var htmlContent = quill.root.innerHTML; // 獲取 HTML 內容
 		console.log(htmlContent);
-
 		// let imgSrc;
 		// if (!$('#preview').attr("src")) {
 		// 	imgSrc = 'null'; // 如果沒有設置圖片，則設置 imgSrc 為 'null'
@@ -217,7 +222,7 @@ $(document).ready(async function() {
 				intro: $('#simpleInfo').val(),
 				deadline: $('#deadline').val(),
 				detail: htmlContent,
-				// picurl: $('#preview').prop("src"),
+				picurl: $('#preview').prop("src"),
 				location: rigion,
 				people: $('#people').val(),
 				tagIds: selectedSkills,
@@ -260,24 +265,4 @@ $(document).ready(async function() {
 			alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
 		});
 	}
-
-	// 顯示縮圖用
-	imageInput.addEventListener('change', function() {
-		const file = imageInput.files[0];
-		console.log(imageInput.files[0]);
-		if (file) {
-			const reader = new FileReader();
-			reader.onload = function(e) {
-				preview.src = e.target.result;
-				preview.style.display = 'inline-block';
-			};
-			reader.readAsDataURL(file);
-		}
-	});
 });
-
-
-
-
-
-
