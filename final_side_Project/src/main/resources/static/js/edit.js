@@ -1,3 +1,4 @@
+
 $(document).ready(async function() {
 	//文字編輯器    
 	var quill = new Quill("#editor", {
@@ -201,7 +202,7 @@ $(document).ready(async function() {
 
 		let imgSrc;
 		if (!$('#preview').attr("src")) {
-			imgSrc = 'null'; 
+			imgSrc = 'null';
 		} else {
 			imgSrc = $('#preview').attr("src");
 		}
@@ -275,9 +276,3 @@ $(document).ready(async function() {
 		}
 	});
 });
-
-
-
-
-
-

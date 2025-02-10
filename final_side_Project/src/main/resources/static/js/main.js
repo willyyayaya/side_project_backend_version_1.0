@@ -1,3 +1,4 @@
+
 function subMemberid(memberid) {
 	console.log('進入傳輸表單的function')
 	var form = $('<form>', {

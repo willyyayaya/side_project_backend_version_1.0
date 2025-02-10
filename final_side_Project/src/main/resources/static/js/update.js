@@ -1,3 +1,4 @@
+
 $(document).ready(async function () {
     
 	let orderId = document.querySelector('meta[name="orderId"]').getAttribute('content');
@@ -307,9 +308,3 @@ $(document).ready(async function () {
         }
     });
 });
-
-
-
-
-
-
