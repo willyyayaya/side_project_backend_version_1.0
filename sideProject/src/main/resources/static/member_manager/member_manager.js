@@ -52,8 +52,8 @@ async function searchMember() {
         const memberItem = document.createElement('div');
         memberItem.className = 'memberItem';
         memberItem.innerHTML = `
-            <button class="listButton" style="float: left; margin-right: 10px;" onclick="confirmDelete(${member.memberid})">刪除</button>
-                <span onclick="showMemberDetail('${member.email}')" style="float: left; margin-right: 10px; cursor: pointer;">${member.name}</span>
+            <button class="listButton" style="float: left; margin-right: 10px; width: 20%;" onclick="confirmDelete(${member.memberid})">刪除</button>
+                <span onclick="showMemberDetail('${member.email}')" style="float: left; margin-right: 10px; cursor: pointer; width: 100%;">${member.name}</span>
         `;
         memberList.appendChild(memberItem);
     } catch (error) {
