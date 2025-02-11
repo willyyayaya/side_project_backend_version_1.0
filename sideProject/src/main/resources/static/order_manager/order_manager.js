@@ -47,7 +47,7 @@ async function searchMember() {
         orders.forEach(order => {
             const orderInfo = orderMap.get(order.orderid) || { owned: false, wanted: false };
             const ownedTag = orderInfo.owned ? '<span class="tag pink">擁有</span>' : '';
-            const wantedTag = orderInfo.wanted ? '<span class="tag yellow">想要</span>' : '';
+            const wantedTag = orderInfo.wanted ? '<span class="tag yellow">參與</span>' : '';
             const deadline = new Date(order.deadline);
             const today = new Date();
             const progressTag =
