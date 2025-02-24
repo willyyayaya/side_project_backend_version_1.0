@@ -217,10 +217,18 @@ public class HomeController {
 	@PostMapping("/memberShow")
 	public String memberShow(@RequestParam Long memberid, Model model, HttpSession session) {
 		System.out.println("前端傳送的會員ID : " + memberid);
+		// 判斷是否有登入狀態
+		if (session.getAttribute("member") != null) {
+			mimiMember member = (mimiMember) session.getAttribute("member");
+			System.out.println("memberShow目前登入狀態:" + member.getName());
+			model.addAttribute("member", member);
+		} else {
+			System.out.println("searchCase訪客模式");
+		}
 		List<yuMember> memberShow = memberService.getyuMemberById(memberid);
 		for (yuMember memberCheck : memberShow) {
-			System.out.println(memberCheck.getName());
-			System.out.println(memberCheck.getEmail());
+			System.out.println("前端查詢的會員name : " +memberCheck.getName());
+			System.out.println("前端查詢的會員Email : " +memberCheck.getEmail());
 
 			// 如果訂單沒圖片，加入圖片
 			if (memberCheck.getPicurl() == null) {
@@ -245,7 +253,7 @@ public class HomeController {
 		return "memberShow";
 	}
 
-	//--------return視圖使用---------------
+	// --------return視圖使用---------------
 	@GetMapping("/memberShow")
 	public String getmemberShow(@RequestParam Long memberid, Model model, HttpSession session) {
 
@@ -258,18 +266,18 @@ public class HomeController {
 			if (memberCheck.getPicurl() == null) {
 				memberCheck.setPicurl("../img/caseImg.jpg");
 			}
-			// get receiverMember 
+			// get receiverMember
 			mimiMember receiverMember = mimiMemberService.getMemberById(memberid);
 			String receiverEmail = memberCheck.getEmail();
-			//  Message 表單置入 receiverid 的 email
+			// Message 表單置入 receiverid 的 email
 			Message message = new Message();
 			message.setReceiverid(receiverMember);
-			message.setReceiverEmail(receiverEmail); 
-			model.addAttribute("message", message); 
+			message.setReceiverEmail(receiverEmail);
+			model.addAttribute("message", message);
 		}
-		model.addAttribute("memberShow", memberShow); 
-		session.setAttribute("message", new Message()); 
-		return "memberShow"; 
+		model.addAttribute("memberShow", memberShow);
+		session.setAttribute("message", new Message());
+		return "memberShow";
 	}
 
 	// --------彈窗測試項目-----------

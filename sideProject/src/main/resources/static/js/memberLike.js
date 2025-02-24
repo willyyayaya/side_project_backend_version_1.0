@@ -3,15 +3,30 @@
  */
 
 //< !--頭像JS部分 -->
+function subMemberid(memberid) {
+    console.log('進入傳輸表單的function')
+    var form = $('<form>', {
+        'method': 'POST',
+        'action': '/memberShow'
+    });
 
-// 顯示選擇的圖片預覽
+    var input = $('<input>', {
+        'type': 'hidden',
+        'name': 'memberid',
+        'value': memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();  // 提交表單
+}
+//顯示選擇的圖片預覽
 function previewImage() {
-    const file = document.getElementById('upload').files[0]; // 获取上传的文件
+    const file = document.getElementById('upload').files[0];
     const reader = new FileReader();
 
     reader.onloadend = function () {
-        // 如果图片为空或null，使用默认图片
-        const imgSrc = reader.result || '/img/caseImg.jpg';  // 默认图片路径
+        const imgSrc = reader.result || '../img/caseImg.jpg';  // 默认图片路径
         document.getElementById('icon').src = imgSrc;
     }
 
@@ -19,7 +34,7 @@ function previewImage() {
         reader.readAsDataURL(file);
     } else {
         // 如果没有选择文件，设置为默认图片
-        document.getElementById('icon').src = '/img/caseImg.jpg'; // 默认图片路径
+        document.getElementById('icon').src = '../img/caseImg.jpg'; // 默认图片路径
     }
 }
 
@@ -61,32 +76,16 @@ function submitImage(picurl) {
 const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
 
-$('#memberShow').click(function(event){
-        console.log('我被點到了');
-        event.preventDefault();
-        //var memberid = memberid;
-   		//const memberid = $(this).attr('alt');
-        console.log(memberid);
-        subMemberid(memberid);  // 提交會員 ID
-    })
-    
-    function subMemberid(memberid){
-        console.log('進入傳輸表單的function')
-        var form = $('<form>',{
-            'method':'POST',
-            'action':'/memberShow'
-        });
+$('#memberShow').click(function (event) {
+    console.log('我被點到了');
+    event.preventDefault();
+    //var memberid = memberid;
+    //const memberid = $(this).attr('alt');
+    console.log(memberid);
+    subMemberid(memberid);  // 提交會員 ID
+})
 
-        var input =$('<input>',{
-            'type':'hidden',
-            'name':'memberid',
-            'value':memberid
-        });
 
-        form.append(input);
-        $('body').append(form);
-        form.submit();  // 提交表單
-    }
 
 
 
@@ -101,11 +100,11 @@ if (!memberid || isNaN(memberid)) {
     const link3 = document.getElementById("link3");
     const link4 = document.getElementById("link4");
 
-	link1.href = `/memberProjectP1/${memberid}`;
-	link2.href = `/memberlike/${memberid}`;
-	// link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
-	link3.href = `http://localhost:8080/order_edit`;
-	link4.href = `/OrderProjectP1/${memberid}`;
+    link1.href = `/memberProjectP1/${memberid}`;
+    link2.href = `/memberlike/${memberid}`;
+    // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
+    link3.href = `http://localhost:8080/order_edit`;
+    link4.href = `/OrderProjectP1/${memberid}`;
 }
 
 
@@ -130,7 +129,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         .then(response => response.json())
         .then(data => {
             //console.log(data); // 檢查 API 返回的資料
-           //console.log(data.member); // 檢查 API 返回的資料
+            //console.log(data.member); // 檢查 API 返回的資料
             //console.log(data[0].member.picurl); // 訪問陣列中的第一個元素的 member 屬性
 
 
@@ -154,14 +153,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
-						memberpicDiv.innerHTML = `
-							<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+                        memberpicDiv.innerHTML = `
+							<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
 						    `;
-							//<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+                        //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
-							//<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+                        //<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
 
-						//	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+                        //	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
                     }
                     )
                 }
@@ -183,14 +182,14 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
-						memberpicDiv.innerHTML = `
-							<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+                        memberpicDiv.innerHTML = `
+							<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
 						    `;
-							//<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
+                        //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
-							//<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+                        //<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
 
-						//	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+                        //	<button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
 
                         const svgElement = `
                             <svg class="icon favorite-icon" style="fill: currentcolor; width: 24px; height: 24px; cursor: pointer;" 
@@ -206,9 +205,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
                         const card = document.createElement('div');
                         card.classList.add('Card');
-						card.innerHTML = `
+                        card.innerHTML = `
 						<div id="imgOut">
-							<img src="${order.picurl || '/img/caseImg.jpg'}" data-order-id="${order.orderid}" style="width:150px;height:150px;">
+							<img src="${order.picurl || '../img/caseImg.jpg'}" data-order-id="${order.orderid}" style="width:150px;height:150px;">
 						</div>
 						    <h4>${order.name}</h4>
 						    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
@@ -218,16 +217,16 @@ window.addEventListener('DOMContentLoaded', (event) => {
 						    <button class="Card_btn">了解詳細</button>
 						`;
 
-						// 等待DOM渲染完成後綁定按鈕點擊事件
-						const cardButton = card.querySelector('.Card_btn');
+                        // 等待DOM渲染完成後綁定按鈕點擊事件
+                        const cardButton = card.querySelector('.Card_btn');
 
-						// 綁定按鈕的點擊事件
-						cardButton.addEventListener('click', function() {
-						    // 從圖片元素獲取 data-order-id 屬性
-						    const orderid = card.querySelector('img').getAttribute('data-order-id');
-						    // 使用 orderid 進行跳轉
-						    window.location.href = `http://localhost:8080/order_main/${orderid}`; // 假設這是詳細頁面的URL
-						});
+                        // 綁定按鈕的點擊事件
+                        cardButton.addEventListener('click', function () {
+                            // 從圖片元素獲取 data-order-id 屬性
+                            const orderid = card.querySelector('img').getAttribute('data-order-id');
+                            // 使用 orderid 進行跳轉
+                            window.location.href = `http://localhost:8080/order_main/${orderid}`; // 假設這是詳細頁面的URL
+                        });
 
 
                         // 添加收藏狀態的事件監聽器
@@ -274,11 +273,11 @@ window.addEventListener('DOMContentLoaded', (event) => {
                                 .catch(error => {
                                     console.error("Error updating favorite status:", error);
                                     alert('更新成功');
-									location.reload();
+                                    location.reload();
                                 });
 
                         });
-						
+
 
                         container.appendChild(card);
                     });

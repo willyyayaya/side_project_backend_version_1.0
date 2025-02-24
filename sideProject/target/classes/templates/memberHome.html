@@ -34,9 +34,11 @@
             <form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${member.memberid})}" method="post"
                 enctype="multipart/form-data">
                 <!-- 預覽圖片 -->
-                <img name="picurl" id="icon" th:src="${member.picurl}" alt=""
-                    onclick="document.getElementById('upload').click();" />
                 <input type="file" id="upload" accept="image/*" onchange="previewImage()" />
+				<img name="picurl" id="icon" 
+     				th:src="${member.picurl != null && member.picurl != '' ? member.picurl : '/img/caseImg.jpg'}" 
+     				width="100%" height="100%" alt="iconimage"
+     				onclick="document.getElementById('upload').click();" />
                 <button type="button" id="icon_btn" onclick="submitImage()">更換圖片</button>
             </form>
             <!-- 功能列 -->
@@ -238,37 +240,6 @@ function submitImage() {
     // link3.href 的設置是根據需求而定，你可以取消註解並設置一個正確的 URL
     link3.href = `http://localhost:8080/order_edit`;
     link4.href = `/OrderProjectP1/${memberid}`;
-    
- // 會員連結的點擊事件	
-//  $('#memberShow').click(function(event){
-//      console.log('我被點到了');
-//      event.preventDefault();
-//      //var memberid = memberid;
-//		const memberid = $(this).attr('alt');
-//      console.log(memberid);
-//      subMemberid(memberid);  // 提交會員 ID
-//  })
-////個人頁面跳轉
-//function subMemberid(memberid){
-//  console.log('進入傳輸表單的function')
-//  var form = $('<form>',{
-//      'method':'POST',
-//      'action':'/memberShow'
-//  });
-
-//  var input =$('<input>',{
-//      'type':'hidden',
-//      'name':'memberid',
-//      'value':memberid
-//  });
-
-//  form.append(input);
-//  $('body').append(form);
-//  form.submit();  // 提交表單
-//}
- 
-    
-
     </script>
     
 

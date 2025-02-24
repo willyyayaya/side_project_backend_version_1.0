@@ -2,37 +2,37 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <!-- CSS -->
-    <link rel="stylesheet" th:href="@{/css/message.css}">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<!-- CSS -->
+	<link rel="stylesheet" th:href="@{/css/message.css}">
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
-        integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
-        crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" th:href="@{/css/fragment.css}">
-    <link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/register.css">
-	
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+		integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+		integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<link rel="stylesheet" th:href="@{/css/fragment.css}">
+	<link rel="stylesheet" href="/sideProject/src/main/resources/static/CSS/register.css">
+
 </head>
 
 <body>
-    <div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
-    <div class="sticky" th:if="${member != null}" th:insert="fragments::userHeader"></div>
+	<div class="sticky" th:if="${member == null}" th:insert="fragments::header"></div>
+	<div class="sticky" th:if="${member != null}" th:insert="fragments::userHeader"></div>
 
-	<form th:action="@{/message/{receiverid}}" method="post"
-		enctype="multipart/form-data">
+	<form th:action="@{/message/{receiverid}}" method="post" enctype="multipart/form-data">
 		<!-- 中間 -->
 		<div id="outSide">
 			<div id="User">
 				<!-- 預覽圖片，目前沒圖片會只有框 -->
-				<img name="picurl" id="icon" alt="" th:src="@{${member.picurl}}" />
+				<img name="picurl" id="icon" alt=""
+					th:src="${member.picurl != null ? member.picurl : '../img/caseImg.jpg'}" />
 				<!-- 功能列 -->
 				<div id="UserUse">
 					<b>功能列</b>
@@ -47,6 +47,8 @@
 						<a th:href="@{/memberlike/{memberid}(memberid=${member.memberid})}">資料夾管理</a>
 						<dt>站內信件</dt>
 						<a th:href="@{'/message/'+${member.memberid}}">收件匣</a>
+						<dt>公開資訊區</dt>
+						<a href="" class="memberLink" th:data-memberid="${member.memberid}">個人資訊</a>
 					</dl>
 				</div>
 			</div>
@@ -56,8 +58,7 @@
 			<div id="message">
 				<div id="mesgtop">
 					<div id="alld">
-						<a th:href="@{'/message/'+${receiverid}}" id="home">站內信</a> <a
-							href="/send" id="tegami">寫信</a>
+						<a th:href="@{'/message/'+${receiverid}}" id="home">站內信</a> <a href="/send" id="tegami">寫信</a>
 					</div>
 					<br> <br> <br>
 					<hr>
@@ -78,7 +79,7 @@
 									<td th:text="${message.title}">測試信件</td>
 									<td th:text="${message.createdat}">2025.1.1</td>
 									<td th:text="${message.isread ? '已讀' : '未讀'}">已讀 <a
-										th:href="@{/message/read/{messageid}(messageid=${message.messageid})}">查看</a>
+											th:href="@{/message/read/{messageid}(messageid=${message.messageid})}">查看</a>
 									</td>
 								</tr>
 							</tbody>
@@ -89,20 +90,46 @@
 		</div>
 	</form>
 
-    <div th:replace="fragments::footer"></div>
+	<div th:replace="fragments::footer"></div>
 
-    <script>
-        document.querySelectorAll('.clickable-row').forEach(function(row) {
-            row.addEventListener('click', function() {
-                // 當點擊整行時，跳轉到 data-href 中儲存的 URL
-                window.location = row.getAttribute('data-href');
-            });
-        });
+	<script>
+		document.querySelectorAll('.clickable-row').forEach(function (row) {
+			row.addEventListener('click', function () {
+				// 當點擊整行時，跳轉到 data-href 中儲存的 URL
+				window.location = row.getAttribute('data-href');
+			});
+		});
 
-        setInterval(() => {
-            location.reload();
-        }, 4000);  // 每 4 秒重新載入頁面
-    </script>
+		setInterval(() => {
+			location.reload();
+		}, 4000);  // 每 4 秒重新載入頁面
+
+		function subMemberid(memberid) {
+			console.log('進入傳輸表單的function')
+			var form = $('<form>', {
+				'method': 'POST',
+				'action': '/memberShow'
+			});
+
+			var input = $('<input>', {
+				'type': 'hidden',
+				'name': 'memberid',
+				'value': memberid
+			});
+
+			form.append(input);
+			$('body').append(form);
+			form.submit();
+		}
+		//點擊框
+		$('.memberLink').click(function (event) {
+			console.log('我被點到了');
+			event.preventDefault();
+			var memberid = $(this).data('memberid');
+			console.log(memberid);
+			subMemberid(memberid);
+		})
+	</script>
 </body>
 
 

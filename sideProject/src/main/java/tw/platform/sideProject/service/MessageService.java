@@ -21,7 +21,7 @@ public class MessageService {
 	@Autowired
 	private MessageRepository messageRepository;
 
-	private static final Long ADMIN_ID = 999L;
+	private static final Long ADMIN_ID = 1L;
 
 	// 寄出信件
 	public String addMesg(Message message) {

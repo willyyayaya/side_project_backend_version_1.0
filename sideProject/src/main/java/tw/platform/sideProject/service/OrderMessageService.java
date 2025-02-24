@@ -28,7 +28,7 @@ public class OrderMessageService {
 	private mimiMemberRepository memberRepository; // 需要查詢 receiver 會員信息
 	@Autowired
 	private MessageRepository messageRepository;
-	private static final Long SENDER_ID = 999L; // 固定的 sender ID
+	private static final Long SENDER_ID = 1L; // 固定的 sender ID
 
 	
 	@Scheduled(fixedRate = 5000) // 每 5 秒檢查一次
@@ -37,7 +37,7 @@ public class OrderMessageService {
 		List<MemberOrder> orders = memberOrderRepository.findByGetprojectTrue();
 
 		for (MemberOrder order : orders) {
-			mimiMember sender = memberRepository.findById(999L)
+			mimiMember sender = memberRepository.findById(1L)
 					.orElseThrow(() -> new RuntimeException("Sender not found"));
 			mimiMember receiver = memberRepository.findById(order.getMember().getMemberid())
 					.orElseThrow(() -> new RuntimeException("Receiver not found"));

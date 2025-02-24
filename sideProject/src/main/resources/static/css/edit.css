@@ -63,12 +63,21 @@ input {
 .col-8>div {
 	margin: 5px;
 }
-label,span,svg,p,.all,.ql-toolbar,.ql-editor{
+label,span,svg,p,.all,.ql-toolbar,.ql-editor,#region{
 	background-color: #eaeff3;
 }
 #imageInput{
 	width: 250px;
 }
-ol,li,strong,ul{
+ol,li,strong,ul,em,u,s{
 	background-color: #eaeff3;
+}
+.container{
+	margin-top:50px;
+	margin-bottom:50px;
+}
+#projectTitle,#simpleInfo,#deadline,#people,#casutamu,select{
+	border: 1px solid #c59650;
+	border-radius: 5px;
+	margin:10px;
 }

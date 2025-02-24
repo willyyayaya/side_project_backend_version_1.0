@@ -34,11 +34,11 @@
     <!-- 中間 -->
     <div id="outSide">
         <div id="User">
-                <div id=icon_test>
-                    <!-- 預覽圖片 -->
-                    <input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
-                    <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
-                </div>
+            <div id=icon_test>
+                <!-- 預覽圖片 -->
+                <input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
+                <button type="button" id="icon_btn" onclick="submitImage('picurl')">更換圖片</button>
+            </div>
             <!-- 功能列 -->
             <div id="UserUse">
                 <b>功能列</b>
@@ -53,8 +53,8 @@
                     <a id="link2" href="#">資料夾管理</a>
                     <dt>站內信件</dt>
                     <a th:href="@{'/message/'+${member.memberid}}" id="home">收件匣</a>
-                	<dt>公開資訊區</dt>
-					<a id="memberShow" href="javascript:void(0);">個人資訊</a>
+                    <dt>公開資訊區</dt>
+                    <a id="memberShow" href="javascript:void(0);">個人資訊</a>
                 </dl>
             </div>
         </div>
@@ -96,7 +96,8 @@
                     <div class="col-5">
                         <div id="imgBorder" class="d-flex justify-content-center align-items-center mb-1"></div>
                         <h3 id="modalName"></h3>
-                        <a href=""><button id="personalPage" class="btn btn-outline-primary">個人頁面</button></a>
+                        <button id="personalPage" class="btn btn-outline-primary">個人頁面</button>
+                        <!-- <button id="personalShow" class="btn btn-outline-primary">個人頁面</button> -->
                     </div>
                     <div class="col-7">
                         <h4 id="projectTitle"></h4>
@@ -112,10 +113,10 @@
                                 </p>
                             </div>
                         </div>
-                        <div>
+                        <div id="rightArea">
                             <label for="message-text" class="col-form-label">評價:</label>
                             <textarea id="message-text" class="form-control" maxlength="200" required></textarea>
-    						<small id="char-count">剩餘字數: 200</small> <!-- 显示剩余字数 -->
+                            <small id="char-count">剩餘字數: 200</small> <!-- 显示剩余字数 -->
                         </div>
                     </div>
 
@@ -136,27 +137,29 @@
 
     <!-- 引入 JavaScript -->
     <script th:src="@{/js/memberProject.js}"></script>
-    
+    <script src="/js/jquery-3.7.1.js"></script> <!-- 確保這個路徑正確 -->
+    <script src="/js/eva.js"></script> <!-- 確保這個路徑正確 -->
+
     <script>
-$(document).ready(function() {
-    const maxLength = 200;  // 设置最大字符数
-    
-    $('#message-text').on('input', function() {
-        const currentLength = $(this).val().length;  // 获取当前输入的字符数
-        const remaining = maxLength - currentLength;  // 计算剩余字数
-        
-        // 更新显示的剩余字数
-        $('#char-count').text('剩餘字數: ' + remaining);
-        
-        // 如果输入字数超过最大字数，禁止输入
-        if (currentLength >= maxLength) {
-            $('#char-count').css('color', 'red');  // 超过字数后，显示红色警告
-        } else {
-            $('#char-count').css('color', 'black');
-        }
-    });
-});
-</script>
+        $(document).ready(function () {
+            const maxLength = 200;  // 设置最大字符数
+
+            $('#message-text').on('input', function () {
+                const currentLength = $(this).val().length;  // 获取当前输入的字符数
+                const remaining = maxLength - currentLength;  // 计算剩余字数
+
+                // 更新显示的剩余字数
+                $('#char-count').text('剩餘字數: ' + remaining);
+
+                // 如果输入字数超过最大字数，禁止输入
+                if (currentLength >= maxLength) {
+                    $('#char-count').css('color', 'red');  // 超过字数后，显示红色警告
+                } else {
+                    $('#char-count').css('color', 'black');
+                }
+            });
+        });
+    </script>
 
 </body>
 

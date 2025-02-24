@@ -1,19 +1,19 @@
-function subMemberid(memberid){
-    console.log('進入傳輸表單的function')
-    var form = $('<form>',{
-        'method':'POST',
-        'action':'/memberShow'
-    });
+function subMemberid(memberid) {
+	console.log('進入傳輸表單的function')
+	var form = $('<form>', {
+		'method': 'POST',
+		'action': '/memberShow'
+	});
 
-    var input =$('<input>',{
-        'type':'hidden',
-        'name':'memberid',
-        'value':memberid
-    });
+	var input = $('<input>', {
+		'type': 'hidden',
+		'name': 'memberid',
+		'value': memberid
+	});
 
-    form.append(input);
-    $('body').append(form);
-    form.submit();
+	form.append(input);
+	$('body').append(form);
+	form.submit();
 }
 $(document).ready(async function () {
 
@@ -153,23 +153,24 @@ $(document).ready(async function () {
 	//	introduce.innerText = `${responseMemberToJSON[0].intro}`;
 	//}
 
-	let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
-	let responseRank = await fetch(rankUrl);
-	let responseRankToJSON = await responseRank.json();
-	console.log(responseRankToJSON);
-	if (responseRankToJSON === 0) {
-		rank.innerText = '尚未評價過'
-	} else {
-		rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
-	}
+
+	// let rankUrl = `http://localhost:8080/api/memberOrders/getRank/${responseMemberToJSON[0].memberid}`;
+	// let responseRank = await fetch(rankUrl);
+	// let responseRankToJSON = await responseRank.json();
+	// console.log(responseRankToJSON);
+	// if (responseRankToJSON === 0) {
+	// 	rank.innerText = '尚未評價過'
+	// } else {
+	// 	rank.innerText = '評價:' + (responseRankToJSON).toFixed(2) + '分';
+	// }
 	memberArea.innerHTML += `<button id='goMember' class='btn btn-outline-primary' data-memberid="${responseMemberToJSON[0].memberid}" data-orderid="orderId">詳細資料</button>`;
 	//專案會員點擊 詳細資料Btn 跳轉到memberShow(最上面的function記得複製)
 	goMember.onclick = function () {
 		console.log('我被點到了');
-        event.preventDefault();
-        var memberid = $(this).data('memberid');
-        console.log(memberid);
-        subMemberid(memberid);
+		event.preventDefault();
+		var memberid = $(this).data('memberid');
+		console.log(memberid);
+		subMemberid(memberid);
 	};
 
 	detail.innerHTML = responseOrderToJSON.detail;
@@ -261,13 +262,13 @@ $(document).ready(async function () {
 
 			anotherpro2.append(another2);
 			$('#getProject').append(anotherpro2);
-
+			//下方承豪寫$(`#ButtonAreaB${item.memberid}`).html(`
 			$(`#ButtonAreaV${item.memberid}`).html(`
 						<button id='anotherabd' class="btn btn-outline-primary showMemberBtn" data-memberid="${item.memberid}">詳細資料</button>
 						`);
 
 			anotherButtonArea.append(anotherButton);
-
+			//下方承豪寫$(`#anotherButtonOnClick${item.memberid}`).on('click', function() {
 			anotherButton[0].onclick = function () {
 				let ButtonUrl = 'http://localhost:8080/api/memberOrders/getproject';
 				fetch(ButtonUrl, {
@@ -282,11 +283,53 @@ $(document).ready(async function () {
 					})
 				})
 				alert('就決定是他了');
-			}
+			}//});
 		});
+
+		if (responseGetedToJSON.length || responseGetToJSON.length) {
+			$('#applyPepple').css('display', 'none');
+		}
+
+		$('#evaluate').css('display', 'none');
 
 	} else {
 		$('#getProject').css('display', 'none');
+		$('#evaluate').css('display', 'none');
+
+		if (new Date(responseOrderToJSON.deadline) < new Date()) {
+			console.log('已截止');
+			// $('#apply').text('已結束');
+			$('#evaluate').css('display', 'block');
+
+			//列出評價
+			let EvaAndRankUrl = `http://localhost:8080/api/memberOrders/getEvaluateAndRank/${orderId}`;
+			let responseEvaAndRank = await fetch(EvaAndRankUrl);
+			let responseEvaAndRankToJSON = await responseEvaAndRank.json();
+			console.log(responseEvaAndRankToJSON);
+			if (responseEvaAndRankToJSON.length) {
+				$('#applyevaluate').css('display', 'none');
+				responseEvaAndRankToJSON.forEach(item => {
+					console.log("評價:" + item);
+					let evaArea = `<div class="evaArea mx-auto rounded-2 mb-1">
+				<div class="evaAreaName"><span>給評價者：</span><span><a href="" class="memberLink" data-memberid="${item.member.memberid}">${item.member.account}</a></span></div> 
+				<div class="evaAreaRank"><span>給分：</span><span>${item.rank}分</span></div> 
+				<div class="evaAreaEva"><span>評論內容：</span><span>${item.evaluate}</span></div> 
+							</div>`;
+					$('#evaluate').append(evaArea);
+					//點擊框
+				});
+			};
+		} else {
+			console.log('進行中');
+		}
+
+		$('.memberLink').click(function (event) {
+			console.log('我被點到了');
+			event.preventDefault();
+			var memberid = $(this).data('memberid');
+			console.log(memberid);
+			subMemberid(memberid);
+		});
 		//推薦其他專案
 		let anotherUrl = 'http://localhost:8080/api/orders/getAllOrders';
 		let responseAnother = await fetch(anotherUrl);
@@ -338,16 +381,30 @@ $(document).ready(async function () {
 
 	if (responseMemberToJSON[0].memberid == `${memberId}`) {
 		$('#edit').css('display', 'block');
+	} else if (new Date(responseOrderToJSON.deadline) < new Date()) {
+		$('#apply').css('display', 'block');
+		$('#apply').text('已結束');
+		$('#apply').prop('disabled', true);
 	} else {
 		$('#apply').css('display', 'block');
 		let memberWantUrl = `http://localhost:8080/api/memberOrders/memberWanted/${orderId}/${memberId}`
 		let responseWant = await fetch(memberWantUrl);
 		let responseWantToJSON = await responseWant.json();
 		console.log(responseWantToJSON);
+		//顯示申請人數
+		let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderId}`;
+		let responsePreople = await fetch(applypeopleUrl);
+		let responsePeopleToJSON = await responsePreople.json();
+		console.log(responsePeopleToJSON);
+		let applyPeople = '目前申請人數:' + responsePeopleToJSON + '人';
+		$('#applyPeople').text(applyPeople);
 		if (responseWantToJSON == true) {
 			$('#apply').text('已申請');
 		};
+
 	}
+
+
 
 	edit.onclick = function () {
 		window.location.href = `/order_update/${orderId}`;
@@ -376,13 +433,7 @@ $(document).ready(async function () {
 		$('#apply').prop('disabled', true);
 	}
 
-	//顯示申請人數
-	let applypeopleUrl = `http://localhost:8080/api/memberOrders/wanted/people/${orderId}`;
-	let responsePreople = await fetch(applypeopleUrl);
-	let responsePeopleToJSON = await responsePreople.json();
-	console.log(responsePeopleToJSON);
-	let applyPeople = '目前申請人數:' + responsePeopleToJSON + '人';
-	$('#applyPeople').text(applyPeople);
+
 
 
 

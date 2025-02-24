@@ -62,9 +62,9 @@ public class MemberOrderController {
 
 
 	// 查詢某個專案相關的所有會員
-	@GetMapping("/getMembersByOrderId/{orderId}")
-	public List<Member> getMembersByOrderId(@PathVariable Long orderId) {
-		return memberOrderService.getMembersByOrderId(orderId);
+	@GetMapping("/getMembersByOrderId/{orderid}")
+	public List<Member> getMembersByOrderId(@PathVariable Long orderid) {
+		return memberOrderService.getMembersByOrderId(orderid);
 	}
 
 	// 查詢某個會員相關的所有專案的關係(admin)

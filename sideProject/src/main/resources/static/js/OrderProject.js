@@ -1,7 +1,23 @@
 
 
 //<!-- 頭像JS部分 -->
+function subMemberid(memberid) {
+    console.log('進入傳輸表單的function')
+    var form = $('<form>', {
+        'method': 'POST',
+        'action': '/memberShow'
+    });
 
+    var input = $('<input>', {
+        'type': 'hidden',
+        'name': 'memberid',
+        'value': memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();  // 提交表單
+}
 //顯示選擇的圖片預覽
 function previewImage() {
     const file = document.getElementById('upload').files[0];
@@ -55,33 +71,17 @@ const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
 
 console.log(memberid);
-	
-	$('#memberShow').click(function(event){
-	        console.log('我被點到了');
-	        event.preventDefault();
-	        //var memberid = memberid;
-	   		//const memberid = $(this).attr('alt');
-	        console.log(memberid);
-	        subMemberid(memberid);  // 提交會員 ID
-	    })
-	    
-	    function subMemberid(memberid){
-	        console.log('進入傳輸表單的function')
-	        var form = $('<form>',{
-	            'method':'POST',
-	            'action':'/memberShow'
-	        });
 
-	        var input =$('<input>',{
-	            'type':'hidden',
-	            'name':'memberid',
-	            'value':memberid
-	        });
+$('#memberShow').click(function (event) {
+    console.log('我被點到了');
+    event.preventDefault();
+    //var memberid = memberid;
+    //const memberid = $(this).attr('alt');
+    console.log(memberid);
+    subMemberid(memberid);  // 提交會員 ID
+})
 
-	        form.append(input);
-	        $('body').append(form);
-	        form.submit();  // 提交表單
-	    }
+
 
 // 確保 memberid 是有效的
 if (!memberid || isNaN(memberid)) {
@@ -130,7 +130,7 @@ fetch(url)
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
                     memberpicDiv.innerHTML = `
-					<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
+					<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                     			
     `;
 
                 }
@@ -187,7 +187,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     card.innerHTML = `
 					  <div class="card-content" data-order-id="${order.orderid}">
 					    <div id="imgOut">
-					      <img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+					      <img src="${order.picurl || '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 					    </div>
 					    <h4>${order.name}</h4>
 					    <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>

@@ -1,3 +1,20 @@
+function subMemberid(memberid) {
+    console.log('進入傳輸表單的function')
+    var form = $('<form>', {
+        'method': 'POST',
+        'action': '/memberShow'
+    });
+
+    var input = $('<input>', {
+        'type': 'hidden',
+        'name': 'memberid',
+        'value': memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();
+}
 $(document).ready(async function () {
     var ratingValue = 0;
 
@@ -55,22 +72,31 @@ $(document).ready(async function () {
         // 根據訂單 ID 載入對應的資料
         loadOrderData(orderId);
     });
-    async function loadOrderData(orderId) {
+    async function loadOrderData(orderid) {
         //顯示發案者頭像和名字
-        let ordermemberUrl = `http://localhost:8080/api/memberOrders/getMembersByOrderId/${orderId}`;
+        let ordermemberUrl = `http://localhost:8080/api/memberOrders/getMembersByOrderid/${orderid}`;
         let responseOrdermember = await fetch(ordermemberUrl);
         let responseOrdermemberToJSON = await responseOrdermember.json();
+        var usermemberid = responseOrdermemberToJSON[0].memberid;
+        console.log("測:" + memberid);
         console.log(responseOrdermemberToJSON);
-        imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseOrdermemberToJSON[0].picurl}">`;
+        imgBorder.innerHTML = `<img class="img-fluid object-fit-contain" src="${responseOrdermemberToJSON[0].picurl !== null ? order.picurl : '../img/caseImg.jpg'}">`;
         modalName.innerText = `${responseOrdermemberToJSON[0].name}`;
         //顯示專案名字
-        let orderUrl = `http://localhost:8080/api/orders/getOrderById/${orderId}`;
+        let orderUrl = `http://localhost:8080/api/orders/getOrderById/${orderid}`;
         let responseOrder = await fetch(orderUrl);
         let responseOrderToJSON = await responseOrder.json();
+        console.log(responseOrderToJSON[0]);
         console.log(responseOrderToJSON);
         projectTitle.innerText = `${responseOrderToJSON.name}`;
+        $("#personalPage").click(function () {
+            console.log('我被點到了');
+            event.preventDefault();
+            var memberid = usermemberid;
+            console.log(memberid);
+            subMemberid(memberid);
+        });
     }
-
     //送出
     evaluateGo.onclick = async function () {
         var rating = $('#rating-value').text();
@@ -83,31 +109,33 @@ $(document).ready(async function () {
         }
 
         //評分部分
-        let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderId}`;
-        fetch(ratingUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ rank: rating })
-        }).then(response => {
-            if (response.ok) { // 檢查是否成功
-                alert("已成功提交評分!"); // 顯示成功提示
-            } else {
-                alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
-            }
-        })
-        .catch(error => {
-            console.error("發生錯誤：", error);
-            alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
-        });
+        // let ratingUrl = `http://localhost:8080/api/orders/addRank/${orderId}`;
+        //fetch(ratingUrl, {
+        //  method: 'POST',
+        // headers: {
+        //      'Content-Type': 'application/json',
+        //  },
+        //   body: JSON.stringify({ rank: rating })
+        // }).then(response => {
+        //     if (response.ok) { // 檢查是否成功
+        //         alert("已成功提交評分!"); // 顯示成功提示
+        //      } else {
+        //          alert("資料送出失敗，請再試一次。"); // 顯示失敗提示
+        //       }
+        //  })
+        //   .catch(error => {
+        //       console.error("發生錯誤：", error);
+        //       alert("發生錯誤，請稍後再試。"); // 顯示錯誤提示
+        //   });
 
         //評論部分
         // 動態設置 URL，根據實際訂單 ID
         let evaluateUrl = `http://localhost:8080/api/memberOrders/addEvaluate/${orderId}`;
         // 準備傳送的資料
         let data = {
-            evaluate: reviewText
+            evaluate: reviewText,
+            rank: rating,
+            memberId: memberid
         };
         // 發送 POST 請求
         await fetch(evaluateUrl, {
@@ -120,5 +148,6 @@ $(document).ready(async function () {
 
         // 打印出評分和評價
         console.log("評分: " + rating + ", 評價: " + reviewText);
+        alert("評分已成功送出");
     };
 });

@@ -31,14 +31,25 @@ public class MemberOrder {
     private boolean getproject;
     private String picurl;   // 確保有這個屬性
     private String name;
+    private Integer rank;
 
 
     // Getters and Setters
+    
+    
     public MemberOrderKey getId() {
         return id;
     }
 
-    public void setId(MemberOrderKey id) {
+    public Integer getRank() {
+		return rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+
+	public void setId(MemberOrderKey id) {
         this.id = id;
     }
 
@@ -107,5 +118,18 @@ public class MemberOrder {
 	            ", collected=" + collected +
 	            '}';
 	}
-	
+
+	public String getPicurl() {
+		return picurl;
+	}
+	public void setPicurl(String picurl) {
+		this.picurl = picurl;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+    
 }

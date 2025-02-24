@@ -4,7 +4,23 @@
 
 
 //<!-- 頭像JS部分 -->
+function subMemberid(memberid) {
+    console.log('進入傳輸表單的function')
+    var form = $('<form>', {
+        'method': 'POST',
+        'action': '/memberShow'
+    });
 
+    var input = $('<input>', {
+        'type': 'hidden',
+        'name': 'memberid',
+        'value': memberid
+    });
+
+    form.append(input);
+    $('body').append(form);
+    form.submit();  // 提交表單
+}
 //顯示選擇的圖片預覽
 function previewImage() {
     const file = document.getElementById('upload').files[0];
@@ -34,7 +50,7 @@ function submitImage(picurl) {
 
     // 动态构建 URL，替换 {memberid} 为实际的 memberid
     var url = `/api/members/memberHome/${memberid}/update`;  // 加上 /api/members 路径前缀
-	
+
     // 通过 Fetch 请求将 Base64 字符串传递到后端
     fetch(url, {
         method: 'POST',
@@ -58,33 +74,17 @@ const path = window.location.pathname;
 const memberid = path.split('/').pop(); // 從 URL 獲取 memberid
 
 //console.log(memberid);
-	
-	$('#memberShow').click(function(event){
-	        console.log('我被點到了');
-	        event.preventDefault();
-	        //var memberid = memberid;
-	   		//const memberid = $(this).attr('alt');
-	        console.log(memberid);
-	        subMemberid(memberid);  // 提交會員 ID
-	    })
-	    
-	    function subMemberid(memberid){
-	        console.log('進入傳輸表單的function')
-	        var form = $('<form>',{
-	            'method':'POST',
-	            'action':'/memberShow'
-	        });
 
-	        var input =$('<input>',{
-	            'type':'hidden',
-	            'name':'memberid',
-	            'value':memberid
-	        });
+$('#memberShow').click(function (event) {
+    console.log('我被點到了');
+    event.preventDefault();
+    //var memberid = memberid;
+    //const memberid = $(this).attr('alt');
+    console.log(memberid);
+    subMemberid(memberid);  // 提交會員 ID
+})
 
-	        form.append(input);
-	        $('body').append(form);
-	        form.submit();  // 提交表單
-	    }
+
 
 
 // 確保 memberid 是有效的
@@ -133,9 +133,7 @@ fetch(url)
                     //const picurl = member.picurl;  // 假設圖片 URL 存在於 member.picurl
 
                     const memberpicDiv = document.getElementById("icon_test");  // 替換為您的目標 div ID
-                    memberpicDiv.innerHTML = `
-	<img  name="picurl" id="icon" src="${member.picurl || '/img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />                    			
-    `;
+                    memberpicDiv.innerHTML = `<img  name="picurl" id="icon" src="${member.picurl || '../img/caseImg.jpg'}" width="100%" height="100%" alt="iconimage" onclick="document.getElementById('upload').click();" />`;
                     //<form id="updateIcon" th:action="@{/memberHome/{id}/update(id=${memberid})}" method="post" enctype="multipart/form-data">
 
                     //<input type="file" id="upload" accept="image/*" style="display:none;" onchange="previewImage()" />
@@ -196,7 +194,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     card.innerHTML = `
 					    <div class="card-content" data-order-id="${order.orderid}" style="width:150px;height:150px;">
 							<div id="imgOut">
-								<img src="${order.picurl || '/img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
+								<img src="${order.picurl !== null ? order.picurl : '../img/caseImg.jpg'}" alt="${order.orderid}" style="width:150px;height:150px;">
 							</div>
 					        <h4>${order.name}</h4>
 					        <p class="title">${order.intro.length > 10 ? order.intro.substring(0, 10) + '...' : order.intro}</p>
